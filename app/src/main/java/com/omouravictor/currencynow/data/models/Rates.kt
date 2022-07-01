@@ -13,12 +13,6 @@ data class Rates(
     val gBP: Double,
     @SerializedName("CAD")
     val cAD: Double,
-    @SerializedName("AUD")
-    val aUD: Double,
-    @SerializedName("CHF")
-    val cHF: Double,
-    @SerializedName("ZND")
-    val zND: Double,
     @SerializedName("BRL")
     val bRL: Double
 )

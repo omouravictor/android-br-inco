@@ -6,9 +6,6 @@
         <item>JPY</item>
         <item>GBP</item>
         <item>CAD</item>
-        <item>AUD</item>
-        <item>CHF</item>
-        <item>ZND</item>
         <item>BRL</item>
     </string-array>
 </resources>

@@ -68,9 +68,6 @@ class MainViewModel @ViewModelInject constructor(
         "JPY" -> rates.jPY
         "GBP" -> rates.gBP
         "CAD" -> rates.cAD
-        "AUD" -> rates.aUD
-        "CHF" -> rates.cHF
-        "ZND" -> rates.zND
         "BRL" -> rates.bRL
         else -> null
     }
