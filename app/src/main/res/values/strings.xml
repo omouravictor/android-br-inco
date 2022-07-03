@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">CurrencyNow</string>
-    <string-array name="currency_codes">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>JPY</item>
-        <item>GBP</item>
-        <item>CAD</item>
-        <item>BRL</item>
+    <string-array name="from_currency_codes">
+        <item>Dólar (USD)</item>
+        <item>Euro (EUR)</item>
+        <item>Iene (JPY)</item>
+        <item>Libra (GBP)</item>
+        <item>Dólar (CAD)</item>
+        <item>Real (BRL)</item>
+    </string-array>
+
+    <string-array name="to_currency_codes">
+        <item>Real (BRL)</item>
+        <item>Dólar (USD)</item>
+        <item>Euro (EUR)</item>
+        <item>Iene (JPY)</item>
+        <item>Libra (GBP)</item>
+        <item>Dólar (CAD)</item>
     </string-array>
 </resources>

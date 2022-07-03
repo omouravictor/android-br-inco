@@ -1,5 +1,7 @@
 package com.omouravictor.currencynow.main
 
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +11,7 @@ import com.omouravictor.currencynow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import kotlin.math.round
 
 class MainViewModel @ViewModelInject constructor(
@@ -27,39 +30,53 @@ class MainViewModel @ViewModelInject constructor(
     val conversion: StateFlow<CurrencyEvent> = _conversion
 
     fun convert(
+        context: Context,
         amountStr: String,
-        fromCurrency: String,
-        toCurrency: String
+        fromCurrencyName: String,
+        toCurrencyName: String
     ) {
-        val fromAmount = amountStr.toFloatOrNull()
-        if (fromAmount == null) {
-            _conversion.value = CurrencyEvent.Failure("Not a valid amount")
+        if (!isOnline(context)) {
+            _conversion.value = CurrencyEvent.Failure("Sem conexão :(")
             return
         }
 
+        val fromAmount = amountStr.toFloatOrNull()
+        if (fromAmount == null) {
+            _conversion.value = CurrencyEvent.Failure("Valor inválido")
+            return
+        }
+
+        val fromCurrency = getCurrencyAbbreviation(fromCurrencyName)
+        val toCurrency = getCurrencyAbbreviation(toCurrencyName)
+
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = CurrencyEvent.Loading
-            when (val ratesResponse = repository.getRates(
-                fromCurrency,
-                "USD%2C%20EUR%2C%20JPY%2C%20GBP%2C%20CAD%2C%20AUD%2C%20CHF%2C%20ZND%2C%20BRL",
-                "u3J6BxflZCOOCm5w5MyRHP4bgT5B5CxH"
-            )) {
+            when (val ratesResponse = repository.getRates(fromCurrency)) {
                 is Resource.Error -> _conversion.value =
                     CurrencyEvent.Failure(ratesResponse.message!!)
                 is Resource.Success -> {
                     val rates = ratesResponse.data!!.rates
                     val rate = getRateForCurrency(toCurrency, rates)
                     if (rate == null) {
-                        _conversion.value = CurrencyEvent.Failure("Unexpected error")
+                        _conversion.value = CurrencyEvent.Failure("Erro inesperado")
                     } else {
-                        val convertedCurrency = round(fromAmount * rate * 100) / 100
+                        val decFormat = DecimalFormat("#,###.00")
+                        val amount = decFormat.format(fromAmount)
+                        val result = decFormat.format(round(fromAmount * rate * 100) / 100)
                         _conversion.value = CurrencyEvent.Success(
-                            "$fromAmount $fromCurrency = $convertedCurrency $toCurrency"
+                            "$amount $fromCurrency = $result $toCurrency"
                         )
                     }
                 }
             }
         }
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        return connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null
     }
 
     private fun getRateForCurrency(currency: String, rates: Rates) = when (currency) {
@@ -71,4 +88,15 @@ class MainViewModel @ViewModelInject constructor(
         "BRL" -> rates.bRL
         else -> null
     }
+
+    private fun getCurrencyAbbreviation(currencyName: String): String = when (currencyName) {
+        "Dólar (USD)" -> "USD"
+        "Euro (EUR)" -> "EUR"
+        "Iene (JPY)" -> "JPY"
+        "Libra (GBP)" -> "GBP"
+        "Dólar (CAD)" -> "CAD"
+        "Real (BRL)" -> "BRL"
+        else -> ""
+    }
+
 }

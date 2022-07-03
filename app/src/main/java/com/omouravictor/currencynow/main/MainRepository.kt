@@ -6,8 +6,6 @@ import com.omouravictor.currencynow.util.Resource
 interface MainRepository {
 
     suspend fun getRates(
-        fromCurrency: String,
-        toCurrencies: String,
-        apikey: String
+        fromCurrency: String
     ): Resource<CurrencyResponse>
 }
