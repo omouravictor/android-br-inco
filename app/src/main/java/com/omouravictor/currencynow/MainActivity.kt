@@ -29,11 +29,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val inNighMode: Boolean = phoneInNightMode()
+        if (inNighMode) binding.swTheme.isChecked = true
+
         binding.swTheme.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
-                println("Working on it..")
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             else
-                println("Working on it..")
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
         }
 
         binding.btnConvert.setOnClickListener {
@@ -50,6 +53,8 @@ class MainActivity : AppCompatActivity() {
                 when (event) {
                     is MainViewModel.CurrencyEvent.Success -> {
                         binding.progressBar.isVisible = false
+                        if (inNighMode) binding.tvResult.setTextColor(Color.WHITE)
+                        else binding.tvResult.setTextColor(Color.BLACK)
                         binding.tvResult.text = event.resultText
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
@@ -64,5 +69,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun phoneInNightMode(): Boolean {
+        val uiModeNightMaskCode =
+            this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+        return uiModeNightMaskCode == Configuration.UI_MODE_NIGHT_YES
     }
 }
