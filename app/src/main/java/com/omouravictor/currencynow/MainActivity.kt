@@ -29,13 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (phoneInNightMode()) binding.swTheme.isChecked = true
-
         binding.swTheme.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                println("Working on it..")
             else
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+                println("Working on it..")
         }
 
         binding.btnConvert.setOnClickListener {
@@ -66,11 +64,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun phoneInNightMode(): Boolean {
-        val uiModeNightMaskCode =
-            this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        return uiModeNightMaskCode == Configuration.UI_MODE_NIGHT_YES
     }
 }
