@@ -1,9 +1,9 @@
 package com.omouravictor.currencynow
 
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +12,13 @@ import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.omouravictor.currencynow.adapter.CurrenciesAdapter
 import com.omouravictor.currencynow.databinding.ActivityMainBinding
 import com.omouravictor.currencynow.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         val inNighMode: Boolean = phoneInNightMode()
         if (inNighMode) binding.swTheme.isChecked = true
 
+        initCurrenciesRecyclerView()
+
         binding.swTheme.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
@@ -42,9 +47,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnConvert.setOnClickListener {
             viewModel.convert(
                 this,
-                binding.etFrom.text.toString(),
-                binding.spFromCurrency.selectedItem.toString(),
-                binding.spToCurrency.selectedItem.toString(),
+                binding.etAmount.text.toString(),
+                binding.spFromCurrency.selectedItemPosition
             )
         }
 
@@ -53,21 +57,28 @@ class MainActivity : AppCompatActivity() {
                 when (event) {
                     is MainViewModel.CurrencyEvent.Success -> {
                         binding.progressBar.isVisible = false
-                        if (inNighMode) binding.tvResult.setTextColor(Color.WHITE)
-                        else binding.tvResult.setTextColor(Color.BLACK)
-                        binding.tvResult.text = event.resultText
+                        binding.rvCurrencies.isVisible = true
+                        (binding.rvCurrencies.adapter as CurrenciesAdapter).setList(event.resultRatesList)
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
                         binding.progressBar.isVisible = false
-                        binding.tvResult.setTextColor(Color.RED)
-                        binding.tvResult.text = event.errorText
+                        Toast.makeText(applicationContext, event.errorText, Toast.LENGTH_SHORT)
+                            .show()
                     }
                     is MainViewModel.CurrencyEvent.Loading -> {
                         binding.progressBar.isVisible = true
+                        binding.rvCurrencies.isVisible = false
                     }
                     else -> Unit
                 }
             }
+        }
+    }
+
+    private fun initCurrenciesRecyclerView() {
+        binding.rvCurrencies.apply {
+            adapter = CurrenciesAdapter(mutableListOf(), Locale("pt", "BR"), Date())
+            layoutManager = LinearLayoutManager(context)
         }
     }
 

@@ -5,13 +5,13 @@ import android.net.ConnectivityManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.currencynow.data.models.Rates
+import com.omouravictor.currencynow.data.models.Rate
+import com.omouravictor.currencynow.data.models.RateValues
 import com.omouravictor.currencynow.util.DispatcherProvider
 import com.omouravictor.currencynow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 import kotlin.math.round
 
 class MainViewModel @ViewModelInject constructor(
@@ -20,7 +20,7 @@ class MainViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     sealed class CurrencyEvent {
-        class Success(val resultText: String) : CurrencyEvent()
+        class Success(val resultRatesList: List<Rate>) : CurrencyEvent()
         class Failure(val errorText: String) : CurrencyEvent()
         object Loading : CurrencyEvent()
         object Empty : CurrencyEvent()
@@ -32,71 +32,86 @@ class MainViewModel @ViewModelInject constructor(
     fun convert(
         context: Context,
         amountStr: String,
-        fromCurrencyName: String,
-        toCurrencyName: String
+        selectedCurrency: Int
     ) {
         if (!isOnline(context)) {
             _conversion.value = CurrencyEvent.Failure("Sem conexão :(")
             return
         }
 
-        val fromAmount = amountStr.toFloatOrNull()
-        if (fromAmount == null) {
+        val amount = amountStr.toFloatOrNull()
+        if (amount == null) {
             _conversion.value = CurrencyEvent.Failure("Valor inválido")
             return
         }
 
-        val fromCurrency = getCurrencyAbbreviation(fromCurrencyName)
-        val toCurrency = getCurrencyAbbreviation(toCurrencyName)
+        val fromCurrency = getCurrencySymbol(selectedCurrency)
+        val toCurrencies = ("BRL,USD,EUR,JPY,GBP,CAD,").replaceFirst("$fromCurrency,", "")
 
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = CurrencyEvent.Loading
-            when (val ratesResponse = repository.getRates(fromCurrency)) {
+            when (val ratesResponse = repository.getRates(fromCurrency, toCurrencies)) {
                 is Resource.Error -> _conversion.value =
                     CurrencyEvent.Failure(ratesResponse.message!!)
                 is Resource.Success -> {
-                    val rates = ratesResponse.data!!.rates
-                    val rate = getRateForCurrency(toCurrency, rates)
-                    if (rate == null) {
-                        _conversion.value = CurrencyEvent.Failure("Erro inesperado")
-                    } else {
-                        val decFormat = DecimalFormat("#,###.00")
-                        val amount = decFormat.format(fromAmount)
-                        val result = decFormat.format(round(fromAmount * rate * 100) / 100)
-                        _conversion.value = CurrencyEvent.Success(
-                            "$amount $fromCurrency = $result $toCurrency"
-                        )
-                    }
+                    val responseData = ratesResponse.data!!
+                    val rates = getRatesForResult(
+                        fromCurrency,
+                        toCurrencies,
+                        amount,
+                        responseData.rates
+                    )
+                    _conversion.value = CurrencyEvent.Success(rates)
                 }
             }
         }
     }
+
+    private fun getRatesForResult(
+        fromCurrency: String,
+        toCurrencies: String,
+        amount: Float,
+        rateValues: RateValues
+    ): List<Rate> {
+        val rates: MutableList<Rate> = mutableListOf()
+        val toCurrencyArray = toCurrencies.split(",")
+
+        for (i in 0 until toCurrencyArray.lastIndex) {
+            val toCurrency = toCurrencyArray[i]
+            val rateValue = getRateValueForCurrency(toCurrency, rateValues)
+            rates.add(Rate(fromCurrency, toCurrency, round(amount * rateValue!! * 100) / 100))
+        }
+
+        return rates
+    }
+
+
+    private fun getCurrencySymbol(selectedCurrency: Int) = when (selectedCurrency) {
+        0 -> "USD"
+        1 -> "EUR"
+        2 -> "JPY"
+        3 -> "GBP"
+        4 -> "CAD"
+        5 -> "BRL"
+        else -> ""
+    }
+
+    private fun getRateValueForCurrency(currency: String, rateValues: RateValues) =
+        when (currency) {
+            "BRL" -> rateValues.bRL
+            "USD" -> rateValues.uSD
+            "EUR" -> rateValues.eUR
+            "JPY" -> rateValues.jPY
+            "GBP" -> rateValues.gBP
+            "CAD" -> rateValues.cAD
+            else -> null
+        }
 
     private fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         return connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null
-    }
-
-    private fun getRateForCurrency(currency: String, rates: Rates) = when (currency) {
-        "USD" -> rates.uSD
-        "EUR" -> rates.eUR
-        "JPY" -> rates.jPY
-        "GBP" -> rates.gBP
-        "CAD" -> rates.cAD
-        "BRL" -> rates.bRL
-        else -> null
-    }
-
-    private fun getCurrencyAbbreviation(currencyName: String): String = when (currencyName) {
-        "Dólar (USD)" -> "USD"
-        "Euro (EUR)" -> "EUR"
-        "Iene (JPY)" -> "JPY"
-        "Libra (GBP)" -> "GBP"
-        "Dólar (CAD)" -> "CAD"
-        "Real (BRL)" -> "BRL"
-        else -> ""
     }
 
 }

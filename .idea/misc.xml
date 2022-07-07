@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/omouravictor/.gradle/caches/transforms-2/files-2.1/f668cd94bf7d015c0079898db5698a2a/jetified-appcompat-resources-1.2.0/res/drawable/abc_vector_test.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/drawable/ic_arrow_right.xml" value="0.13802083333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/drawable/ic_round_double_arrow.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/drawable/ic_white_arrow_right_background.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/drawable/ic_white_arrow_right_foreground.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/omouravictor/AndroidStudioProjects/CurrencyNow/app/src/main/res/layout/currency_item_list.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -1,20 +1,13 @@
 <resources>
     <string name="app_name">CurrencyNow</string>
-    <string-array name="from_currency_codes">
+    <string name="conversion_from">Conversão de %d %s</string>
+    <!-- If you change array items order you'll have to change getCurrencySymbol function as well -->
+    <string-array name="from_currency_names">
         <item>Dólar (USD)</item>
         <item>Euro (EUR)</item>
         <item>Iene (JPY)</item>
         <item>Libra (GBP)</item>
         <item>Dólar (CAD)</item>
         <item>Real (BRL)</item>
-    </string-array>
-
-    <string-array name="to_currency_codes">
-        <item>Real (BRL)</item>
-        <item>Dólar (USD)</item>
-        <item>Euro (EUR)</item>
-        <item>Iene (JPY)</item>
-        <item>Libra (GBP)</item>
-        <item>Dólar (CAD)</item>
     </string-array>
 </resources>

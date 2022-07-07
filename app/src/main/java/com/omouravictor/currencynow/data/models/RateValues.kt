@@ -2,7 +2,7 @@ package com.omouravictor.currencynow.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Rates(
+data class RateValues(
     @SerializedName("USD")
     val uSD: Double,
     @SerializedName("EUR")
