@@ -1,7 +1,7 @@
 package com.omouravictor.currencynow.data.models
 
-data class CurrencyResponse(
+data class CurrencyApiResponse(
     val base: String,
     val date: String,
-    val rates: RateValues
+    val rates: Rates
 )

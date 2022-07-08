@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     is MainViewModel.CurrencyEvent.Success -> {
                         binding.progressBar.isVisible = false
                         binding.rvCurrencies.isVisible = true
-                        (binding.rvCurrencies.adapter as CurrenciesAdapter).setList(event.resultRatesList)
+                        (binding.rvCurrencies.adapter as CurrenciesAdapter).setList(event.conversionsList)
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
                         binding.progressBar.isVisible = false

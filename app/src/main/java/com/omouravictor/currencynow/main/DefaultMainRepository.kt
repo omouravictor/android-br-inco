@@ -1,7 +1,7 @@
 package com.omouravictor.currencynow.main
 
 import com.omouravictor.currencynow.data.CurrencyApi
-import com.omouravictor.currencynow.data.models.CurrencyResponse
+import com.omouravictor.currencynow.data.models.CurrencyApiResponse
 import com.omouravictor.currencynow.util.Resource
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class DefaultMainRepository @Inject constructor(
     override suspend fun getRates(
         fromCurrency: String,
         toCurrencies: String
-    ): Resource<CurrencyResponse> {
+    ): Resource<CurrencyApiResponse> {
         return try {
             val response = api.getRates(fromCurrency, toCurrencies, API_KEY)
             val result = response.body()
