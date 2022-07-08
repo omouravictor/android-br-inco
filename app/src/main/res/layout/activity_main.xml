@@ -6,29 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Switch
-        android:id="@+id/swTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTitle"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Valores em tempo real :)"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/swTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Spinner
         android:id="@+id/spFromCurrency"
         android:layout_width="wrap_content"
@@ -38,7 +15,7 @@
         android:entries="@array/from_currency_names"
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etAmount"
@@ -49,25 +26,12 @@
         android:imeOptions="actionDone"
         android:inputType="number"
         android:maxLength="10"
-        android:text="1"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/spFromCurrency"
         app:layout_constraintEnd_toStartOf="@+id/spFromCurrency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spFromCurrency" />
-
-    <Button
-        android:id="@+id/btnConvert"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Converter"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spFromCurrency" />
+        app:layout_constraintTop_toTopOf="@+id/spFromCurrency"
+        tools:text="1"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -85,11 +49,11 @@
         android:id="@+id/rvCurrencies"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnConvert"
+        app:layout_constraintTop_toBottomOf="@+id/spFromCurrency"
         tools:listitem="@layout/currency_item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

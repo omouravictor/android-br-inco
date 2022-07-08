@@ -12,12 +12,11 @@ import java.util.*
 class CurrenciesAdapter(
     private var list: List<Rate>,
     private val brLocale: Locale,
-    private val date: Date
 ) : RecyclerView.Adapter<CurrenciesAdapter.CurrencyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =
             CurrencyItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CurrencyViewHolder(binding, brLocale, date)
+        return CurrencyViewHolder(binding, brLocale)
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
@@ -30,11 +29,11 @@ class CurrenciesAdapter(
 
     class CurrencyViewHolder(
         private val currencyItem: CurrencyItemListBinding,
-        private val brLocale: Locale,
-        private val date: Date
+        private val brLocale: Locale
     ) : RecyclerView.ViewHolder(currencyItem.root) {
         fun bind(rate: Rate) {
 
+            val date = Date()
             val locale = when (rate.toCurrency) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")

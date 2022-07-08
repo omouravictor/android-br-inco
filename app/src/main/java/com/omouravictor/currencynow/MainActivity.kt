@@ -1,16 +1,13 @@
 package com.omouravictor.currencynow
 
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.currencynow.adapter.CurrenciesAdapter
@@ -32,24 +29,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val inNighMode: Boolean = phoneInNightMode()
-        if (inNighMode) binding.swTheme.isChecked = true
-
         initCurrenciesRecyclerView()
+        initCurrencies()
 
-        binding.swTheme.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
-            else
-                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
-        }
-
-        binding.btnConvert.setOnClickListener {
-            viewModel.convert(
-                this,
-                binding.etAmount.text.toString(),
-                binding.spFromCurrency.selectedItemPosition
-            )
+        binding.etAmount.doAfterTextChanged { text ->
+            val amountStr = text.toString()
+            if (amountStr.isNotEmpty()) {
+                viewModel.convert(
+                    this, amountStr, binding.spFromCurrency.selectedItemPosition
+                )
+            }
         }
 
         lifecycleScope.launchWhenStarted {
@@ -75,16 +64,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initCurrencies () {
+        binding.etAmount.setText("1")
+        viewModel.convert(this, binding.etAmount.text.toString(), 0)
+    }
+
     private fun initCurrenciesRecyclerView() {
         binding.rvCurrencies.apply {
-            adapter = CurrenciesAdapter(mutableListOf(), Locale("pt", "BR"), Date())
+            adapter = CurrenciesAdapter(mutableListOf(), Locale("pt", "BR"))
             layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun phoneInNightMode(): Boolean {
-        val uiModeNightMaskCode =
-            this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
-        return uiModeNightMaskCode == Configuration.UI_MODE_NIGHT_YES
-    }
 }
