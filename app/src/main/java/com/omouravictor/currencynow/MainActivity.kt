@@ -2,6 +2,9 @@ package com.omouravictor.currencynow
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -29,12 +32,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initEtAmount()
+        initSpFromCurrency()
         initConversionsRecyclerView()
-        initConversions()
-
-        binding.etAmount.doAfterTextChanged { text ->
-            viewModel.convert(text.toString(), binding.spFromCurrency.selectedItemPosition)
-        }
 
         lifecycleScope.launchWhenStarted {
             viewModel.conversion.collect { event ->
@@ -61,9 +61,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initConversions() {
+    private fun initEtAmount() {
         binding.etAmount.setText("1")
-        viewModel.convert(binding.etAmount.text.toString(), 0)
+        binding.etAmount.doAfterTextChanged { text ->
+            viewModel.convert(text.toString(), binding.spFromCurrency.selectedItemPosition)
+        }
+    }
+
+    private fun initSpFromCurrency() {
+        binding.spFromCurrency.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.convert(binding.etAmount.text.toString(), position)
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {}
+        }
     }
 
     private fun initConversionsRecyclerView() {
@@ -72,5 +89,4 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
     }
-
 }
