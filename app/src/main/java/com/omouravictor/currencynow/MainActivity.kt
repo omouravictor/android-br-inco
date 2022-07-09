@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.currencynow.adapter.CurrenciesAdapter
+import com.omouravictor.currencynow.adapter.ConversionAdapter
 import com.omouravictor.currencynow.databinding.ActivityMainBinding
 import com.omouravictor.currencynow.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,16 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initCurrenciesRecyclerView()
-        initCurrencies()
+        initConversionsRecyclerView()
+        initConversions()
 
         binding.etAmount.doAfterTextChanged { text ->
-            val amountStr = text.toString()
-            if (amountStr.isNotEmpty()) {
-                viewModel.convert(
-                    this, amountStr, binding.spFromCurrency.selectedItemPosition
-                )
-            }
+            viewModel.convert(text.toString(), binding.spFromCurrency.selectedItemPosition)
         }
 
         lifecycleScope.launchWhenStarted {
@@ -46,8 +41,8 @@ class MainActivity : AppCompatActivity() {
                 when (event) {
                     is MainViewModel.CurrencyEvent.Success -> {
                         binding.progressBar.isVisible = false
-                        binding.rvCurrencies.isVisible = true
-                        (binding.rvCurrencies.adapter as CurrenciesAdapter).setList(event.conversionsList)
+                        binding.rvConversions.isVisible = true
+                        (binding.rvConversions.adapter as ConversionAdapter).setList(event.conversionsList)
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
                         binding.progressBar.isVisible = false
@@ -56,22 +51,24 @@ class MainActivity : AppCompatActivity() {
                     }
                     is MainViewModel.CurrencyEvent.Loading -> {
                         binding.progressBar.isVisible = true
-                        binding.rvCurrencies.isVisible = false
+                        binding.rvConversions.isVisible = false
                     }
-                    else -> Unit
+                    is MainViewModel.CurrencyEvent.Empty -> {
+                        (binding.rvConversions.adapter as ConversionAdapter).setZeroRates()
+                    }
                 }
             }
         }
     }
 
-    private fun initCurrencies () {
+    private fun initConversions() {
         binding.etAmount.setText("1")
-        viewModel.convert(this, binding.etAmount.text.toString(), 0)
+        viewModel.convert(binding.etAmount.text.toString(), 0)
     }
 
-    private fun initCurrenciesRecyclerView() {
-        binding.rvCurrencies.apply {
-            adapter = CurrenciesAdapter(mutableListOf(), Locale("pt", "BR"))
+    private fun initConversionsRecyclerView() {
+        binding.rvConversions.apply {
+            adapter = ConversionAdapter(mutableListOf(), Locale("pt", "BR"))
             layoutManager = LinearLayoutManager(context)
         }
     }

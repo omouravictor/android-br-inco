@@ -1,7 +1,5 @@
 package com.omouravictor.currencynow.main
 
-import android.content.Context
-import android.net.ConnectivityManager
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +10,6 @@ import com.omouravictor.currencynow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlin.math.round
 
 class MainViewModel @ViewModelInject constructor(
     private val repository: MainRepository,
@@ -30,18 +27,12 @@ class MainViewModel @ViewModelInject constructor(
     val conversion: StateFlow<CurrencyEvent> = _conversion
 
     fun convert(
-        context: Context,
         amountStr: String,
         selectedCurrency: Int
     ) {
-        if (!isOnline(context)) {
-            _conversion.value = CurrencyEvent.Failure("Sem conexão :(")
-            return
-        }
-
         val amount = amountStr.toFloatOrNull()
         if (amount == null) {
-            _conversion.value = CurrencyEvent.Failure("Valor inválido")
+            _conversion.value = CurrencyEvent.Empty
             return
         }
 
@@ -71,18 +62,18 @@ class MainViewModel @ViewModelInject constructor(
         fromCurrency: String,
         toCurrencies: String,
         amount: Float,
-        rates: Rates
+        rateList: Rates
     ): List<Conversion> {
-        val conversions: MutableList<Conversion> = mutableListOf()
+        val list: MutableList<Conversion> = mutableListOf()
         val toCurrencyArray = toCurrencies.split(",")
 
         for (i in 0 until toCurrencyArray.lastIndex) {
             val toCurrency = toCurrencyArray[i]
-            val rateValue = getRateValueForCurrency(toCurrency, rates)
-            conversions.add(Conversion(fromCurrency, toCurrency, round(amount * rateValue!! * 100) / 100))
+            val rate = getRateForCurrency(toCurrency, rateList)
+            list.add(Conversion(fromCurrency, toCurrency, amount, rate))
         }
 
-        return conversions
+        return list
     }
 
     private fun getCurrencySymbol(selectedCurrency: Int) = when (selectedCurrency) {
@@ -95,7 +86,7 @@ class MainViewModel @ViewModelInject constructor(
         else -> ""
     }
 
-    private fun getRateValueForCurrency(currency: String, rates: Rates) =
+    private fun getRateForCurrency(currency: String, rates: Rates) =
         when (currency) {
             "BRL" -> rates.bRL
             "USD" -> rates.uSD
@@ -103,14 +94,6 @@ class MainViewModel @ViewModelInject constructor(
             "JPY" -> rates.jPY
             "GBP" -> rates.gBP
             "CAD" -> rates.cAD
-            else -> null
+            else -> -1.0
         }
-
-    private fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        return connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null
-    }
-
 }

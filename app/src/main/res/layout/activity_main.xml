@@ -38,15 +38,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvCurrencies"
-        app:layout_constraintEnd_toEndOf="@+id/rvCurrencies"
-        app:layout_constraintStart_toStartOf="@+id/rvCurrencies"
-        app:layout_constraintTop_toTopOf="@+id/rvCurrencies"
+        app:layout_constraintBottom_toBottomOf="@+id/rvConversions"
+        app:layout_constraintEnd_toEndOf="@+id/rvConversions"
+        app:layout_constraintStart_toStartOf="@+id/rvConversions"
+        app:layout_constraintTop_toTopOf="@+id/rvConversions"
         app:layout_constraintVertical_bias="0.1"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCurrencies"
+        android:id="@+id/rvConversions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -54,6 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spFromCurrency"
-        tools:listitem="@layout/currency_item_list" />
+        tools:listitem="@layout/conversion_item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
