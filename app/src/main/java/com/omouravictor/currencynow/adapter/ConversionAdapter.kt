@@ -11,12 +11,14 @@ import java.util.*
 
 class ConversionAdapter(
     private var list: List<Conversion>,
-    private val brLocale: Locale,
+    private val defaultLocale: Locale,
+    private val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yy", defaultLocale),
+    private val timeFormatter: SimpleDateFormat = SimpleDateFormat("HH:mm", defaultLocale)
 ) : RecyclerView.Adapter<ConversionAdapter.CurrencyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =
             ConversionItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CurrencyViewHolder(binding, brLocale)
+        return CurrencyViewHolder(binding, defaultLocale, dateFormatter, timeFormatter)
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
@@ -29,24 +31,25 @@ class ConversionAdapter(
 
     class CurrencyViewHolder(
         private val currencyItem: ConversionItemListBinding,
-        private val brLocale: Locale
+        private val defaultLocale: Locale,
+        private val dateFormatter: SimpleDateFormat,
+        private val timeFormatter: SimpleDateFormat
     ) : RecyclerView.ViewHolder(currencyItem.root) {
         fun bind(conversion: Conversion) {
-
-            val date = Date()
+            val now = Date()
             val locale = when (conversion.toCurrency) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")
                 "JPY" -> Locale("ja", "JP")
                 "GBP" -> Locale("en", "GB")
                 "CAD" -> Locale("en", "CA")
-                else -> brLocale
+                else -> defaultLocale
             }
 
             currencyItem.tvFromCurrency.text = conversion.fromCurrency
             currencyItem.tvToCurrency.text = conversion.toCurrency
-            currencyItem.tvDate.text = SimpleDateFormat("dd/MM/yy", brLocale).format(date)
-            currencyItem.tvTime.text = SimpleDateFormat.getTimeInstance(3, brLocale).format(date)
+            currencyItem.tvDate.text = dateFormatter.format(now)
+            currencyItem.tvTime.text = timeFormatter.format(now)
             currencyItem.tvValue.text = NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
         }
     }
