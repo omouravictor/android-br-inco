@@ -1,13 +1,16 @@
 package com.omouravictor.currencynow.di
 
+import android.content.Context
 import com.omouravictor.currencynow.data.CurrencyApi
-import com.omouravictor.currencynow.main.DefaultMainRepository
+import com.omouravictor.currencynow.database.AppDataBase
+import com.omouravictor.currencynow.main.CurrencyApiRepository
 import com.omouravictor.currencynow.main.MainRepository
 import com.omouravictor.currencynow.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
@@ -30,7 +33,13 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(api: CurrencyApi): MainRepository = DefaultMainRepository(api)
+    fun provideAppDataBase(@ApplicationContext appContext: Context): AppDataBase =
+        AppDataBase.getDatabase(appContext)
+
+    @Singleton
+    @Provides
+    fun provideMainRepository(api: CurrencyApi, dataBase: AppDataBase): MainRepository =
+        CurrencyApiRepository(api, dataBase)
 
     @Singleton
     @Provides

@@ -11,7 +11,7 @@ import java.util.*
 
 class ConversionAdapter(
     private var list: List<Conversion>,
-    private val defaultLocale: Locale,
+    private val defaultLocale: Locale = Locale("pt", "BR"),
     private val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yy", defaultLocale),
     private val timeFormatter: SimpleDateFormat = SimpleDateFormat("HH:mm", defaultLocale)
 ) : RecyclerView.Adapter<ConversionAdapter.CurrencyViewHolder>() {
@@ -36,7 +36,6 @@ class ConversionAdapter(
         private val timeFormatter: SimpleDateFormat
     ) : RecyclerView.ViewHolder(currencyItem.root) {
         fun bind(conversion: Conversion) {
-            val now = Date()
             val locale = when (conversion.toCurrency) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")
@@ -48,8 +47,8 @@ class ConversionAdapter(
 
             currencyItem.tvFromCurrency.text = conversion.fromCurrency
             currencyItem.tvToCurrency.text = conversion.toCurrency
-            currencyItem.tvDate.text = dateFormatter.format(now)
-            currencyItem.tvTime.text = timeFormatter.format(now)
+            currencyItem.tvDate.text = dateFormatter.format(conversion.rateDate)
+            currencyItem.tvTime.text = timeFormatter.format(conversion.rateDate)
             currencyItem.tvValue.text = NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
         }
     }
@@ -61,6 +60,11 @@ class ConversionAdapter(
 
     fun setList(newList: List<Conversion>) {
         list = newList
+        notifyDataSetChanged()
+    }
+
+    fun removeAll() {
+        list = emptyList()
         notifyDataSetChanged()
     }
 }
