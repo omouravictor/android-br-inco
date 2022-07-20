@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CurrencyNow</string>
+    <string name="app_name">RatesNow</string>
     <string name="conversion_from">Conversão de %d %s</string>
     <!-- If you change array items order you'll have to change getCurrencySymbol function as well -->
     <string-array name="from_currency_names">

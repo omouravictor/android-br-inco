@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow.data.models
+package com.omouravictor.ratesnow.data.models
 
 import java.util.*
 import kotlin.math.round

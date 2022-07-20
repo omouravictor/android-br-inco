@@ -1,7 +1,7 @@
-package com.omouravictor.currencynow
+package com.omouravictor.ratesnow
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class CurrencyApplication : Application()
+class RatesApplication : Application()

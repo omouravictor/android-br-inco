@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow
+package com.omouravictor.ratesnow
 
 import android.os.Bundle
 import android.view.View
@@ -11,9 +11,9 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.currencynow.adapter.ConversionAdapter
-import com.omouravictor.currencynow.databinding.ActivityMainBinding
-import com.omouravictor.currencynow.main.MainViewModel
+import com.omouravictor.ratesnow.databinding.ActivityMainBinding
+import com.omouravictor.ratesnow.adapter.ConversionAdapter
+import com.omouravictor.ratesnow.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -42,16 +42,16 @@ class MainActivity : AppCompatActivity() {
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
                         binding.progressBar.isVisible = false
+                        binding.rvConversions.isVisible = false
                         Toast.makeText(applicationContext, event.errorText, Toast.LENGTH_SHORT)
                             .show()
-                        (binding.rvConversions.adapter as ConversionAdapter).removeAll()
                     }
                     is MainViewModel.CurrencyEvent.Loading -> {
                         binding.progressBar.isVisible = true
                         binding.rvConversions.isVisible = false
                     }
                     is MainViewModel.CurrencyEvent.Empty -> {
-                        (binding.rvConversions.adapter as ConversionAdapter).setZeroRates()
+                        binding.rvConversions.isVisible = false
                     }
                 }
             }
@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initEtAmount() {
         binding.etAmount.setText("1")
+        binding.etAmount.setSelection(1)
         binding.etAmount.doAfterTextChanged { text ->
             viewModel.convertFromDb(
                 binding.spFromCurrency.selectedItemPosition,

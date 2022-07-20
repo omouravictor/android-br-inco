@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow.database
+package com.omouravictor.ratesnow.database
 
 import androidx.room.TypeConverter
 import java.util.*

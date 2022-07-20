@@ -1,12 +1,12 @@
-package com.omouravictor.currencynow.database
+package com.omouravictor.ratesnow.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.omouravictor.currencynow.database.dao.RateDao
-import com.omouravictor.currencynow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.database.dao.RateDao
+import com.omouravictor.ratesnow.database.entity.RatesEntity
 
 @Database(entities = [RatesEntity::class], version = 1)
 @TypeConverters(Converters::class)

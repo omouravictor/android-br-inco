@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow
+package com.omouravictor.ratesnow
 
 import org.junit.Test
 

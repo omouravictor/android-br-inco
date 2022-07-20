@@ -1,8 +1,8 @@
-package com.omouravictor.currencynow.main
+package com.omouravictor.ratesnow.main
 
-import com.omouravictor.currencynow.data.models.CurrencyApiResponse
-import com.omouravictor.currencynow.database.entity.RatesEntity
-import com.omouravictor.currencynow.util.Resource
+import com.omouravictor.ratesnow.data.models.ApiResponse
+import com.omouravictor.ratesnow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
@@ -14,7 +14,7 @@ interface MainRepository {
     suspend fun getRatesFromApi(
         fromCurrency: String,
         toCurrencies: String
-    ): Resource<CurrencyApiResponse>
+    ): Resource<ApiResponse>
 
     suspend fun insertRatesOnDb(rates: RatesEntity)
 

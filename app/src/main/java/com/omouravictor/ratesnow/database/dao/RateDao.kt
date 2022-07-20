@@ -1,10 +1,10 @@
-package com.omouravictor.currencynow.database.dao
+package com.omouravictor.ratesnow.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.omouravictor.currencynow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.database.entity.RatesEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow.util
+package com.omouravictor.ratesnow.util
 
 sealed class Resource<T>(val data: T?, val message: String?) {
     class Success<T>(data: T) : Resource<T>(data, null)

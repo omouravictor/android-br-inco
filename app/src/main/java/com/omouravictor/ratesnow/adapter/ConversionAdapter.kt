@@ -1,10 +1,10 @@
-package com.omouravictor.currencynow.adapter
+package com.omouravictor.ratesnow.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.currencynow.data.models.Conversion
-import com.omouravictor.currencynow.databinding.ConversionItemListBinding
+import com.omouravictor.ratesnow.data.models.Conversion
+import com.omouravictor.ratesnow.databinding.ConversionItemListBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,18 +53,8 @@ class ConversionAdapter(
         }
     }
 
-    fun setZeroRates() {
-        for (conv: Conversion in list) conv.rate = 0.0
-        notifyDataSetChanged()
-    }
-
     fun setList(newList: List<Conversion>) {
         list = newList
-        notifyDataSetChanged()
-    }
-
-    fun removeAll() {
-        list = emptyList()
         notifyDataSetChanged()
     }
 }

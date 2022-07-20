@@ -1,13 +1,13 @@
-package com.omouravictor.currencynow.main
+package com.omouravictor.ratesnow.main
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.currencynow.data.models.Conversion
-import com.omouravictor.currencynow.data.models.CurrencyApiResponse
-import com.omouravictor.currencynow.database.entity.RatesEntity
-import com.omouravictor.currencynow.util.DispatcherProvider
-import com.omouravictor.currencynow.util.Resource
+import com.omouravictor.ratesnow.data.models.Conversion
+import com.omouravictor.ratesnow.data.models.ApiResponse
+import com.omouravictor.ratesnow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.util.DispatcherProvider
+import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -38,15 +38,15 @@ class MainViewModel @ViewModelInject constructor(
 
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = CurrencyEvent.Loading
-            tryRatesFromApi(selectedCurrency, amount)
+            val fromCurrency = getCurrencySymbol(selectedCurrency)
+            tryRatesFromApi(fromCurrency, amount)
         }
     }
 
-    private suspend fun tryRatesFromApi(selectedCurrency: Int, amount: Float) {
-        val fromCurrency = getCurrencySymbol(selectedCurrency)
-        when (val apiResponse = repository.getRatesFromApi(fromCurrency, toCurrencies)) {
+    private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
+        when (val ratesApiRequest = repository.getRatesFromApi(fromCurrency, toCurrencies)) {
             is Resource.Success -> {
-                val rates = getRatesEntity(apiResponse.data!!, Date())
+                val rates = getRatesEntity(ratesApiRequest.data!!, Date())
                 val conversions = getConversionsForResult(fromCurrency, amount, rates)
                 repository.insertRatesOnDb(rates)
                 _conversion.value = CurrencyEvent.Success(conversions)
@@ -81,7 +81,7 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getRatesEntity(apiResponse: CurrencyApiResponse, ratesDate: Date): RatesEntity =
+    private fun getRatesEntity(apiResponse: ApiResponse, ratesDate: Date): RatesEntity =
         RatesEntity(
             apiResponse.base,
             apiResponse.rates.uSD,
@@ -100,18 +100,19 @@ class MainViewModel @ViewModelInject constructor(
     ): List<Conversion> {
         val list: MutableList<Conversion> = mutableListOf()
 
-        arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD").forEach { toCurrency ->
-            val rate = when (toCurrency) {
-                "BRL" -> rates.bRL
-                "USD" -> rates.uSD
-                "EUR" -> rates.eUR
-                "JPY" -> rates.jPY
-                "GBP" -> rates.gBP
-                "CAD" -> rates.cAD
-                else -> 0.0
+        arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD").forEach {
+            if (it != fromCurrency) {
+                val rate = when (it) {
+                    "BRL" -> rates.bRL
+                    "USD" -> rates.uSD
+                    "EUR" -> rates.eUR
+                    "JPY" -> rates.jPY
+                    "GBP" -> rates.gBP
+                    "CAD" -> rates.cAD
+                    else -> 0.0
+                }
+                list.add(Conversion(fromCurrency, it, amount, rate, rates.date))
             }
-
-            list.add(Conversion(fromCurrency, toCurrency, amount, rate, rates.date))
         }
 
         return list

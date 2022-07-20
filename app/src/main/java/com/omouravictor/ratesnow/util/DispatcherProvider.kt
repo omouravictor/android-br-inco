@@ -1,4 +1,4 @@
-package com.omouravictor.currencynow.util
+package com.omouravictor.ratesnow.util
 
 import kotlinx.coroutines.CoroutineDispatcher
 

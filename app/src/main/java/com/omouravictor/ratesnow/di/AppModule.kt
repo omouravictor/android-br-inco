@@ -1,11 +1,11 @@
-package com.omouravictor.currencynow.di
+package com.omouravictor.ratesnow.di
 
 import android.content.Context
-import com.omouravictor.currencynow.data.CurrencyApi
-import com.omouravictor.currencynow.database.AppDataBase
-import com.omouravictor.currencynow.main.CurrencyApiRepository
-import com.omouravictor.currencynow.main.MainRepository
-import com.omouravictor.currencynow.util.DispatcherProvider
+import com.omouravictor.ratesnow.data.RatesApi
+import com.omouravictor.ratesnow.database.AppDataBase
+import com.omouravictor.ratesnow.main.RatesRepository
+import com.omouravictor.ratesnow.main.MainRepository
+import com.omouravictor.ratesnow.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,11 +25,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideCurrencyApi(): CurrencyApi = Retrofit.Builder()
+    fun provideCurrencyApi(): RatesApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create(CurrencyApi::class.java)
+        .create(RatesApi::class.java)
 
     @Singleton
     @Provides
@@ -38,8 +38,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(api: CurrencyApi, dataBase: AppDataBase): MainRepository =
-        CurrencyApiRepository(api, dataBase)
+    fun provideMainRepository(api: RatesApi, dataBase: AppDataBase): MainRepository =
+        RatesRepository(api, dataBase)
 
     @Singleton
     @Provides
