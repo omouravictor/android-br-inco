@@ -3,8 +3,8 @@ package com.omouravictor.ratesnow.di
 import android.content.Context
 import com.omouravictor.ratesnow.data.RatesApi
 import com.omouravictor.ratesnow.database.AppDataBase
-import com.omouravictor.ratesnow.main.RatesRepository
 import com.omouravictor.ratesnow.main.MainRepository
+import com.omouravictor.ratesnow.main.RatesRepository
 import com.omouravictor.ratesnow.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides

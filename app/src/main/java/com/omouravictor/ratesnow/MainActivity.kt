@@ -11,8 +11,8 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.ratesnow.databinding.ActivityMainBinding
 import com.omouravictor.ratesnow.adapter.ConversionAdapter
+import com.omouravictor.ratesnow.databinding.ActivityMainBinding
 import com.omouravictor.ratesnow.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

@@ -3,8 +3,8 @@ package com.omouravictor.ratesnow.main
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesnow.data.models.Conversion
 import com.omouravictor.ratesnow.data.models.ApiResponse
+import com.omouravictor.ratesnow.data.models.Conversion
 import com.omouravictor.ratesnow.database.entity.RatesEntity
 import com.omouravictor.ratesnow.util.DispatcherProvider
 import com.omouravictor.ratesnow.util.Resource
