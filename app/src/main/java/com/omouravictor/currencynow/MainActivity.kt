@@ -61,7 +61,10 @@ class MainActivity : AppCompatActivity() {
     private fun initEtAmount() {
         binding.etAmount.setText("1")
         binding.etAmount.doAfterTextChanged { text ->
-            viewModel.getRatesFromDb(binding.spFromCurrency.selectedItemPosition, text.toString())
+            viewModel.convertFromDb(
+                binding.spFromCurrency.selectedItemPosition,
+                text.toString()
+            )
         }
     }
 
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.getRatesFromApi(
+                viewModel.convertFromApi(
                     position,
                     binding.etAmount.text.toString()
                 )

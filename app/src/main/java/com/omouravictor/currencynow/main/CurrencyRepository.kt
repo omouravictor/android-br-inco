@@ -39,8 +39,8 @@ class CurrencyApiRepository @Inject constructor(
         return database.rateDao().getRatesForCurrency(currencyBase)
     }
 
-    override suspend fun insertRatesOnDb(ratesEntityList: List<RatesEntity>) {
-        database.rateDao().insertRate(ratesEntityList)
+    override suspend fun insertRatesOnDb(rates: RatesEntity) {
+        database.rateDao().insertRate(rates)
     }
 
     override suspend fun removeAllRates() {

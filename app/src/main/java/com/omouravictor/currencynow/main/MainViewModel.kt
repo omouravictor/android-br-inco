@@ -29,7 +29,7 @@ class MainViewModel @ViewModelInject constructor(
     private val _conversion = MutableStateFlow<CurrencyEvent>(CurrencyEvent.Empty)
     val conversion: StateFlow<CurrencyEvent> = _conversion
 
-    fun getRatesFromApi(selectedCurrency: Int, amountStr: String) {
+    fun convertFromApi(selectedCurrency: Int, amountStr: String) {
         val amount = amountStr.toFloatOrNull()
         if (amount == null) {
             _conversion.value = CurrencyEvent.Empty
@@ -38,20 +38,26 @@ class MainViewModel @ViewModelInject constructor(
 
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = CurrencyEvent.Loading
-            val fromCurrency = getCurrencySymbol(selectedCurrency)
-            when (val apiResponse = repository.getRatesFromApi(fromCurrency, toCurrencies)) {
-                is Resource.Success -> {
-                    val rates = getRatesEntity(apiResponse.data!!, Date())
-                    saveRateOnDb(rates)
-                    val conversions = getConversionsForResult(fromCurrency, amount, rates)
-                    _conversion.value = CurrencyEvent.Success(conversions)
-                }
-                is Resource.Error -> getRatesFromDb(selectedCurrency, amountStr)
+            tryRatesFromApi(selectedCurrency, amount)
+        }
+    }
+
+    private suspend fun tryRatesFromApi(selectedCurrency: Int, amount: Float) {
+        val fromCurrency = getCurrencySymbol(selectedCurrency)
+        when (val apiResponse = repository.getRatesFromApi(fromCurrency, toCurrencies)) {
+            is Resource.Success -> {
+                val rates = getRatesEntity(apiResponse.data!!, Date())
+                val conversions = getConversionsForResult(fromCurrency, amount, rates)
+                repository.insertRatesOnDb(rates)
+                _conversion.value = CurrencyEvent.Success(conversions)
+            }
+            is Resource.Error -> {
+                tryRatesFromDb(fromCurrency, amount)
             }
         }
     }
 
-    fun getRatesFromDb(selectedCurrency: Int, amountStr: String) {
+    fun convertFromDb(selectedCurrency: Int, amountStr: String) {
         val amount = amountStr.toFloatOrNull()
         if (amount == null) {
             _conversion.value = CurrencyEvent.Empty
@@ -61,14 +67,17 @@ class MainViewModel @ViewModelInject constructor(
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = CurrencyEvent.Loading
             val fromCurrency = getCurrencySymbol(selectedCurrency)
-            val rates = repository.getRatesFromDb(fromCurrency)
+            tryRatesFromDb(fromCurrency, amount)
+        }
+    }
 
-            if (rates != null) {
-                val conversions = getConversionsForResult(fromCurrency, amount, rates)
-                _conversion.value = CurrencyEvent.Success(conversions)
-            } else {
-                _conversion.value = CurrencyEvent.Failure("Não foi possível obter os dados.")
-            }
+    private fun tryRatesFromDb(fromCurrency: String, amount: Float) {
+        val rates = repository.getRatesFromDb(fromCurrency)
+        if (rates != null) {
+            val conversions = getConversionsForResult(fromCurrency, amount, rates)
+            _conversion.value = CurrencyEvent.Success(conversions)
+        } else {
+            _conversion.value = CurrencyEvent.Failure("Não foi possível obter os dados.")
         }
     }
 
@@ -84,38 +93,29 @@ class MainViewModel @ViewModelInject constructor(
             ratesDate
         )
 
-    private suspend fun saveRateOnDb(rates: RatesEntity) {
-        val ratesEntityList: MutableList<RatesEntity> = mutableListOf()
-        ratesEntityList.add(rates)
-        repository.insertRatesOnDb(ratesEntityList)
-    }
-
     private fun getConversionsForResult(
         fromCurrency: String,
         amount: Float,
         rates: RatesEntity
     ): List<Conversion> {
         val list: MutableList<Conversion> = mutableListOf()
-        val toCurrencyArray = toCurrencies.split(",")
 
-        for (toCurrency in toCurrencyArray) {
-            val rate = getRateForCurrency(toCurrency, rates)
+        arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD").forEach { toCurrency ->
+            val rate = when (toCurrency) {
+                "BRL" -> rates.bRL
+                "USD" -> rates.uSD
+                "EUR" -> rates.eUR
+                "JPY" -> rates.jPY
+                "GBP" -> rates.gBP
+                "CAD" -> rates.cAD
+                else -> 0.0
+            }
+
             list.add(Conversion(fromCurrency, toCurrency, amount, rate, rates.date))
         }
 
         return list
     }
-
-    private fun getRateForCurrency(currency: String, rates: RatesEntity) =
-        when (currency) {
-            "BRL" -> rates.bRL
-            "USD" -> rates.uSD
-            "EUR" -> rates.eUR
-            "JPY" -> rates.jPY
-            "GBP" -> rates.gBP
-            "CAD" -> rates.cAD
-            else -> -1.0
-        }
 
     private fun getCurrencySymbol(selectedCurrency: Int) = when (selectedCurrency) {
         0 -> "USD"

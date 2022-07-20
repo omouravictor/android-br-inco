@@ -9,14 +9,14 @@ interface MainRepository {
 
     fun getAllRatesFromDb(): Flow<List<RatesEntity>>
 
-    fun getRatesFromDb(currencyBase: String): RatesEntity
+    fun getRatesFromDb(currencyBase: String): RatesEntity?
 
     suspend fun getRatesFromApi(
         fromCurrency: String,
         toCurrencies: String
     ): Resource<CurrencyApiResponse>
 
-    suspend fun insertRatesOnDb(ratesEntityList: List<RatesEntity>)
+    suspend fun insertRatesOnDb(rates: RatesEntity)
 
     suspend fun removeAllRates()
 }
