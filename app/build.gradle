@@ -84,4 +84,7 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.4.1'
     kapt 'androidx.room:room-compiler:2.4.1'
     implementation 'androidx.room:room-ktx:2.4.1'
+
+    // Swipe to Refresh
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

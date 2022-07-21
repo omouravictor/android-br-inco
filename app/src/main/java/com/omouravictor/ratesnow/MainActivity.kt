@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         initEtAmount()
         initSpFromCurrency()
+        initSwipeRefreshLayout()
         initConversionsRecyclerView()
 
         lifecycleScope.launchWhenStarted {
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                             .show()
                     }
                     is MainViewModel.CurrencyEvent.Loading -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = true
                         binding.rvConversions.isVisible = false
                     }
@@ -77,13 +79,19 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.convertFromApi(
-                    position,
-                    binding.etAmount.text.toString()
-                )
+                viewModel.convertFromApi(position, binding.etAmount.text.toString())
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
+        }
+    }
+
+    private fun initSwipeRefreshLayout () {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.convertFromApi(
+                binding.spFromCurrency.selectedItemPosition,
+                binding.etAmount.text.toString()
+            )
         }
     }
 

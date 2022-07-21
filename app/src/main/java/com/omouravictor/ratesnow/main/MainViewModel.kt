@@ -77,7 +77,9 @@ class MainViewModel @ViewModelInject constructor(
             val conversions = getConversionsForResult(fromCurrency, amount, rates)
             _conversion.value = CurrencyEvent.Success(conversions)
         } else {
-            _conversion.value = CurrencyEvent.Failure("Não foi possível obter os dados.")
+            _conversion.value = CurrencyEvent.Failure(
+                "Não foi possível obter os dados.\nVerifique sua conexão :("
+            )
         }
     }
 
