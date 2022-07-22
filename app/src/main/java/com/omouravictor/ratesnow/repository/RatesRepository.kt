@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.main
+package com.omouravictor.ratesnow.repository
 
 import com.omouravictor.ratesnow.data.RatesApi
 import com.omouravictor.ratesnow.data.models.ApiResponse
@@ -39,11 +39,7 @@ class RatesRepository @Inject constructor(
         return database.rateDao().getRatesForCurrency(currencyBase)
     }
 
-    override suspend fun insertRatesOnDb(rates: RatesEntity) {
+    override fun insertRatesOnDb(rates: RatesEntity) {
         database.rateDao().insertRate(rates)
-    }
-
-    override suspend fun removeAllRates() {
-        database.rateDao().deleteAllRates()
     }
 }

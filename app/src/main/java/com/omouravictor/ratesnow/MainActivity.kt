@@ -1,104 +1,47 @@
 package com.omouravictor.ratesnow
 
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.ratesnow.adapter.ConversionAdapter
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.omouravictor.ratesnow.databinding.ActivityMainBinding
-import com.omouravictor.ratesnow.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initEtAmount()
-        initSpFromCurrency()
-        initSwipeRefreshLayout()
-        initConversionsRecyclerView()
+        setSupportActionBar(binding.appBarMain.toolbar)
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.conversion.collect { event ->
-                when (event) {
-                    is MainViewModel.CurrencyEvent.Success -> {
-                        binding.progressBar.isVisible = false
-                        binding.rvConversions.isVisible = true
-                        (binding.rvConversions.adapter as ConversionAdapter).setList(event.conversionsList)
-                    }
-                    is MainViewModel.CurrencyEvent.Failure -> {
-                        binding.progressBar.isVisible = false
-                        binding.rvConversions.isVisible = false
-                        Toast.makeText(applicationContext, event.errorText, Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    is MainViewModel.CurrencyEvent.Loading -> {
-                        binding.swipeRefreshLayout.isRefreshing = false
-                        binding.progressBar.isVisible = true
-                        binding.rvConversions.isVisible = false
-                    }
-                    is MainViewModel.CurrencyEvent.Empty -> {
-                        binding.rvConversions.isVisible = false
-                    }
-                }
-            }
-        }
+        val drawerLayout: DrawerLayout = binding.drawerLayout
+        val navView: NavigationView = binding.navView
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_conversions, R.id.nav_stock
+            ), drawerLayout
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
-    private fun initEtAmount() {
-        binding.etAmount.setText("1")
-        binding.etAmount.setSelection(1)
-        binding.etAmount.doAfterTextChanged { text ->
-            viewModel.convertFromDb(
-                binding.spFromCurrency.selectedItemPosition,
-                text.toString()
-            )
-        }
-    }
-
-    private fun initSpFromCurrency() {
-        binding.spFromCurrency.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>?,
-                selectedItemView: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.convertFromApi(position, binding.etAmount.text.toString())
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) {}
-        }
-    }
-
-    private fun initSwipeRefreshLayout () {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.convertFromApi(
-                binding.spFromCurrency.selectedItemPosition,
-                binding.etAmount.text.toString()
-            )
-        }
-    }
-
-    private fun initConversionsRecyclerView() {
-        binding.rvConversions.apply {
-            adapter = ConversionAdapter(mutableListOf())
-            layoutManager = LinearLayoutManager(context)
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

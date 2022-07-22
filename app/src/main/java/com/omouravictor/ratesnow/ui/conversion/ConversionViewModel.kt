@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.main
+package com.omouravictor.ratesnow.ui.conversion
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesnow.data.models.ApiResponse
 import com.omouravictor.ratesnow.data.models.Conversion
 import com.omouravictor.ratesnow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.repository.MainRepository
 import com.omouravictor.ratesnow.util.DispatcherProvider
 import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 
-class MainViewModel @ViewModelInject constructor(
+class ConversionViewModel @ViewModelInject constructor(
     private val repository: MainRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {

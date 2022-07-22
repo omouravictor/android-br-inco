@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.main
+package com.omouravictor.ratesnow.repository
 
 import com.omouravictor.ratesnow.data.models.ApiResponse
 import com.omouravictor.ratesnow.database.entity.RatesEntity
@@ -7,16 +7,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
 
+    suspend fun getRatesFromApi(fromCurrency: String, toCurrencies: String): Resource<ApiResponse>
+
     fun getAllRatesFromDb(): Flow<List<RatesEntity>>
 
     fun getRatesFromDb(currencyBase: String): RatesEntity?
 
-    suspend fun getRatesFromApi(
-        fromCurrency: String,
-        toCurrencies: String
-    ): Resource<ApiResponse>
+    fun insertRatesOnDb(rates: RatesEntity)
 
-    suspend fun insertRatesOnDb(rates: RatesEntity)
-
-    suspend fun removeAllRates()
 }

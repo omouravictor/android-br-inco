@@ -16,8 +16,5 @@ interface RateDao {
     fun getRatesForCurrency(currency: String): RatesEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRate(rates: RatesEntity)
-
-    @Query("DELETE FROM rate_table")
-    suspend fun deleteAllRates()
+    fun insertRate(rates: RatesEntity)
 }
