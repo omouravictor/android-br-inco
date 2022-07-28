@@ -4,39 +4,76 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.omouravictor.ratesnow.adapter.StockAdapter
 import com.omouravictor.ratesnow.databinding.FragmentStockBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StockFragment : Fragment() {
 
-    private var _binding: FragmentStockBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentStockBinding
+    private val viewModel: StockViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val stockViewModel =
-            ViewModelProvider(this).get(StockViewModel::class.java)
-
-        _binding = FragmentStockBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        stockViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        binding = FragmentStockBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onStart() {
+        super.onStart()
+
+        initSwipeRefreshLayout()
+        initStocksRecyclerView()
+
+        viewModel.getStocksFromApi()
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.stocks.collect { event ->
+                when (event) {
+                    is StockViewModel.StockEvent.Success -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        binding.progressBar.isVisible = false
+                        binding.rvStocks.isVisible = true
+                        (binding.rvStocks.adapter as StockAdapter).setList(event.stocksList)
+                    }
+                    is StockViewModel.StockEvent.Failure -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        binding.progressBar.isVisible = false
+                        binding.rvStocks.isVisible = false
+                        Toast.makeText(context, event.errorText, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    is StockViewModel.StockEvent.Loading -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        binding.progressBar.isVisible = true
+                        binding.rvStocks.isVisible = false
+                    }
+                    is StockViewModel.StockEvent.Empty -> {
+                        binding.rvStocks.isVisible = false
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getStocksFromApi() }
+    }
+
+    private fun initStocksRecyclerView() {
+        binding.rvStocks.apply {
+            adapter = StockAdapter(mutableListOf())
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 }

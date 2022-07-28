@@ -5,13 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.omouravictor.ratesnow.database.entity.RatesEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RateDao {
-    @Query("SELECT * FROM rate_table")
-    fun getAllRates(): Flow<List<RatesEntity>>
-
     @Query("SELECT * FROM rate_table WHERE currency_base = :currency")
     fun getRatesForCurrency(currency: String): RatesEntity
 

@@ -3,10 +3,10 @@ package com.omouravictor.ratesnow.ui.conversion
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesnow.data.models.ApiResponse
-import com.omouravictor.ratesnow.data.models.Conversion
+import com.omouravictor.ratesnow.api.apilayer.RatesApiResponse
 import com.omouravictor.ratesnow.database.entity.RatesEntity
-import com.omouravictor.ratesnow.repository.MainRepository
+import com.omouravictor.ratesnow.model.Conversion
+import com.omouravictor.ratesnow.repository.RatesRepository
 import com.omouravictor.ratesnow.util.DispatcherProvider
 import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +15,10 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class ConversionViewModel @ViewModelInject constructor(
-    private val repository: MainRepository,
+
+    private val repository: RatesRepository,
     private val dispatchers: DispatcherProvider
+
 ) : ViewModel() {
 
     sealed class CurrencyEvent {
@@ -84,15 +86,15 @@ class ConversionViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getRatesEntity(apiResponse: ApiResponse, ratesDate: Date): RatesEntity =
+    private fun getRatesEntity(ratesApiResponse: RatesApiResponse, ratesDate: Date): RatesEntity =
         RatesEntity(
-            apiResponse.base,
-            apiResponse.rates.uSD,
-            apiResponse.rates.eUR,
-            apiResponse.rates.jPY,
-            apiResponse.rates.gBP,
-            apiResponse.rates.cAD,
-            apiResponse.rates.bRL,
+            ratesApiResponse.base,
+            ratesApiResponse.rates.uSD,
+            ratesApiResponse.rates.eUR,
+            ratesApiResponse.rates.jPY,
+            ratesApiResponse.rates.gBP,
+            ratesApiResponse.rates.cAD,
+            ratesApiResponse.rates.bRL,
             ratesDate
         )
 

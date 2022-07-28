@@ -3,22 +3,19 @@ package com.omouravictor.ratesnow.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesnow.data.models.Conversion
 import com.omouravictor.ratesnow.databinding.ConversionItemListBinding
+import com.omouravictor.ratesnow.model.Conversion
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ConversionAdapter(
-    private var list: List<Conversion>,
-    private val defaultLocale: Locale = Locale("pt", "BR"),
-    private val dateFormatter: SimpleDateFormat = SimpleDateFormat("dd/MM/yy", defaultLocale),
-    private val timeFormatter: SimpleDateFormat = SimpleDateFormat("HH:mm", defaultLocale)
+    private var list: List<Conversion>
 ) : RecyclerView.Adapter<ConversionAdapter.CurrencyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =
             ConversionItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CurrencyViewHolder(binding, defaultLocale, dateFormatter, timeFormatter)
+        return CurrencyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
@@ -30,12 +27,10 @@ class ConversionAdapter(
     }
 
     class CurrencyViewHolder(
-        private val currencyItem: ConversionItemListBinding,
-        private val defaultLocale: Locale,
-        private val dateFormatter: SimpleDateFormat,
-        private val timeFormatter: SimpleDateFormat
+        private val currencyItem: ConversionItemListBinding
     ) : RecyclerView.ViewHolder(currencyItem.root) {
         fun bind(conversion: Conversion) {
+            val defaultLocale = Locale("pt", "BR")
             val locale = when (conversion.toCurrency) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")
@@ -44,12 +39,15 @@ class ConversionAdapter(
                 "CAD" -> Locale("en", "CA")
                 else -> defaultLocale
             }
+            val dateFormatter = SimpleDateFormat("dd/MM/yy", defaultLocale)
+            val timeFormatter = SimpleDateFormat("HH:mm", defaultLocale)
 
             currencyItem.tvFromCurrency.text = conversion.fromCurrency
             currencyItem.tvToCurrency.text = conversion.toCurrency
             currencyItem.tvDate.text = dateFormatter.format(conversion.rateDate)
             currencyItem.tvTime.text = timeFormatter.format(conversion.rateDate)
-            currencyItem.tvValue.text = NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
+            currencyItem.tvValue.text =
+                NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
         }
     }
 

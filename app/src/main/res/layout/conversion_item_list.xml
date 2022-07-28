@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/side_nav_bar"
+            android:background="@drawable/green_gradient_background"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp">
 

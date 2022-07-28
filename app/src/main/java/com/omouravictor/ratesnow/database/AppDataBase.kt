@@ -6,13 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.omouravictor.ratesnow.database.dao.RateDao
+import com.omouravictor.ratesnow.database.dao.StockDao
 import com.omouravictor.ratesnow.database.entity.RatesEntity
+import com.omouravictor.ratesnow.database.entity.StockEntity
 
-@Database(entities = [RatesEntity::class], version = 1)
+@Database(entities = [RatesEntity::class, StockEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun rateDao(): RateDao
+    abstract fun stockDao(): StockDao
 
     companion object {
         @Volatile

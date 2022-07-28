@@ -1,6 +1,5 @@
-package com.omouravictor.ratesnow.data
+package com.omouravictor.ratesnow.api.apilayer
 
-import com.omouravictor.ratesnow.data.models.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -12,5 +11,5 @@ interface RatesApi {
         @Query("base") fromCurrency: String,
         @Query("symbols") toCurrencies: String,
         @Query("apikey") apikey: String
-    ): Response<ApiResponse>
+    ): Response<RatesApiResponse>
 }

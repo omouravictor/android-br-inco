@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.data.models
+package com.omouravictor.ratesnow.api.apilayer
 
 import com.google.gson.annotations.SerializedName
 

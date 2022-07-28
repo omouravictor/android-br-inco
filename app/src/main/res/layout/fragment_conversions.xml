@@ -64,5 +64,4 @@
             tools:listitem="@layout/conversion_item_list" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

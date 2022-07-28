@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.data.models
+package com.omouravictor.ratesnow.model
 
 import java.util.*
 import kotlin.math.round
@@ -6,9 +6,9 @@ import kotlin.math.round
 class Conversion(
     val fromCurrency: String,
     val toCurrency: String,
-    var amount: Float,
-    var rate: Double,
-    var rateDate: Date
+    private val amount: Float,
+    private val rate: Double,
+    val rateDate: Date
 ) {
     fun getValue() = round(amount * rate * 100) / 100
 }
