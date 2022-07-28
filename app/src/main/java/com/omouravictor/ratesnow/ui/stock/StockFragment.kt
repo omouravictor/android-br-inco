@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesnow.adapter.StockAdapter
+import com.omouravictor.ratesnow.database.entity.StockEntity
 import com.omouravictor.ratesnow.databinding.FragmentStockBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,8 +37,6 @@ class StockFragment : Fragment() {
         initSwipeRefreshLayout()
         initStocksRecyclerView()
 
-        viewModel.getStocksFromApi()
-
         lifecycleScope.launchWhenStarted {
             viewModel.stocks.collect { event ->
                 when (event) {
@@ -44,12 +44,11 @@ class StockFragment : Fragment() {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
                         binding.rvStocks.isVisible = true
-                        (binding.rvStocks.adapter as StockAdapter).setList(event.stocksList)
                     }
                     is StockViewModel.StockEvent.Failure -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
-                        binding.rvStocks.isVisible = false
+                        binding.rvStocks.isVisible = true
                         Toast.makeText(context, event.errorText, Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -58,22 +57,26 @@ class StockFragment : Fragment() {
                         binding.progressBar.isVisible = true
                         binding.rvStocks.isVisible = false
                     }
-                    is StockViewModel.StockEvent.Empty -> {
-                        binding.rvStocks.isVisible = false
-                    }
                 }
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getStocks()
+    }
+
     private fun initSwipeRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getStocksFromApi() }
+        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getStocks() }
     }
 
     private fun initStocksRecyclerView() {
-        binding.rvStocks.apply {
-            adapter = StockAdapter(mutableListOf())
-            layoutManager = LinearLayoutManager(context)
-        }
+        viewModel.stocksList.observe(this, Observer {
+            binding.rvStocks.apply {
+                adapter = StockAdapter(it)
+                layoutManager = LinearLayoutManager(context)
+            }
+        })
     }
 }

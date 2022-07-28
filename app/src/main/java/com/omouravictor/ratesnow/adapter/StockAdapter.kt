@@ -54,9 +54,4 @@ class StockAdapter(
             }
         }
     }
-
-    fun setList(newList: List<StockEntity>) {
-        list = newList
-        notifyDataSetChanged()
-    }
 }

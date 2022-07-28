@@ -2,6 +2,7 @@ package com.omouravictor.ratesnow.ui.stock
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesnow.api.hgbrasil.SourceRequestStockItemModel
 import com.omouravictor.ratesnow.database.entity.StockEntity
@@ -10,7 +11,6 @@ import com.omouravictor.ratesnow.util.DispatcherProvider
 import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -21,18 +21,19 @@ class StockViewModel @ViewModelInject constructor(
 
 ) : ViewModel() {
 
+    val stocksList = repository.getAllStocksFromDb().asLiveData()
+
     sealed class StockEvent {
-        class Success(val stocksList: List<StockEntity>) : StockEvent()
         class Failure(val errorText: String) : StockEvent()
+        object Success : StockEvent()
         object Loading : StockEvent()
-        object Empty : StockEvent()
     }
 
     private val stockFields = "stocks"
-    private val _stocks = MutableStateFlow<StockEvent>(StockEvent.Empty)
+    private val _stocks = MutableStateFlow<StockEvent>(StockEvent.Success)
     val stocks: StateFlow<StockEvent> = _stocks
 
-    fun getStocksFromApi() {
+    fun getStocks() {
         viewModelScope.launch(dispatchers.io) {
             _stocks.value = StockEvent.Loading
             tryStocksFromApi()
@@ -42,27 +43,16 @@ class StockViewModel @ViewModelInject constructor(
     private suspend fun tryStocksFromApi() {
         when (val request = repository.getStocksFromApi(stockFields)) {
             is Resource.Success -> {
-                val stocksList = getStocksList(request.data!!.sourceResultStocks.resultsStocks)
-                _stocks.value = StockEvent.Success(stocksList)
+                replaceStocksOnDb(request.data!!.sourceResultStocks.resultsStocks)
+                _stocks.value = StockEvent.Success
             }
             is Resource.Error -> {
-                tryRatesFromDb()
+                _stocks.value = StockEvent.Failure("Verifique sua conexão :(")
             }
         }
     }
 
-    private suspend fun tryRatesFromDb() {
-        val stocksList = repository.getAllStocksFromDb().first()
-        if (stocksList.isNotEmpty()) {
-            _stocks.value = StockEvent.Success(stocksList)
-        } else {
-            _stocks.value = StockEvent.Failure(
-                "Não foi possível obter os dados.\nVerifique sua conexão :("
-            )
-        }
-    }
-
-    private fun getStocksList(apiResponse: LinkedHashMap<String, SourceRequestStockItemModel>): MutableList<StockEntity> {
+    private fun replaceStocksOnDb(apiResponse: LinkedHashMap<String, SourceRequestStockItemModel>) {
         val stockList: MutableList<StockEntity> = mutableListOf()
         apiResponse.forEach {
             stockList.add(
@@ -77,6 +67,5 @@ class StockViewModel @ViewModelInject constructor(
             )
         }
         repository.insertStocksOnDb(stockList)
-        return stockList
     }
 }
