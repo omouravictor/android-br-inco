@@ -9,9 +9,9 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ConversionAdapter(
+class RateAdapter(
     private var list: List<Conversion>
-) : RecyclerView.Adapter<ConversionAdapter.CurrencyViewHolder>() {
+) : RecyclerView.Adapter<RateAdapter.CurrencyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =
             ConversionItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,10 +49,5 @@ class ConversionAdapter(
             currencyItem.tvValue.text =
                 NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
         }
-    }
-
-    fun setList(newList: List<Conversion>) {
-        list = newList
-        notifyDataSetChanged()
     }
 }

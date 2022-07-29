@@ -1,6 +1,7 @@
-package com.omouravictor.ratesnow.ui.conversion
+package com.omouravictor.ratesnow.ui.rate
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesnow.api.apilayer.RatesApiResponse
@@ -14,75 +15,56 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 
-class ConversionViewModel @ViewModelInject constructor(
+class RateViewModel @ViewModelInject constructor(
 
     private val repository: RatesRepository,
     private val dispatchers: DispatcherProvider
 
 ) : ViewModel() {
+    var conversionList = MutableLiveData<List<Conversion>>()
 
-    sealed class CurrencyEvent {
-        class Success(val conversionsList: List<Conversion>) : CurrencyEvent()
-        class Failure(val errorText: String) : CurrencyEvent()
-        object Loading : CurrencyEvent()
-        object Empty : CurrencyEvent()
+    sealed class ConversionEvent {
+        class Failure(val errorText: String) : ConversionEvent()
+        object Success : ConversionEvent()
+        object Loading : ConversionEvent()
+        object Empty : ConversionEvent()
     }
 
-    private val toCurrencies = ("BRL,USD,EUR,JPY,GBP,CAD")
-    private val _conversion = MutableStateFlow<CurrencyEvent>(CurrencyEvent.Empty)
-    val conversion: StateFlow<CurrencyEvent> = _conversion
+    private val requestCurrencies = ("BRL,USD,EUR,JPY,GBP,CAD")
+    private val _conversion = MutableStateFlow<ConversionEvent>(ConversionEvent.Empty)
+    val conversion: StateFlow<ConversionEvent> = _conversion
 
-    fun convertFromApi(selectedCurrency: Int, amountStr: String) {
+    fun getRates(selectedCurrency: Int, amountStr: String) {
         val amount = amountStr.toFloatOrNull()
         if (amount == null) {
-            _conversion.value = CurrencyEvent.Empty
+            _conversion.value = ConversionEvent.Empty
             return
         }
 
         viewModelScope.launch(dispatchers.io) {
-            _conversion.value = CurrencyEvent.Loading
+            _conversion.value = ConversionEvent.Loading
             val fromCurrency = getCurrencySymbol(selectedCurrency)
             tryRatesFromApi(fromCurrency, amount)
         }
     }
 
     private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
-        when (val ratesApiRequest = repository.getRatesFromApi(fromCurrency, toCurrencies)) {
+        when (val request = repository.getRatesFromApi(fromCurrency, requestCurrencies)) {
             is Resource.Success -> {
-                val rates = getRatesEntity(ratesApiRequest.data!!, Date())
-                val conversions = getConversionsForResult(fromCurrency, amount, rates)
+                val rates = getRatesEntity(request.data!!, Date())
                 repository.insertRatesOnDb(rates)
-                _conversion.value = CurrencyEvent.Success(conversions)
+                replaceConversionList(fromCurrency, amount, rates)
+                _conversion.value = ConversionEvent.Success
             }
             is Resource.Error -> {
-                tryRatesFromDb(fromCurrency, amount)
+                val rates = repository.getRatesForCurrencyFromDb(fromCurrency)
+                if  (rates != null) {
+                    replaceConversionList(fromCurrency, amount, rates)
+                    _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+                }else {
+                    _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+                }
             }
-        }
-    }
-
-    fun convertFromDb(selectedCurrency: Int, amountStr: String) {
-        val amount = amountStr.toFloatOrNull()
-        if (amount == null) {
-            _conversion.value = CurrencyEvent.Empty
-            return
-        }
-
-        viewModelScope.launch(dispatchers.io) {
-            _conversion.value = CurrencyEvent.Loading
-            val fromCurrency = getCurrencySymbol(selectedCurrency)
-            tryRatesFromDb(fromCurrency, amount)
-        }
-    }
-
-    private fun tryRatesFromDb(fromCurrency: String, amount: Float) {
-        val rates = repository.getRatesFromDb(fromCurrency)
-        if (rates != null) {
-            val conversions = getConversionsForResult(fromCurrency, amount, rates)
-            _conversion.value = CurrencyEvent.Success(conversions)
-        } else {
-            _conversion.value = CurrencyEvent.Failure(
-                "Não foi possível obter os dados.\nVerifique sua conexão :("
-            )
         }
     }
 
@@ -98,11 +80,7 @@ class ConversionViewModel @ViewModelInject constructor(
             ratesDate
         )
 
-    private fun getConversionsForResult(
-        fromCurrency: String,
-        amount: Float,
-        rates: RatesEntity
-    ): List<Conversion> {
+    private fun replaceConversionList(fromCurrency: String, amount: Float, rates: RatesEntity) {
         val list: MutableList<Conversion> = mutableListOf()
 
         arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD").forEach {
@@ -120,7 +98,7 @@ class ConversionViewModel @ViewModelInject constructor(
             }
         }
 
-        return list
+        conversionList.postValue(list)
     }
 
     private fun getCurrencySymbol(selectedCurrency: Int) = when (selectedCurrency) {

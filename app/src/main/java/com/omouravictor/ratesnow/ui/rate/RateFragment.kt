@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.ui.conversion
+package com.omouravictor.ratesnow.ui.rate
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,24 +10,25 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.ratesnow.adapter.ConversionAdapter
-import com.omouravictor.ratesnow.databinding.FragmentConversionsBinding
+import com.omouravictor.ratesnow.adapter.RateAdapter
+import com.omouravictor.ratesnow.databinding.FragmentRateBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ConversionFragment : Fragment() {
+class RateFragment : Fragment() {
 
-    private lateinit var binding: FragmentConversionsBinding
-    private val viewModel: ConversionViewModel by viewModels()
+    private lateinit var binding: FragmentRateBinding
+    private val viewModel: RateViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentConversionsBinding.inflate(layoutInflater, container, false)
+        binding = FragmentRateBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -42,25 +43,24 @@ class ConversionFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.conversion.collect { event ->
                 when (event) {
-                    is ConversionViewModel.CurrencyEvent.Success -> {
+                    is RateViewModel.ConversionEvent.Success -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
                         binding.rvConversions.isVisible = true
-                        (binding.rvConversions.adapter as ConversionAdapter).setList(event.conversionsList)
                     }
-                    is ConversionViewModel.CurrencyEvent.Failure -> {
+                    is RateViewModel.ConversionEvent.Failure -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
-                        binding.rvConversions.isVisible = false
+                        binding.rvConversions.isVisible = true
                         Toast.makeText(context, event.errorText, Toast.LENGTH_SHORT)
                             .show()
                     }
-                    is ConversionViewModel.CurrencyEvent.Loading -> {
+                    is RateViewModel.ConversionEvent.Loading -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = true
                         binding.rvConversions.isVisible = false
                     }
-                    is ConversionViewModel.CurrencyEvent.Empty -> {
+                    is RateViewModel.ConversionEvent.Empty -> {
                         binding.rvConversions.isVisible = false
                     }
                 }
@@ -72,7 +72,7 @@ class ConversionFragment : Fragment() {
         binding.etAmount.setText("1")
         binding.etAmount.setSelection(1)
         binding.etAmount.doAfterTextChanged { text ->
-            viewModel.convertFromDb(
+            viewModel.getRates(
                 binding.spFromCurrency.selectedItemPosition,
                 text.toString()
             )
@@ -88,7 +88,7 @@ class ConversionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.convertFromApi(position, binding.etAmount.text.toString())
+                viewModel.getRates(position, binding.etAmount.text.toString())
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -97,7 +97,7 @@ class ConversionFragment : Fragment() {
 
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.convertFromApi(
+            viewModel.getRates(
                 binding.spFromCurrency.selectedItemPosition,
                 binding.etAmount.text.toString()
             )
@@ -105,10 +105,11 @@ class ConversionFragment : Fragment() {
     }
 
     private fun initConversionsRecyclerView() {
-        binding.rvConversions.apply {
-            adapter = ConversionAdapter(mutableListOf())
-            layoutManager = LinearLayoutManager(context)
-        }
+        viewModel.conversionList.observe(this, Observer {
+            binding.rvConversions.apply {
+                adapter = RateAdapter(it)
+                layoutManager = LinearLayoutManager(context)
+            }
+        })
     }
-
 }

@@ -53,9 +53,9 @@ class StockViewModel @ViewModelInject constructor(
     }
 
     private fun replaceStocksOnDb(apiResponse: LinkedHashMap<String, SourceRequestStockItemModel>) {
-        val stockList: MutableList<StockEntity> = mutableListOf()
+        val stocksList: MutableList<StockEntity> = mutableListOf()
         apiResponse.forEach {
-            stockList.add(
+            stocksList.add(
                 StockEntity(
                     it.key,
                     it.value.requestStockName,
@@ -66,6 +66,6 @@ class StockViewModel @ViewModelInject constructor(
                 )
             )
         }
-        repository.insertStocksOnDb(stockList)
+        repository.insertStocksOnDb(stocksList)
     }
 }

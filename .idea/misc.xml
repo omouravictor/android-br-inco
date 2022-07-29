@@ -46,11 +46,12 @@
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/fragment_stock.xml" value="0.33" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/ic_baseline_keyboard_arrow_up.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/nav_header_main.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/rate_item_list.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/stock_item_list.xml" value="0.27291666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

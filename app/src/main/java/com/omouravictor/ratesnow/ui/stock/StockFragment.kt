@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesnow.adapter.StockAdapter
-import com.omouravictor.ratesnow.database.entity.StockEntity
 import com.omouravictor.ratesnow.databinding.FragmentStockBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +67,9 @@ class StockFragment : Fragment() {
     }
 
     private fun initSwipeRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener { viewModel.getStocks() }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getStocks()
+        }
     }
 
     private fun initStocksRecyclerView() {

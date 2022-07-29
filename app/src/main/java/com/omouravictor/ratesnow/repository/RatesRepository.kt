@@ -7,7 +7,7 @@ import com.omouravictor.ratesnow.database.entity.RatesEntity
 import com.omouravictor.ratesnow.util.Resource
 import javax.inject.Inject
 
-private const val API_KEY = "rtjnuP6eoDYLeuJXl0u3SiqB11ybal6h"
+private const val API_KEY = "1vIuWTLu5sWKv9H0qbFurrWs5OVnZT68"
 
 class RatesRepository @Inject constructor(
     private val api: RatesApi, private val database: AppDataBase
@@ -29,7 +29,7 @@ class RatesRepository @Inject constructor(
         }
     }
 
-    fun getRatesFromDb(currencyBase: String): RatesEntity {
+    fun getRatesForCurrencyFromDb(currencyBase: String): RatesEntity {
         return database.rateDao().getRatesForCurrency(currencyBase)
     }
 
