@@ -72,10 +72,7 @@ class RateFragment : Fragment() {
         binding.etAmount.setText("1")
         binding.etAmount.setSelection(1)
         binding.etAmount.doAfterTextChanged { text ->
-            viewModel.getRates(
-                binding.spFromCurrency.selectedItemPosition,
-                text.toString()
-            )
+            viewModel.convert(text.toString())
         }
     }
 

@@ -29,7 +29,7 @@ class RatesRepository @Inject constructor(
         }
     }
 
-    fun getRatesForCurrencyFromDb(currencyBase: String): RatesEntity {
+    fun getRatesFromDb(currencyBase: String): RatesEntity? {
         return database.rateDao().getRatesForCurrency(currencyBase)
     }
 

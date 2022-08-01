@@ -48,35 +48,51 @@ class RateViewModel @ViewModelInject constructor(
         }
     }
 
+    fun convert(amountStr: String) {
+        val amount = amountStr.toFloatOrNull()
+        if (amount == null) {
+            _conversion.value = ConversionEvent.Empty
+            return
+        }
+
+        conversionList.value!!.forEach { conversion -> conversion.amount = amount }
+        conversionList.postValue(conversionList.value)
+
+        _conversion.value = ConversionEvent.Success
+    }
+
     private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
         when (val request = repository.getRatesFromApi(fromCurrency, requestCurrencies)) {
             is Resource.Success -> {
-                val rates = getRatesEntity(request.data!!, Date())
+                val rates = getRatesFromApi(request.data!!, Date())
                 repository.insertRatesOnDb(rates)
                 replaceConversionList(fromCurrency, amount, rates)
                 _conversion.value = ConversionEvent.Success
             }
             is Resource.Error -> {
-                val rates = repository.getRatesForCurrencyFromDb(fromCurrency)
-                if  (rates != null) {
+                val rates = repository.getRatesFromDb(fromCurrency)
+                if (rates != null) {
                     replaceConversionList(fromCurrency, amount, rates)
                     _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
-                }else {
+                } else {
                     _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
                 }
             }
         }
     }
 
-    private fun getRatesEntity(ratesApiResponse: RatesApiResponse, ratesDate: Date): RatesEntity =
+    private fun getRatesFromApi(
+        requestData: RatesApiResponse,
+        ratesDate: Date
+    ): RatesEntity =
         RatesEntity(
-            ratesApiResponse.base,
-            ratesApiResponse.rates.uSD,
-            ratesApiResponse.rates.eUR,
-            ratesApiResponse.rates.jPY,
-            ratesApiResponse.rates.gBP,
-            ratesApiResponse.rates.cAD,
-            ratesApiResponse.rates.bRL,
+            requestData.base,
+            requestData.rates.uSD,
+            requestData.rates.eUR,
+            requestData.rates.jPY,
+            requestData.rates.gBP,
+            requestData.rates.cAD,
+            requestData.rates.bRL,
             ratesDate
         )
 
