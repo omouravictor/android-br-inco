@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.omouravictor.ratesnow.database.entity.BitCoinEntity
-import com.omouravictor.ratesnow.database.entity.StockEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

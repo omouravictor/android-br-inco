@@ -1,7 +1,6 @@
 package com.omouravictor.ratesnow.api.hgbrasil.bitcoin
 
 import com.google.gson.annotations.SerializedName
-import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.SourceRequestResultBitcoinModel
 
 data class SourceRequestBitcoinModel(
     @SerializedName("by")
