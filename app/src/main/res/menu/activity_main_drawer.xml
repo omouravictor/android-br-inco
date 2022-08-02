@@ -12,6 +12,10 @@
             android:id="@+id/nav_stock"
             android:icon="@drawable/ic_upgrade"
             android:title="@string/stock_exchanges" />
+        <item
+            android:id="@+id/nav_bitcoin"
+            android:icon="@drawable/ic_currency_bitcoin"
+            android:title="@string/bitcoin" />
     </group>
 
 </menu>

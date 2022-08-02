@@ -1,7 +1,7 @@
 package com.omouravictor.ratesnow.repository
 
-import com.omouravictor.ratesnow.api.hgbrasil.SourceRequestStockModel
-import com.omouravictor.ratesnow.api.hgbrasil.StocksApi
+import com.omouravictor.ratesnow.api.hgbrasil.stock.SourceRequestStockModel
+import com.omouravictor.ratesnow.api.hgbrasil.stock.StocksApi
 import com.omouravictor.ratesnow.database.AppDataBase
 import com.omouravictor.ratesnow.database.entity.StockEntity
 import com.omouravictor.ratesnow.util.Resource

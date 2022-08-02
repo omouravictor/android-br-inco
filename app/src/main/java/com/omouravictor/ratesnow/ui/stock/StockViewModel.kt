@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesnow.api.hgbrasil.SourceRequestStockItemModel
+import com.omouravictor.ratesnow.api.hgbrasil.stock.SourceRequestStockItemModel
 import com.omouravictor.ratesnow.database.entity.StockEntity
 import com.omouravictor.ratesnow.repository.StocksRepository
 import com.omouravictor.ratesnow.util.DispatcherProvider

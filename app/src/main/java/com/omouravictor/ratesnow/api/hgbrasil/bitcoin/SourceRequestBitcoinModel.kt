@@ -1,8 +1,9 @@
-package com.omouravictor.ratesnow.api.hgbrasil
+package com.omouravictor.ratesnow.api.hgbrasil.bitcoin
 
 import com.google.gson.annotations.SerializedName
+import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.SourceRequestResultBitcoinModel
 
-data class SourceRequestStockModel(
+data class SourceRequestBitcoinModel(
     @SerializedName("by")
     val sourceBy: String,
 
@@ -10,11 +11,11 @@ data class SourceRequestStockModel(
     val sourceValidKey: Boolean,
 
     @SerializedName("results")
-    val sourceResultStocks: SourceRequestResultStockModel,
+    val sourceResultBitcoin: SourceRequestResultBitcoinModel,
 
     @SerializedName("execution_time")
     val sourceExecutionTime: Double,
 
     @SerializedName("from_cache")
     val from_cache: Boolean
-)
+) {}

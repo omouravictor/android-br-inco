@@ -67,40 +67,29 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-medium"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tvDate"
+                app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tvToCurrency"
                 app:layout_constraintTop_toBottomOf="@+id/tvToCurrency"
                 tools:text="R$ 10000000000000" />
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/tvTime"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="06/07/22" />
-
-            <TextView
-                android:id="@+id/tvTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:textAlignment="textEnd"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/tvDate"
-                tools:text="15:06" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="06/07/22\n15:53" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

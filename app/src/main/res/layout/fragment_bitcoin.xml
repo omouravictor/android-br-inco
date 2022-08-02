@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.stock.StockFragment">
+    tools:context=".ui.bitcoin.BitCoinFragment">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -28,13 +28,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvStocks"
+            android:id="@+id/rvBitCoins"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            tools:listitem="@layout/stock_item_list" />
+            tools:listitem="@layout/bitcoin_item_list" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

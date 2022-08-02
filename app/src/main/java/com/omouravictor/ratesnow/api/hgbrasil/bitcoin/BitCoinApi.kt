@@ -1,14 +1,14 @@
-package com.omouravictor.ratesnow.api.hgbrasil
+package com.omouravictor.ratesnow.api.hgbrasil.bitcoin
 
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface StocksApi {
+interface BitCoinApi {
 
     @GET("finance")
-    suspend fun getStocks(
+    suspend fun getBitCoin(
         @Query("fields") field: String,
         @Query("key") apikey: String
-    ): Response<SourceRequestStockModel>
+    ): Response<SourceRequestBitcoinModel>
 }

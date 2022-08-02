@@ -1,4 +1,4 @@
-package com.omouravictor.ratesnow.ui.stock
+package com.omouravictor.ratesnow.ui.bitcoin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,22 +11,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.ratesnow.adapter.StockAdapter
-import com.omouravictor.ratesnow.databinding.FragmentStockBinding
+import com.omouravictor.ratesnow.adapter.BitCoinAdapter
+import com.omouravictor.ratesnow.databinding.FragmentBitcoinBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StockFragment : Fragment() {
+class BitCoinFragment : Fragment() {
 
-    private lateinit var binding: FragmentStockBinding
-    private val viewModel: StockViewModel by viewModels()
+    private lateinit var binding: FragmentBitcoinBinding
+    private val viewModel: BitCoinViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStockBinding.inflate(layoutInflater, container, false)
+        binding = FragmentBitcoinBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -34,27 +34,27 @@ class StockFragment : Fragment() {
         super.onStart()
 
         initSwipeRefreshLayout()
-        initStocksRecyclerView()
+        initBitCoinRecyclerView()
 
         lifecycleScope.launchWhenStarted {
-            viewModel.stocks.collect { event ->
+            viewModel.bitCoins.collect { event ->
                 when (event) {
-                    is StockViewModel.StockEvent.Success -> {
+                    is BitCoinViewModel.BitCoinEvent.Success -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
-                        binding.rvStocks.isVisible = true
+                        binding.rvBitCoins.isVisible = true
                     }
-                    is StockViewModel.StockEvent.Failure -> {
+                    is BitCoinViewModel.BitCoinEvent.Failure -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
-                        binding.rvStocks.isVisible = true
+                        binding.rvBitCoins.isVisible = true
                         Toast.makeText(context, event.errorText, Toast.LENGTH_SHORT)
                             .show()
                     }
-                    is StockViewModel.StockEvent.Loading -> {
+                    is BitCoinViewModel.BitCoinEvent.Loading -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = true
-                        binding.rvStocks.isVisible = false
+                        binding.rvBitCoins.isVisible = false
                     }
                 }
             }
@@ -63,19 +63,19 @@ class StockFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getStocks()
+        viewModel.getBitCoin()
     }
 
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getStocks()
+            viewModel.getBitCoin()
         }
     }
 
-    private fun initStocksRecyclerView() {
-        viewModel.stocksList.observe(this, Observer {
-            binding.rvStocks.apply {
-                adapter = StockAdapter(it, context)
+    private fun initBitCoinRecyclerView() {
+        viewModel.bitCoinsList.observe(this, Observer {
+            binding.rvBitCoins.apply {
+                adapter = BitCoinAdapter(it, context)
                 layoutManager = LinearLayoutManager(context)
             }
         })

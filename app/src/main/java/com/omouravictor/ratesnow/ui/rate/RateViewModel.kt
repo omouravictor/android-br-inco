@@ -55,8 +55,12 @@ class RateViewModel @ViewModelInject constructor(
             return
         }
 
-        conversionList.value!!.forEach { conversion -> conversion.amount = amount }
-        conversionList.postValue(conversionList.value)
+        if (conversionList.value != null) {
+            conversionList.value!!.forEach { conversion -> conversion.amount = amount }
+            conversionList.postValue(conversionList.value)
+        } else {
+            _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+        }
 
         _conversion.value = ConversionEvent.Success
     }

@@ -1,6 +1,6 @@
 package com.omouravictor.ratesnow.adapter
 
-import android.graphics.Color
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,12 +13,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StockAdapter(
-    private var list: List<StockEntity>
+    private var list: List<StockEntity>,
+    private val context: Context
 ) : RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
             StockItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StockViewHolder(binding)
+        return StockViewHolder(binding, context)
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -31,6 +32,7 @@ class StockAdapter(
 
     class StockViewHolder(
         private val stockItem: StockItemListBinding,
+        private val context: Context,
     ) : RecyclerView.ViewHolder(stockItem.root) {
         fun bind(stock: StockEntity) {
             val locale = Locale("pt", "BR")
@@ -47,10 +49,12 @@ class StockAdapter(
 
             if (stock.stockVariation <= 0.0) {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
-                stockItem.textViewStockVariation.setTextColor(Color.RED)
+                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.lightRed))
+                stockItem.percent.setTextColor(context.getColor(R.color.lightRed))
             } else {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
-                stockItem.textViewStockVariation.setTextColor(Color.GREEN)
+                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.fluorescentGreen))
+                stockItem.percent.setTextColor(context.getColor(R.color.fluorescentGreen))
             }
         }
     }

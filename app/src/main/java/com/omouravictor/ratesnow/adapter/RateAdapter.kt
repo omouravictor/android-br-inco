@@ -44,10 +44,11 @@ class RateAdapter(
 
             currencyItem.tvFromCurrency.text = conversion.fromCurrency
             currencyItem.tvToCurrency.text = conversion.toCurrency
-            currencyItem.tvDate.text = dateFormatter.format(conversion.rateDate)
-            currencyItem.tvTime.text = timeFormatter.format(conversion.rateDate)
             currencyItem.tvValue.text =
                 NumberFormat.getCurrencyInstance(locale).format(conversion.getValue())
+            "${dateFormatter.format(conversion.rateDate)}\n${timeFormatter.format(conversion.rateDate)}".also {
+                currencyItem.tvDateTime.text = it
+            }
         }
     }
 }

@@ -5,17 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.omouravictor.ratesnow.database.dao.BitCoinDao
 import com.omouravictor.ratesnow.database.dao.RateDao
 import com.omouravictor.ratesnow.database.dao.StockDao
+import com.omouravictor.ratesnow.database.entity.BitCoinEntity
 import com.omouravictor.ratesnow.database.entity.RatesEntity
 import com.omouravictor.ratesnow.database.entity.StockEntity
 
-@Database(entities = [RatesEntity::class, StockEntity::class], version = 1)
+@Database(entities = [RatesEntity::class, StockEntity::class, BitCoinEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun rateDao(): RateDao
     abstract fun stockDao(): StockDao
+    abstract fun bitCoinDao(): BitCoinDao
 
     companion object {
         @Volatile

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RatesNow</string>
     <string name="stock_exchanges">Bolsa de valores</string>
+    <string name="bitcoin">Bitcoin</string>
     <string name="conversion">Conversão</string>
 
     <!-- If you change array items order you'll have to change getCurrencySymbol function as well -->

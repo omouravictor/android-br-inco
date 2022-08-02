@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_conversions">
+    app:startDestination="@+id/nav_bitcoin">
 
     <fragment
         android:id="@+id/nav_conversions"
@@ -16,5 +16,11 @@
         android:name="com.omouravictor.ratesnow.ui.stock.StockFragment"
         android:label="@string/stock_exchanges"
         tools:layout="@layout/fragment_stock" />
+
+    <fragment
+        android:id="@+id/nav_bitcoin"
+        android:name="com.omouravictor.ratesnow.ui.bitcoin.BitCoinFragment"
+        android:label="@string/bitcoin"
+        tools:layout="@layout/fragment_bitcoin" />
 
 </navigation>
