@@ -40,8 +40,7 @@ class StockAdapter(
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
             val decimalFormat = DecimalFormat("#0.00#", DecimalFormatSymbols.getInstance(locale))
 
-            "${stock.stockTerm} / ${stock.stockName}".also { stockItem.textViewStockName.text = it }
-            stockItem.textViewStockLocation.text = stock.stockLocation
+            "${stock.stockTerm} - ${stock.stockLocation}".also { stockItem.textViewStockName.text = it }
             stockItem.textViewStockVariation.text = decimalFormat.format(stock.stockVariation)
             "${dateFormatter.format(stock.date)}\n${timeFormatter.format(stock.date)}".also {
                 stockItem.tvDateTime.text = it

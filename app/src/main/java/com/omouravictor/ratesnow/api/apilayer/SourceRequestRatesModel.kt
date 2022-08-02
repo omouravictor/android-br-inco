@@ -3,16 +3,10 @@ package com.omouravictor.ratesnow.api.apilayer
 import com.google.gson.annotations.SerializedName
 
 data class SourceRequestRatesModel(
-    @SerializedName("USD")
-    val uSD: Double,
-    @SerializedName("EUR")
-    val eUR: Double,
-    @SerializedName("JPY")
-    val jPY: Double,
-    @SerializedName("GBP")
-    val gBP: Double,
-    @SerializedName("CAD")
-    val cAD: Double,
-    @SerializedName("BRL")
-    val bRL: Double
+    @SerializedName("base")
+    val base: String,
+    @SerializedName("date")
+    val date: String,
+    @SerializedName("rates")
+    val rates: SourceRequestRatesItemModel
 )

@@ -4,7 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesnow.api.apilayer.RatesApiResponse
+import com.omouravictor.ratesnow.api.apilayer.SourceRequestRatesModel
 import com.omouravictor.ratesnow.database.entity.RatesEntity
 import com.omouravictor.ratesnow.model.Conversion
 import com.omouravictor.ratesnow.repository.RatesRepository
@@ -86,7 +86,7 @@ class RateViewModel @ViewModelInject constructor(
     }
 
     private fun getRatesFromApi(
-        requestData: RatesApiResponse,
+        requestData: SourceRequestRatesModel,
         ratesDate: Date
     ): RatesEntity =
         RatesEntity(

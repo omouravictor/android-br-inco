@@ -46,7 +46,7 @@ class BitCoinAdapter(
             val decimalFormat = DecimalFormat("#0.00#", DecimalFormatSymbols.getInstance(locale))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            "${bitcoin.bitcoinName} / ${bitcoin.bitcoinISO}".also {
+            "${bitcoin.bitcoinName} - ${bitcoin.bitcoinISO}".also {
                 bitCoinItem.textViewBitcoinName.text = it
             }
             bitCoinItem.textViewBitcoinVariation.text =

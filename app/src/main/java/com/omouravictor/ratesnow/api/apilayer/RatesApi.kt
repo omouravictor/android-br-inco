@@ -11,5 +11,5 @@ interface RatesApi {
         @Query("base") fromCurrency: String,
         @Query("symbols") toCurrencies: String,
         @Query("apikey") apikey: String
-    ): Response<RatesApiResponse>
+    ): Response<SourceRequestRatesModel>
 }
