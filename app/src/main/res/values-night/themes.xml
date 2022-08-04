@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/darkGrey</item>
         <item name="android:textColor">@color/darkWhite</item>
+        <item name="android:colorBackground">@color/darkGrey</item>
     </style>
 </resources>

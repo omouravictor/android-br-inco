@@ -25,7 +25,7 @@ class RateViewModel @ViewModelInject constructor(
 
     sealed class ConversionEvent {
         class Failure(val errorText: String) : ConversionEvent()
-        object Success : ConversionEvent()
+        class Success(val text: String = "") : ConversionEvent()
         object Loading : ConversionEvent()
         object Empty : ConversionEvent()
     }
@@ -62,7 +62,7 @@ class RateViewModel @ViewModelInject constructor(
             _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
         }
 
-        _conversion.value = ConversionEvent.Success
+        _conversion.value = ConversionEvent.Success()
     }
 
     private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
@@ -71,13 +71,13 @@ class RateViewModel @ViewModelInject constructor(
                 val rates = getRatesFromApi(request.data!!, Date())
                 repository.insertRatesOnDb(rates)
                 replaceConversionList(fromCurrency, amount, rates)
-                _conversion.value = ConversionEvent.Success
+                _conversion.value = ConversionEvent.Success()
             }
             is Resource.Error -> {
                 val rates = repository.getRatesFromDb(fromCurrency)
                 if (rates != null) {
                     replaceConversionList(fromCurrency, amount, rates)
-                    _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+                    _conversion.value = ConversionEvent.Success()
                 } else {
                     _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
                 }

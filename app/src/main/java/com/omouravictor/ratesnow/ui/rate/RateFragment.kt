@@ -51,7 +51,7 @@ class RateFragment : Fragment() {
                     is RateViewModel.ConversionEvent.Failure -> {
                         binding.swipeRefreshLayout.isRefreshing = false
                         binding.progressBar.isVisible = false
-                        binding.rvConversions.isVisible = true
+                        binding.rvConversions.isVisible = false
                         Toast.makeText(context, event.errorText, Toast.LENGTH_SHORT)
                             .show()
                     }

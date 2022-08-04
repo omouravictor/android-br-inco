@@ -2,8 +2,9 @@ package com.omouravictor.ratesnow
 
 import android.app.UiModeManager.MODE_NIGHT_NO
 import android.app.UiModeManager.MODE_NIGHT_YES
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        setSwitchThemeMenuItemActionViewListener(navView)
+        initSwitchThemeMenuItem(navView)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -53,12 +54,24 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun setSwitchThemeMenuItemActionViewListener(navView: NavigationView) {
-        navView.menu.findItem(R.id.switch_theme).actionView.setOnClickListener {
+    private fun initSwitchThemeMenuItem(navView: NavigationView) {
+        val switch = navView.menu.findItem(R.id.switch_theme).actionView as Switch
+        val isNightModeOn: Boolean =
+            resources.configuration.uiMode.and(UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+
+        switch.isChecked = isNightModeOn
+
+        switch.setOnClickListener {
             if ((it as Switch).isChecked)
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             else
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
         }
+    }
+
+    override fun recreate() {
+        finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        startActivity(intent)
     }
 }

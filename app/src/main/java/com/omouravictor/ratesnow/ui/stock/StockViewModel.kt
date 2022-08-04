@@ -25,12 +25,12 @@ class StockViewModel @ViewModelInject constructor(
 
     sealed class StockEvent {
         class Failure(val errorText: String) : StockEvent()
-        object Success : StockEvent()
+        class Success(val text: String = "") : StockEvent()
         object Loading : StockEvent()
     }
 
     private val stockFields = "stocks"
-    private val _stocks = MutableStateFlow<StockEvent>(StockEvent.Success)
+    private val _stocks = MutableStateFlow<StockEvent>(StockEvent.Success())
     val stocks: StateFlow<StockEvent> = _stocks
 
     fun getStocks() {
@@ -44,10 +44,14 @@ class StockViewModel @ViewModelInject constructor(
         when (val request = repository.getStocksFromApi(stockFields)) {
             is Resource.Success -> {
                 replaceStocksOnDb(request.data!!.sourceResultStocks.resultsStocks)
-                _stocks.value = StockEvent.Success
+                _stocks.value = StockEvent.Success()
             }
             is Resource.Error -> {
-                _stocks.value = StockEvent.Failure("Verifique sua conexão :(")
+                if (stocksList.value!!.isNotEmpty()) {
+                    _stocks.value = StockEvent.Success()
+                } else {
+                    _stocks.value = StockEvent.Failure("Verifique sua conexão :(")
+                }
             }
         }
     }

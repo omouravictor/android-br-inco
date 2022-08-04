@@ -25,12 +25,12 @@ class BitCoinViewModel @ViewModelInject constructor(
 
     sealed class BitCoinEvent {
         class Failure(val errorText: String) : BitCoinEvent()
-        object Success : BitCoinEvent()
+        class Success(val text: String = "") : BitCoinEvent()
         object Loading : BitCoinEvent()
     }
 
     private val bitCoinFields = "bitcoin"
-    private val _bitCoins = MutableStateFlow<BitCoinEvent>(BitCoinEvent.Success)
+    private val _bitCoins = MutableStateFlow<BitCoinEvent>(BitCoinEvent.Success())
     val bitCoins: StateFlow<BitCoinEvent> = _bitCoins
 
     fun getBitCoin() {
@@ -44,10 +44,14 @@ class BitCoinViewModel @ViewModelInject constructor(
         when (val request = repository.getBitCoinFromApi(bitCoinFields)) {
             is Resource.Success -> {
                 replaceBitCoinOnDb(request.data!!.sourceResultBitcoin.resultsBitcoin)
-                _bitCoins.value = BitCoinEvent.Success
+                _bitCoins.value = BitCoinEvent.Success()
             }
             is Resource.Error -> {
-                _bitCoins.value = BitCoinEvent.Failure("Verifique sua conexão :(")
+                if (bitCoinsList.value!!.isNotEmpty()) {
+                    _bitCoins.value = BitCoinEvent.Success()
+                } else {
+                    _bitCoins.value = BitCoinEvent.Failure("Verifique sua conexão :(")
+                }
             }
         }
     }
