@@ -63,7 +63,8 @@ class BitCoinAdapter(
                         .getColor(context, R.color.lightRed)
                 )
             } else {
-                bitCoinItem.textViewBitcoinVariation.setTextColor(
+                bitCoinItem.textViewBitcoinVariation.text = "+" + bitCoinItem.textViewBitcoinVariation.text
+                    bitCoinItem.textViewBitcoinVariation.setTextColor(
                     ContextCompat
                         .getColor(context, R.color.fluorescentGreen)
                 )

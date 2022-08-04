@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.rate.RateFragment">
+    tools:context=".ui.rate.RateFragment"
+    tools:theme="@style/Theme.App">
 
     <EditText
         android:id="@+id/etAmount"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:hint="Quantidade"
+        android:hint="@string/quantity"
         android:imeOptions="actionDone"
         android:inputType="number"
         android:maxLength="10"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.stock.StockFragment">
+    tools:context=".ui.stock.StockFragment"
+    tools:theme="@style/Theme.App">
 
     <TextView
         android:id="@+id/tvTittle"
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:textSize="16sp"
-        android:text="Índices de bolsa de valores pelo mundo"
+        android:text="@string/stocks_fragment_tittle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

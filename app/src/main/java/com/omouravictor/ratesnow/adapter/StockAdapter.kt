@@ -48,8 +48,8 @@ class StockAdapter(
 
             if (stock.stockVariation <= 0.0) {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
-                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.lightRed))
-                stockItem.percent.setTextColor(context.getColor(R.color.lightRed))
+                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.grey))
+                stockItem.percent.setTextColor(context.getColor(R.color.grey))
             } else {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
                 stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.fluorescentGreen))

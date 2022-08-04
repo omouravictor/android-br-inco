@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="5dp">
+    android:layout_marginVertical="5dp"
+    tools:theme="@style/Theme.App">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -59,7 +60,6 @@
                 android:id="@+id/textViewStockVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
                 app:layout_constraintStart_toEndOf="@+id/imageViewStockVariation"
@@ -72,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="%"
-                android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"

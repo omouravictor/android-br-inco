@@ -1,7 +1,12 @@
 package com.omouravictor.ratesnow
 
+import android.app.UiModeManager.MODE_NIGHT_NO
+import android.app.UiModeManager.MODE_NIGHT_YES
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -21,12 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
-
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.appBarMain.toolbar)
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -38,12 +41,24 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_conversions, R.id.nav_stock, R.id.nav_bitcoin
             ), drawerLayout
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        setSwitchThemeMenuItemActionViewListener(navView)
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun setSwitchThemeMenuItemActionViewListener(navView: NavigationView) {
+        navView.menu.findItem(R.id.switch_theme).actionView.setOnClickListener {
+            if ((it as Switch).isChecked)
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            else
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        }
     }
 }
