@@ -34,7 +34,7 @@ class StockFragment : Fragment() {
         super.onStart()
 
         initSwipeRefreshLayout()
-        initStocksRecyclerView()
+        initRecyclerView()
 
         lifecycleScope.launchWhenStarted {
             viewModel.stocks.collect { event ->
@@ -72,7 +72,7 @@ class StockFragment : Fragment() {
         }
     }
 
-    private fun initStocksRecyclerView() {
+    private fun initRecyclerView() {
         viewModel.stocksList.observe(this, Observer {
             binding.rvStocks.apply {
                 adapter = StockAdapter(it, context)

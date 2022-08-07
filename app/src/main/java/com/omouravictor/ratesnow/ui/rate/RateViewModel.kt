@@ -30,11 +30,12 @@ class RateViewModel @ViewModelInject constructor(
         object Empty : ConversionEvent()
     }
 
-    private val requestCurrencies = ("BRL,USD,EUR,JPY,GBP,CAD")
+    private val requestCurrencies = "BRL,USD,EUR,JPY,GBP,CAD"
+    private val currenciesArray = arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD")
     private val _conversion = MutableStateFlow<ConversionEvent>(ConversionEvent.Empty)
     val conversion: StateFlow<ConversionEvent> = _conversion
 
-    fun getRates(selectedCurrency: Int, amountStr: String) {
+    fun getRates(fromCurrency: String, amountStr: String) {
         val amount = amountStr.toFloatOrNull()
         if (amount == null) {
             _conversion.value = ConversionEvent.Empty
@@ -43,7 +44,6 @@ class RateViewModel @ViewModelInject constructor(
 
         viewModelScope.launch(dispatchers.io) {
             _conversion.value = ConversionEvent.Loading
-            val fromCurrency = getCurrencySymbol(selectedCurrency)
             tryRatesFromApi(fromCurrency, amount)
         }
     }
@@ -66,15 +66,15 @@ class RateViewModel @ViewModelInject constructor(
     }
 
     private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
-        when (val request = repository.getRatesFromApi(fromCurrency, requestCurrencies)) {
+        when (val request = repository.getAllFromApi(fromCurrency, requestCurrencies)) {
             is Resource.Success -> {
-                val rates = getRatesFromApi(request.data!!, Date())
-                repository.insertRatesOnDb(rates)
+                val rates = getRatesEntity(request.data!!, Date())
+                repository.insertOnDb(rates)
                 replaceConversionList(fromCurrency, amount, rates)
                 _conversion.value = ConversionEvent.Success()
             }
             is Resource.Error -> {
-                val rates = repository.getRatesFromDb(fromCurrency)
+                val rates = repository.getFromDb(fromCurrency)
                 if (rates != null) {
                     replaceConversionList(fromCurrency, amount, rates)
                     _conversion.value = ConversionEvent.Success()
@@ -85,7 +85,7 @@ class RateViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getRatesFromApi(
+    private fun getRatesEntity(
         requestData: SourceRequestRatesModel,
         ratesDate: Date
     ): RatesEntity =
@@ -103,7 +103,7 @@ class RateViewModel @ViewModelInject constructor(
     private fun replaceConversionList(fromCurrency: String, amount: Float, rates: RatesEntity) {
         val list: MutableList<Conversion> = mutableListOf()
 
-        arrayOf("BRL", "USD", "EUR", "JPY", "GBP", "CAD").forEach {
+        currenciesArray.forEach {
             if (it != fromCurrency) {
                 val rate = when (it) {
                     "BRL" -> rates.bRL
@@ -117,17 +117,7 @@ class RateViewModel @ViewModelInject constructor(
                 list.add(Conversion(fromCurrency, it, amount, rate, rates.date))
             }
         }
-
         conversionList.postValue(list)
     }
 
-    private fun getCurrencySymbol(selectedCurrency: Int) = when (selectedCurrency) {
-        0 -> "USD"
-        1 -> "EUR"
-        2 -> "JPY"
-        3 -> "GBP"
-        4 -> "CAD"
-        5 -> "BRL"
-        else -> ""
-    }
 }

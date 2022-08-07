@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSwitchThemeMenuItem(navView: NavigationView) {
         val switch = navView.menu.findItem(R.id.switch_theme).actionView as Switch
-        val isNightModeOn: Boolean =
-            resources.configuration.uiMode.and(UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+        val isNightModeOn: Boolean = resources.configuration.uiMode.and(UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
 
         switch.isChecked = isNightModeOn
 

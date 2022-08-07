@@ -36,9 +36,9 @@ class RateFragment : Fragment() {
         super.onStart()
 
         initEtAmount()
-        initSpFromCurrency()
+        initSpinner()
         initSwipeRefreshLayout()
-        initConversionsRecyclerView()
+        initRecyclerView()
 
         lifecycleScope.launchWhenStarted {
             viewModel.conversion.collect { event ->
@@ -76,7 +76,7 @@ class RateFragment : Fragment() {
         }
     }
 
-    private fun initSpFromCurrency() {
+    private fun initSpinner() {
         binding.spFromCurrency.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -85,7 +85,10 @@ class RateFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.getRates(position, binding.etAmount.text.toString())
+                viewModel.getRates(
+                    binding.spFromCurrency.selectedItem.toString(),
+                    binding.etAmount.text.toString()
+                )
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -95,13 +98,13 @@ class RateFragment : Fragment() {
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getRates(
-                binding.spFromCurrency.selectedItemPosition,
+                binding.spFromCurrency.selectedItem.toString(),
                 binding.etAmount.text.toString()
             )
         }
     }
 
-    private fun initConversionsRecyclerView() {
+    private fun initRecyclerView() {
         viewModel.conversionList.observe(this, Observer {
             binding.rvConversions.apply {
                 adapter = RateAdapter(it)

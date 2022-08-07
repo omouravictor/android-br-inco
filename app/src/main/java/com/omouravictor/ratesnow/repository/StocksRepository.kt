@@ -13,8 +13,7 @@ private const val API_KEY = "0b0d596d"
 class StocksRepository @Inject constructor(
     private val api: StocksApi, private val database: AppDataBase
 ) {
-
-    suspend fun getStocksFromApi(field: String): Resource<SourceRequestStockModel> {
+    suspend fun getAllFromApi(field: String): Resource<SourceRequestStockModel> {
         return try {
             val response = api.getStocks(field, API_KEY)
             val result = response.body()
@@ -27,11 +26,11 @@ class StocksRepository @Inject constructor(
         }
     }
 
-    fun getAllStocksFromDb(): Flow<List<StockEntity>> {
+    fun getAllFromDb(): Flow<List<StockEntity>> {
         return database.stockDao().getAllStocks()
     }
 
-    fun insertStocksOnDb(stocksList: List<StockEntity>) {
+    fun insertOnDb(stocksList: List<StockEntity>) {
         database.stockDao().insertStock(stocksList)
     }
 }

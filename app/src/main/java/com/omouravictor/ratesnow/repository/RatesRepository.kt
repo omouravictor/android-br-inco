@@ -12,8 +12,7 @@ private const val API_KEY = "1vIuWTLu5sWKv9H0qbFurrWs5OVnZT68"
 class RatesRepository @Inject constructor(
     private val api: RatesApi, private val database: AppDataBase
 ) {
-
-    suspend fun getRatesFromApi(
+    suspend fun getAllFromApi(
         fromCurrency: String,
         toCurrencies: String
     ): Resource<SourceRequestRatesModel> {
@@ -29,11 +28,11 @@ class RatesRepository @Inject constructor(
         }
     }
 
-    fun getRatesFromDb(currencyBase: String): RatesEntity? {
+    fun getFromDb(currencyBase: String): RatesEntity? {
         return database.rateDao().getRatesForCurrency(currencyBase)
     }
 
-    fun insertRatesOnDb(rates: RatesEntity) {
+    fun insertOnDb(rates: RatesEntity) {
         database.rateDao().insertRate(rates)
     }
 }

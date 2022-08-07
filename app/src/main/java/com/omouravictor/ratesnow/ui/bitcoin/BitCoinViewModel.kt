@@ -21,7 +21,7 @@ class BitCoinViewModel @ViewModelInject constructor(
 
 ) : ViewModel() {
 
-    val bitCoinsList = repository.getAllBitCoinFromDb().asLiveData()
+    val bitCoinsList = repository.getAllFromDb().asLiveData()
 
     sealed class BitCoinEvent {
         class Failure(val errorText: String) : BitCoinEvent()
@@ -41,7 +41,7 @@ class BitCoinViewModel @ViewModelInject constructor(
     }
 
     private suspend fun tryBitCoinsFromApi() {
-        when (val request = repository.getBitCoinFromApi(bitCoinFields)) {
+        when (val request = repository.getAllFromApi(bitCoinFields)) {
             is Resource.Success -> {
                 replaceBitCoinOnDb(request.data!!.sourceResultBitcoin.resultsBitcoin)
                 _bitCoins.value = BitCoinEvent.Success()
@@ -73,6 +73,6 @@ class BitCoinViewModel @ViewModelInject constructor(
                 )
             )
         }
-        repository.insertBitCoinOnDb(bitCoinsList)
+        repository.insertOnDb(bitCoinsList)
     }
 }

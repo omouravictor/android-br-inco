@@ -13,8 +13,7 @@ private const val API_KEY = "0b0d596d"
 class BitCoinRepository @Inject constructor(
     private val api: BitCoinApi, private val database: AppDataBase
 ) {
-
-    suspend fun getBitCoinFromApi(field: String): Resource<SourceRequestBitcoinModel> {
+    suspend fun getAllFromApi(field: String): Resource<SourceRequestBitcoinModel> {
         return try {
             val response = api.getBitCoin(field, API_KEY)
             val result = response.body()
@@ -27,11 +26,11 @@ class BitCoinRepository @Inject constructor(
         }
     }
 
-    fun getAllBitCoinFromDb(): Flow<List<BitCoinEntity>> {
+    fun getAllFromDb(): Flow<List<BitCoinEntity>> {
         return database.bitCoinDao().getAllBitCoins()
     }
 
-    fun insertBitCoinOnDb(bitCoinList: List<BitCoinEntity>) {
+    fun insertOnDb(bitCoinList: List<BitCoinEntity>) {
         database.bitCoinDao().insertBitCoin(bitCoinList)
     }
 }

@@ -21,7 +21,7 @@ class StockViewModel @ViewModelInject constructor(
 
 ) : ViewModel() {
 
-    val stocksList = repository.getAllStocksFromDb().asLiveData()
+    val stocksList = repository.getAllFromDb().asLiveData()
 
     sealed class StockEvent {
         class Failure(val errorText: String) : StockEvent()
@@ -41,7 +41,7 @@ class StockViewModel @ViewModelInject constructor(
     }
 
     private suspend fun tryStocksFromApi() {
-        when (val request = repository.getStocksFromApi(stockFields)) {
+        when (val request = repository.getAllFromApi(stockFields)) {
             is Resource.Success -> {
                 replaceStocksOnDb(request.data!!.sourceResultStocks.resultsStocks)
                 _stocks.value = StockEvent.Success()
@@ -70,6 +70,6 @@ class StockViewModel @ViewModelInject constructor(
                 )
             )
         }
-        repository.insertStocksOnDb(stocksList)
+        repository.insertOnDb(stocksList)
     }
 }

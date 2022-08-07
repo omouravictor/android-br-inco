@@ -34,7 +34,7 @@ class BitCoinFragment : Fragment() {
         super.onStart()
 
         initSwipeRefreshLayout()
-        initBitCoinRecyclerView()
+        initRecyclerView()
 
         lifecycleScope.launchWhenStarted {
             viewModel.bitCoins.collect { event ->
@@ -72,7 +72,7 @@ class BitCoinFragment : Fragment() {
         }
     }
 
-    private fun initBitCoinRecyclerView() {
+    private fun initRecyclerView() {
         viewModel.bitCoinsList.observe(this, Observer {
             binding.rvBitCoins.apply {
                 adapter = BitCoinAdapter(it, context)
