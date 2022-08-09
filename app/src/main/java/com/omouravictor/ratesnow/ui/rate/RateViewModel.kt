@@ -21,6 +21,7 @@ class RateViewModel @ViewModelInject constructor(
     private val dispatchers: DispatcherProvider
 
 ) : ViewModel() {
+
     var conversionList = MutableLiveData<List<Conversion>>()
 
     sealed class ConversionEvent {

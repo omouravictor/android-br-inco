@@ -2,6 +2,7 @@ package com.omouravictor.ratesnow
 
 import android.app.UiModeManager.MODE_NIGHT_NO
 import android.app.UiModeManager.MODE_NIGHT_YES
+import android.content.Intent
 import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
@@ -9,7 +10,9 @@ import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -17,7 +20,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.omouravictor.ratesnow.databinding.ActivityMainBinding
+import com.omouravictor.ratesnow.onboarding.Datastore.dataStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -47,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         initSwitchThemeMenuItem(navView)
+        getNewUser()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,7 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initSwitchThemeMenuItem(navView: NavigationView) {
         val switch = navView.menu.findItem(R.id.switch_theme).actionView as Switch
-        val isNightModeOn: Boolean = resources.configuration.uiMode.and(UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+        val isNightModeOn: Boolean =
+            resources.configuration.uiMode.and(UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
 
         switch.isChecked = isNightModeOn
 
@@ -65,6 +74,20 @@ class MainActivity : AppCompatActivity() {
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
             else
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        }
+    }
+
+    private fun getNewUser() {
+        val newUser = booleanPreferencesKey("newUser")
+        val newUserFlow: Flow<Boolean> = application.dataStore.data.map { it[newUser] ?: true }
+
+        lifecycleScope.launch {
+            newUserFlow.collect {
+                if (it) {
+                    val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
     }
 

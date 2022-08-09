@@ -18,6 +18,8 @@
     <string name="thanks_for_using_our_app">Obrigado por utilizar nosso app!</string>
     <string name="developed_in_a_minimalist_way_so_you_have_an_excellent_experience">Desenvolvido de uma forma minimalista, para que você tenha uma excelente experiencia!</string>
     <string name="start">INICIAR</string>
+    <string name="previous">Anterior</string>
+    <string name="next">Próximo</string>
 
     <string-array name="from_currency_names">
         <item>USD</item>

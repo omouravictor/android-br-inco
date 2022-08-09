@@ -37,6 +37,7 @@
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable-v24/ic_arrow_up.xml" value="0.2005" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable-v24/ic_baseline_keyboard_arrow_up.xml" value="0.2005" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1565" />
+        <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/default_dot.xml" value="0.182" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/green_gradient_background.xml" value="0.2005" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/ic_arrow_down.xml" value="0.2775" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/ic_arrow_up.xml" value="0.2245" />
@@ -49,8 +50,11 @@
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/ic_splash_screen_icon_background.xml" value="0.1565" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/ic_splash_screen_icon_foreground.xml" value="0.1565" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/ic_upgrade.xml" value="0.13" />
+        <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/selected_dot.xml" value="0.2775" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/side_nav_bar.xml" value="0.1795" />
+        <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/drawable/tab_dot.xml" value="0.2775" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/activity_welcome.xml" value="0.26871794871794874" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/app_bar_main.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/bitcoin_item_list.xml" value="0.33" />
         <entry key="..\:/Users/omouravictor/StudioProjects/rates-now/app/src/main/res/layout/content_main.xml" value="0.27291666666666664" />
