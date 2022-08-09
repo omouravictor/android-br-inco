@@ -5,6 +5,8 @@
 
 <img src="https://github.com/omouravictor/assets/blob/main/assets/rates-now/app-screens.png" alt="app-screens">
 
+## MVVM Architecture
+
 ## Tools
 
 - [Android](https://developer.android.com)
