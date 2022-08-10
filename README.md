@@ -11,6 +11,7 @@
 
 - [Android](https://developer.android.com)
 - [Retrofit](https://square.github.io/retrofit/)
+- [DaggerHilt](https://developer.android.com/training/dependency-injection/hilt-android)
 - [Room Database](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase)
 - [Coroutines](https://developer.android.com/kotlin/coroutines) 
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
@@ -20,6 +21,7 @@
 - [Navigation](https://developer.android.com/guide/navigation)
 - [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
 - [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview)
+- [SwipeRefreshLayout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
 - [Material Design](https://material.io/design)
 - [SplashScreen](https://developer.android.com/guide/topics/ui/splash-screen)
 
