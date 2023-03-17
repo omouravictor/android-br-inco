@@ -1,6 +1,7 @@
 package com.omouravictor.ratesnow.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -50,12 +51,12 @@ class StockAdapter(
 
             if (stock.stockVariation <= 0.0) {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
-                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.lightRed))
-                stockItem.percent.setTextColor(context.getColor(R.color.lightRed))
+                stockItem.textViewStockVariation.setTextColor(Color.RED)
+                stockItem.percent.setTextColor(Color.RED)
             } else {
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
-                stockItem.textViewStockVariation.setTextColor(context.getColor(R.color.fluorescentGreen))
-                stockItem.percent.setTextColor(context.getColor(R.color.fluorescentGreen))
+                stockItem.textViewStockVariation.setTextColor(Color.GREEN)
+                stockItem.percent.setTextColor(Color.GREEN)
             }
         }
     }
