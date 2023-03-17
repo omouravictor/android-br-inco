@@ -7,7 +7,7 @@ import com.omouravictor.ratesnow.database.entity.RatesEntity
 import com.omouravictor.ratesnow.util.Resource
 import javax.inject.Inject
 
-private const val API_KEY = "1vIuWTLu5sWKv9H0qbFurrWs5OVnZT68"
+private const val API_KEY = "vun27fVe86DqCJOVkaomPgQNItQg6sus"
 
 class RatesRepository @Inject constructor(
     private val api: RatesApi, private val database: AppDataBase

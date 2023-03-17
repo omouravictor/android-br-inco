@@ -5,6 +5,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+def apisPropertiesFile = rootProject.file("apis.properties")
+def apisProperties = new Properties()
+apisProperties.load(new FileInputStream(apisPropertiesFile))
+
 android {
     compileSdk 32
 
@@ -16,6 +20,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "API_KEY_LAYER", apisProperties['API_KEY_LAYER'])
+        buildConfigField("String", "API_KEY_HG", apisProperties['API_KEY_HG'])
     }
 
     buildTypes {
