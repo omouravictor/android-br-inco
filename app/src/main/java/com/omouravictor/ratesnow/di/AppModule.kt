@@ -1,6 +1,7 @@
 package com.omouravictor.ratesnow.di
 
 import android.content.Context
+import com.omouravictor.ratesnow.BuildConfig
 import com.omouravictor.ratesnow.api.apilayer.RatesApi
 import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.BitCoinApi
 import com.omouravictor.ratesnow.api.hgbrasil.stock.StocksApi
@@ -20,9 +21,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-private const val API_LAYER_BASE_URL = "https://api.apilayer.com/"
-private const val HG_BRAZIL_BASE_URL = "https://api.hgbrasil.com/"
-
 @Module
 @InstallIn(ApplicationComponent::class)
 object AppModule {
@@ -30,7 +28,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRatesApi(): RatesApi = Retrofit.Builder()
-        .baseUrl(API_LAYER_BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL_LAYER)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(RatesApi::class.java)
@@ -38,7 +36,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideStocksApi(): StocksApi = Retrofit.Builder()
-        .baseUrl(HG_BRAZIL_BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL_HG)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(StocksApi::class.java)
@@ -46,7 +44,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideBitCoinsApi(): BitCoinApi = Retrofit.Builder()
-        .baseUrl(HG_BRAZIL_BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL_HG)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(BitCoinApi::class.java)

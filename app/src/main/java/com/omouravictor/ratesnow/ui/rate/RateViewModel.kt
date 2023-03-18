@@ -67,31 +67,23 @@ class RateViewModel @ViewModelInject constructor(
     }
 
     private suspend fun tryRatesFromApi(fromCurrency: String, amount: Float) {
-        val rates = repository.getFromDb(fromCurrency)
-        if (rates != null) {
-            replaceConversionList(fromCurrency, amount, rates)
-            _conversion.value = ConversionEvent.Success()
-        } else {
-            _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+        when (val request = repository.getAllFromApi(fromCurrency, requestCurrencies)) {
+            is Resource.Success -> {
+                val rates = getRatesEntity(request.data!!, Date())
+                repository.insertOnDb(rates)
+                replaceConversionList(fromCurrency, amount, rates)
+                _conversion.value = ConversionEvent.Success()
+            }
+            is Resource.Error -> {
+                val rates = repository.getFromDb(fromCurrency)
+                if (rates != null) {
+                    replaceConversionList(fromCurrency, amount, rates)
+                    _conversion.value = ConversionEvent.Success()
+                } else {
+                    _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
+                }
+            }
         }
-
-//        when (val request = repository.getAllFromApi(fromCurrency, requestCurrencies)) {
-//            is Resource.Success -> {
-//                val rates = getRatesEntity(request.data!!, Date())
-//                repository.insertOnDb(rates)
-//                replaceConversionList(fromCurrency, amount, rates)
-//                _conversion.value = ConversionEvent.Success()
-//            }
-//            is Resource.Error -> {
-//                val rates = repository.getFromDb(fromCurrency)
-//                if (rates != null) {
-//                    replaceConversionList(fromCurrency, amount, rates)
-//                    _conversion.value = ConversionEvent.Success()
-//                } else {
-//                    _conversion.value = ConversionEvent.Failure("Verifique sua conexão :(")
-//                }
-//            }
-//        }
     }
 
     private fun getRatesEntity(

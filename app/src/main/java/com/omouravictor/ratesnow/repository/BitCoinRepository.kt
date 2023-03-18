@@ -1,5 +1,6 @@
 package com.omouravictor.ratesnow.repository
 
+import com.omouravictor.ratesnow.BuildConfig
 import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.BitCoinApi
 import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.SourceRequestBitcoinModel
 import com.omouravictor.ratesnow.database.AppDataBase
@@ -8,14 +9,12 @@ import com.omouravictor.ratesnow.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-private const val API_KEY = "0b0d596d"
-
 class BitCoinRepository @Inject constructor(
     private val api: BitCoinApi, private val database: AppDataBase
 ) {
     suspend fun getAllFromApi(field: String): Resource<SourceRequestBitcoinModel> {
         return try {
-            val response = api.getBitCoin(field, API_KEY)
+            val response = api.getBitCoin(field, BuildConfig.API_KEY_HG)
             val result = response.body()
             if (response.isSuccessful && result != null)
                 Resource.Success(result)
