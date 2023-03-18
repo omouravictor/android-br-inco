@@ -2,14 +2,14 @@ package com.omouravictor.ratesnow.di
 
 import android.content.Context
 import com.omouravictor.ratesnow.BuildConfig
-import com.omouravictor.ratesnow.api.apilayer.RatesApi
-import com.omouravictor.ratesnow.api.hgbrasil.bitcoin.BitCoinApi
-import com.omouravictor.ratesnow.api.hgbrasil.stock.StocksApi
-import com.omouravictor.ratesnow.database.AppDataBase
-import com.omouravictor.ratesnow.repository.BitCoinRepository
-import com.omouravictor.ratesnow.repository.RatesRepository
-import com.omouravictor.ratesnow.repository.StocksRepository
-import com.omouravictor.ratesnow.util.DispatcherProvider
+import com.omouravictor.ratesnow.data.remote.apilayer.RatesApi
+import com.omouravictor.ratesnow.data.remote.hgbrasil.bitcoin.BitCoinApi
+import com.omouravictor.ratesnow.data.remote.hgbrasil.stock.StocksApi
+import com.omouravictor.ratesnow.data.local.AppDataBase
+import com.omouravictor.ratesnow.data.repository.BitCoinRepository
+import com.omouravictor.ratesnow.data.repository.RatesRepository
+import com.omouravictor.ratesnow.data.repository.StocksRepository
+import com.omouravictor.ratesnow.utils.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
