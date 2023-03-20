@@ -4,18 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.stocks.StockFragment"
+    tools:context=".presenter.rates.RatesFragment"
     tools:theme="@style/Theme.App">
 
-    <TextView
-        android:id="@+id/tvTittle"
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:hint="@string/quantity"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/spFromCurrency"
+        app:layout_constraintEnd_toStartOf="@+id/spFromCurrency"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spFromCurrency"
+        tools:text="1" />
+
+    <Spinner
+        android:id="@+id/spFromCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/stocks_fragment_tittle"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/from_currency_names"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
@@ -34,19 +50,19 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTittle">
+        app:layout_constraintTop_toBottomOf="@+id/spFromCurrency">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvStocks"
+            android:id="@+id/rvConversions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            tools:listitem="@layout/stock_item_list" />
+            tools:listitem="@layout/conversion_item_list" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

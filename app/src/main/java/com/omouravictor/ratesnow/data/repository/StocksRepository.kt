@@ -1,10 +1,10 @@
 package com.omouravictor.ratesnow.data.repository
 
 import com.omouravictor.ratesnow.BuildConfig
-import com.omouravictor.ratesnow.data.remote.hgbrasil.stock.SourceRequestStockModel
-import com.omouravictor.ratesnow.data.remote.hgbrasil.stock.StocksApi
 import com.omouravictor.ratesnow.data.local.AppDataBase
 import com.omouravictor.ratesnow.data.local.entity.StockEntity
+import com.omouravictor.ratesnow.data.network.hgbrasil.stock.SourceRequestStockModel
+import com.omouravictor.ratesnow.data.network.hgbrasil.stock.StocksApi
 import com.omouravictor.ratesnow.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
