@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "rate_table")
-data class CurrencyEntity(
+data class RateEntity(
     @PrimaryKey(autoGenerate = false)
     val currencyName: String,
     val rate: Double,

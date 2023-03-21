@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("finance")
-    suspend fun getCurrencies(
+    suspend fun getRates(
         @Query("fields") field: String
     ): SourceRequestCurrencyModel
 

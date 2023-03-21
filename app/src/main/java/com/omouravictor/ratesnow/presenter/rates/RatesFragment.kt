@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesnow.databinding.FragmentRatesBinding
-import com.omouravictor.ratesnow.presenter.base.ResultUiState
+import com.omouravictor.ratesnow.presenter.base.UiResultState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,19 +39,19 @@ class RatesFragment : Fragment() {
 
         ratesViewModel.rates.observe(viewLifecycleOwner) {
             when (it) {
-                is ResultUiState.Success -> {
+                is UiResultState.Success -> {
                     ratesAdapter.submitList(it.data)
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
                     ratesBinding.rvConversions.isVisible = true
                 }
-                is ResultUiState.Error -> {
+                is UiResultState.Error -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
                     ratesBinding.rvConversions.isVisible = false
                     Toast.makeText(context, it.e.message, Toast.LENGTH_SHORT).show()
                 }
-                is ResultUiState.Loading -> {
+                is UiResultState.Loading -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = true
                     ratesBinding.rvConversions.isVisible = false

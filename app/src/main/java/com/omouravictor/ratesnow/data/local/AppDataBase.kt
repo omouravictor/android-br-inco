@@ -9,10 +9,10 @@ import com.omouravictor.ratesnow.data.local.dao.BitCoinDao
 import com.omouravictor.ratesnow.data.local.dao.RateDao
 import com.omouravictor.ratesnow.data.local.dao.StockDao
 import com.omouravictor.ratesnow.data.local.entity.BitCoinEntity
-import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
+import com.omouravictor.ratesnow.data.local.entity.RateEntity
 import com.omouravictor.ratesnow.data.local.entity.StockEntity
 
-@Database(entities = [CurrencyEntity::class, StockEntity::class, BitCoinEntity::class], version = 1)
+@Database(entities = [RateEntity::class, StockEntity::class, BitCoinEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
 

@@ -1,7 +1,7 @@
 package com.omouravictor.ratesnow.data.repository
 
 import com.omouravictor.ratesnow.data.local.AppDataBase
-import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
+import com.omouravictor.ratesnow.data.local.entity.RateEntity
 import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesnow.data.network.ApiService
 import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
@@ -12,20 +12,20 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class RatesLocalRepository(private val database: AppDataBase) {
-    fun getLocalRates(): Flow<List<CurrencyEntity>> = database.rateDao().getAllRates()
+    fun getLocalRates(): Flow<List<RateEntity>> = database.rateDao().getAllRates()
 
-    suspend fun insertRates(rates: List<CurrencyEntity>) {
-        database.rateDao().insertRates(rates)
+    suspend fun insertRates(listRateEntity: List<RateEntity>) {
+        database.rateDao().insertRates(listRateEntity)
     }
 }
 
 class RatesApiRepository(private val apiService: ApiService) {
-    suspend fun getRemoteRates(field: String): Flow<NetworkResultStatus<SourceRequestCurrencyModel>> {
+    suspend fun getRemoteRates(currencies: String): Flow<NetworkResultStatus<SourceRequestCurrencyModel>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)
                 try {
-                    val request = apiService.getCurrencies(field)
+                    val request = apiService.getRates(currencies)
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
                     emit(NetworkResultStatus.Error(e))

@@ -1,7 +1,7 @@
 package com.omouravictor.ratesnow.data.network.hgbrasil.rates
 
 import com.google.gson.annotations.SerializedName
-import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
+import com.omouravictor.ratesnow.data.local.entity.RateEntity
 import java.util.*
 
 data class SourceRequestCurrencyModel(
@@ -21,11 +21,11 @@ data class SourceRequestCurrencyModel(
     val from_cache: Boolean
 )
 
-fun SourceRequestCurrencyModel.toListCurrencyEntity(toCurrencies: String): List<CurrencyEntity> {
-    val list: MutableList<CurrencyEntity> = mutableListOf()
+fun SourceRequestCurrencyModel.toListRateEntity(currencies: String): List<RateEntity> {
+    val list: MutableList<RateEntity> = mutableListOf()
     val date = Date()
 
-    toCurrencies.split(",").forEach { currency ->
+    currencies.split(",").forEach { currency ->
         val rate = when (currency) {
             "USD" -> sourceResultCurrency.resultsCurrencies["USD"]?.requestCurrencyBuy ?: 0.0
             "EUR" -> sourceResultCurrency.resultsCurrencies["EUR"]?.requestCurrencyBuy ?: 0.0
@@ -36,7 +36,7 @@ fun SourceRequestCurrencyModel.toListCurrencyEntity(toCurrencies: String): List<
             else -> -1.0
         }
 
-        list.add(CurrencyEntity(currency, rate, date))
+        list.add(RateEntity(currency, rate, date))
     }
 
     return list
