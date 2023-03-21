@@ -7,6 +7,7 @@ import com.omouravictor.ratesnow.data.network.hgbrasil.rates.CurrencyApi
 import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
@@ -19,13 +20,16 @@ class RatesLocalRepository(private val database: AppDataBase) {
 }
 
 class RatesApiRepository(private val currencyApi: CurrencyApi) {
-    suspend fun getRemoteRates(field: String): ResultStatus<SourceRequestCurrencyModel?> {
+    suspend fun getRemoteRates(field: String): Flow<ResultStatus<SourceRequestCurrencyModel>> {
         return withContext(Dispatchers.IO) {
-            val request = currencyApi.getCurrencies(field)
-            if (request.isSuccessful) {
-                ResultStatus.Success(request.body())
-            } else {
-                ResultStatus.Error(Exception())
+            flow {
+                emit(ResultStatus.Loading)
+                try {
+                    val request = currencyApi.getCurrencies(field)
+                    emit(ResultStatus.Success(request))
+                } catch (e: Exception) {
+                    emit(ResultStatus.Error(e))
+                }
             }
         }
     }
