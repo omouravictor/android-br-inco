@@ -5,13 +5,13 @@ import com.omouravictor.ratesnow.presenter.rates.RatesDto
 import java.util.*
 
 data class Rates(
+    val date: Date,
     val currencyBase: String,
     val currenciesRates: RatesItemsNetworkResponse
 )
 
 fun Rates.toListRatesDto(listToCurrencies: List<String>): List<RatesDto> {
     val list: MutableList<RatesDto> = mutableListOf()
-    val date = Date()
 
     listToCurrencies.filterNot { toCurrency -> toCurrency == currencyBase }
         .forEach { toCurrency ->

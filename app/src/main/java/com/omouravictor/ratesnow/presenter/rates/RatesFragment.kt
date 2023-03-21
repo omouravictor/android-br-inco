@@ -36,7 +36,6 @@ class RatesFragment : Fragment() {
 
         initAdapter()
         initEtAmount()
-        initSpinner()
         initSwipeRefreshLayout()
 
         ratesViewModel.rates.observe(viewLifecycleOwner) {
@@ -79,30 +78,10 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initSpinner() {
-        ratesBinding.spFromCurrency.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parentView: AdapterView<*>?,
-                selectedItemView: View?,
-                position: Int,
-                id: Long
-            ) {
-                ratesViewModel.getRates(
-                    ratesBinding.spFromCurrency.selectedItem.toString(),
-//                    ratesBinding.etAmount.text.toString()
-                )
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>?) {}
-        }
-    }
-
     private fun initSwipeRefreshLayout() {
         ratesBinding.swipeRefreshLayout.setOnRefreshListener {
             ratesViewModel.getRates(
-                ratesBinding.spFromCurrency.selectedItem.toString(),
-//                ratesBinding.etAmount.text.toString()
+                ratesBinding.etAmount.text.toString()
             )
         }
     }

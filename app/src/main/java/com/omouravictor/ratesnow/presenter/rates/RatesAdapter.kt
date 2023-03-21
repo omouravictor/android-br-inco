@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
 import com.omouravictor.ratesnow.databinding.ConversionItemListBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
-class RatesAdapter() : ListAdapter<RatesDto, RatesAdapter.CurrencyViewHolder>(diffCallback) {
+class RatesAdapter() : ListAdapter<CurrencyEntity, RatesAdapter.CurrencyViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =
@@ -28,9 +29,9 @@ class RatesAdapter() : ListAdapter<RatesDto, RatesAdapter.CurrencyViewHolder>(di
     class CurrencyViewHolder(
         private val currencyItem: ConversionItemListBinding
     ) : RecyclerView.ViewHolder(currencyItem.root) {
-        fun bind(ratesDto: RatesDto) {
+        fun bind(currencyEntity: CurrencyEntity) {
             val defaultLocale = Locale("pt", "BR")
-            val locale = when (ratesDto.toCurrency) {
+            val locale = when (currencyEntity.currencyName) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")
                 "JPY" -> Locale("ja", "JP")
@@ -41,23 +42,23 @@ class RatesAdapter() : ListAdapter<RatesDto, RatesAdapter.CurrencyViewHolder>(di
             val dateFormatter = SimpleDateFormat("dd/MM/yy", defaultLocale)
             val timeFormatter = SimpleDateFormat("HH:mm", defaultLocale)
 
-            currencyItem.tvFromCurrency.text = ratesDto.fromCurrency
-            currencyItem.tvToCurrency.text = ratesDto.toCurrency
+            currencyItem.tvFromCurrency.text = "BRL"
+            currencyItem.tvToCurrency.text = currencyEntity.currencyName
             currencyItem.tvValue.text =
                 NumberFormat.getCurrencyInstance(locale)
-                    .format(round(ratesDto.amount * ratesDto.rate * 100) / 100)
-            "${dateFormatter.format(ratesDto.rateDate)}\n${timeFormatter.format(ratesDto.rateDate)}".also {
+                    .format(round(1 * currencyEntity.rate * 100) / 100)
+            "${dateFormatter.format(currencyEntity.date)}\n${timeFormatter.format(currencyEntity.date)}".also {
                 currencyItem.tvDateTime.text = it
             }
         }
     }
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<RatesDto>() {
-            override fun areItemsTheSame(oldItem: RatesDto, newItem: RatesDto): Boolean {
-                return oldItem.fromCurrency == newItem.fromCurrency
+        val diffCallback = object : DiffUtil.ItemCallback<CurrencyEntity>() {
+            override fun areItemsTheSame(oldItem: CurrencyEntity, newItem: CurrencyEntity): Boolean {
+                return oldItem.currencyName == newItem.currencyName
             }
 
-            override fun areContentsTheSame(oldItem: RatesDto, newItem: RatesDto): Boolean {
+            override fun areContentsTheSame(oldItem: CurrencyEntity, newItem: CurrencyEntity): Boolean {
                 return oldItem == newItem
             }
         }

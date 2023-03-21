@@ -3,9 +3,13 @@ package com.omouravictor.ratesnow.framework.di
 import android.content.Context
 import com.omouravictor.ratesnow.BuildConfig
 import com.omouravictor.ratesnow.data.local.AppDataBase
+import com.omouravictor.ratesnow.data.network.apilayer.RatesApi
 import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.BitCoinApi
+import com.omouravictor.ratesnow.data.network.hgbrasil.rates.CurrencyApi
 import com.omouravictor.ratesnow.data.network.hgbrasil.stock.StocksApi
 import com.omouravictor.ratesnow.data.repository.BitCoinRepository
+import com.omouravictor.ratesnow.data.repository.RatesApiRepository
+import com.omouravictor.ratesnow.data.repository.RatesLocalRepository
 import com.omouravictor.ratesnow.data.repository.StocksRepository
 import com.omouravictor.ratesnow.utils.DispatcherProvider
 import dagger.Module
@@ -15,6 +19,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -43,6 +48,16 @@ object AppModule {
     @Provides
     fun provideAppDataBase(@ApplicationContext appContext: Context): AppDataBase =
         AppDataBase.getDatabase(appContext)
+
+    @Singleton
+    @Provides
+    fun provideRatesApiRepository(api: CurrencyApi): RatesApiRepository =
+        RatesApiRepository(api)
+
+    @Singleton
+    @Provides
+    fun provideRatesLocalRepository(dataBase: AppDataBase): RatesLocalRepository =
+        RatesLocalRepository(dataBase)
 
     @Singleton
     @Provides

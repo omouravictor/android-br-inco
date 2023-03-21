@@ -11,7 +11,7 @@ class AuthorizationInterceptor(
         val url = request.url
 
         val newUrl = url.newBuilder()
-            .addQueryParameter("apikey", apiKey)
+            .addQueryParameter("key", apiKey)
             .build()
 
         return chain.proceed(

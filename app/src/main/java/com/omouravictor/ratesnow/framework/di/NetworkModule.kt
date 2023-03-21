@@ -2,6 +2,7 @@ package com.omouravictor.ratesnow.framework.di
 
 import com.omouravictor.ratesnow.BuildConfig
 import com.omouravictor.ratesnow.data.network.apilayer.RatesApi
+import com.omouravictor.ratesnow.data.network.hgbrasil.rates.CurrencyApi
 import com.omouravictor.ratesnow.framework.interceptor.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides
@@ -25,13 +26,13 @@ object NetworkModule {
     fun provideRetrofit(
         provideGsonConverterFactory: GsonConverterFactory,
         provideOkHttpClient: OkHttpClient
-    ): RatesApi {
+    ): CurrencyApi {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL_LAYER)
+            .baseUrl(BuildConfig.BASE_URL_HG)
             .client(provideOkHttpClient)
             .addConverterFactory(provideGsonConverterFactory)
             .build()
-            .create(RatesApi::class.java)
+            .create(CurrencyApi::class.java)
     }
 
     @Provides
@@ -58,7 +59,7 @@ object NetworkModule {
     @Singleton
     fun provideAuthorizationInterceptor(): AuthorizationInterceptor {
         return AuthorizationInterceptor(
-            apiKey = BuildConfig.API_KEY_LAYER
+            apiKey = BuildConfig.API_KEY_HG
         )
     }
 

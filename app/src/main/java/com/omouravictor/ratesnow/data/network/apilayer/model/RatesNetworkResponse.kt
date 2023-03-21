@@ -2,6 +2,7 @@ package com.omouravictor.ratesnow.data.network.apilayer.model
 
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesnow.domain.model.Rates
+import java.util.Date
 
 data class RatesNetworkResponse(
     @SerializedName("base")
@@ -12,4 +13,4 @@ data class RatesNetworkResponse(
     val rates: RatesItemsNetworkResponse
 )
 
-fun RatesNetworkResponse.toRates() = Rates(currencyBase = base, currenciesRates = rates)
+fun RatesNetworkResponse.toRates() = Rates(date = Date(), currencyBase = base, currenciesRates = rates)
