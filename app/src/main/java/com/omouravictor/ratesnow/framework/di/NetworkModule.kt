@@ -1,7 +1,7 @@
 package com.omouravictor.ratesnow.framework.di
 
 import com.omouravictor.ratesnow.BuildConfig
-import com.omouravictor.ratesnow.data.network.hgbrasil.rates.ApiService
+import com.omouravictor.ratesnow.data.network.ApiService
 import com.omouravictor.ratesnow.framework.interceptor.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object NetworkModule {
 
-    private const val TIMEOUT_SECONDS = 15L
+    private const val TIMEOUT_SECONDS = 10L
 
     @Singleton
     @Provides

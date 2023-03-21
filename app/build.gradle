@@ -20,9 +20,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY_LAYER", apisProperties['API_KEY_LAYER'])
         buildConfigField("String", "API_KEY_HG", apisProperties['API_KEY_HG'])
-        buildConfigField("String", "BASE_URL_LAYER", '"https://api.apilayer.com/"')
         buildConfigField("String", "BASE_URL_HG", '"https://api.hgbrasil.com/"')
     }
 

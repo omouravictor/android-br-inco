@@ -2,7 +2,7 @@ package com.omouravictor.ratesnow.framework.di
 
 import android.content.Context
 import com.omouravictor.ratesnow.data.local.AppDataBase
-import com.omouravictor.ratesnow.data.network.hgbrasil.rates.ApiService
+import com.omouravictor.ratesnow.data.network.ApiService
 import com.omouravictor.ratesnow.data.repository.BitCoinRepository
 import com.omouravictor.ratesnow.data.repository.RatesApiRepository
 import com.omouravictor.ratesnow.data.repository.RatesLocalRepository

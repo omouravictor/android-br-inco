@@ -1,6 +1,7 @@
-package com.omouravictor.ratesnow.data.network.hgbrasil.rates
+package com.omouravictor.ratesnow.data.network
 
 import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.SourceRequestBitcoinModel
+import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
 import com.omouravictor.ratesnow.data.network.hgbrasil.stock.SourceRequestStockModel
 import retrofit2.Response
 import retrofit2.http.GET
