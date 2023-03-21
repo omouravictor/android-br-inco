@@ -2,14 +2,13 @@ package com.omouravictor.ratesnow.data.repository
 
 import com.omouravictor.ratesnow.data.local.AppDataBase
 import com.omouravictor.ratesnow.data.local.entity.RateEntity
-import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesnow.data.network.ApiService
+import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class RatesLocalRepository(private val database: AppDataBase) {
     fun getLocalRates(): Flow<List<RateEntity>> = database.rateDao().getAllRates()
@@ -28,7 +27,7 @@ class RatesApiRepository(private val apiService: ApiService) {
                     val request = apiService.getRates(currencies)
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
-                    emit(NetworkResultStatus.Error(e))
+                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados da internet :(")))
                 }
             }
         }
