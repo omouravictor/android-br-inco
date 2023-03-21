@@ -3,7 +3,7 @@ package com.omouravictor.ratesnow.presenter.rates
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
-import com.omouravictor.ratesnow.data.network.base.ResultStatus
+import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesnow.data.network.hgbrasil.rates.toListCurrencyEntity
 import com.omouravictor.ratesnow.data.repository.RatesApiRepository
 import com.omouravictor.ratesnow.data.repository.RatesLocalRepository
@@ -17,26 +17,30 @@ class RatesViewModel @ViewModelInject constructor(
     val rates = MutableLiveData<ResultUiState<List<CurrencyEntity>>>()
     private val toCurrencies = "USD,EUR,GBP,CAD,AUD,JPY"
 
-    fun getRates(fromCurrency: String) {
+    init {
+        getRates()
+    }
+
+    fun getRates() {
         viewModelScope.launch {
-            ratesApiRepository.getRemoteRates(toCurrencies).collect { resultStatus ->
-                when (resultStatus) {
-                    is ResultStatus.Success -> {
+            ratesApiRepository.getRemoteRates(toCurrencies).collect { networkResultStatus ->
+                when (networkResultStatus) {
+                    is NetworkResultStatus.Success -> {
                         val listCurrencyEntity =
-                            resultStatus.data.toListCurrencyEntity(toCurrencies)
+                            networkResultStatus.data.toListCurrencyEntity(toCurrencies)
                         ratesLocalRepository.insertRates(listCurrencyEntity)
                         rates.postValue(ResultUiState.Success(listCurrencyEntity))
                     }
-                    is ResultStatus.Error -> {
+                    is NetworkResultStatus.Error -> {
                         ratesLocalRepository.getLocalRates().collect {
                             if (it.isNotEmpty()) {
                                 rates.postValue(ResultUiState.Success(it))
                             } else {
-                                rates.postValue(ResultUiState.Error(resultStatus.e))
+                                rates.postValue(ResultUiState.Error(networkResultStatus.e))
                             }
                         }
                     }
-                    is ResultStatus.Loading -> {
+                    is NetworkResultStatus.Loading -> {
                         rates.postValue(ResultUiState.Loading)
                     }
                 }

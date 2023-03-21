@@ -80,9 +80,7 @@ class RatesFragment : Fragment() {
 
     private fun initSwipeRefreshLayout() {
         ratesBinding.swipeRefreshLayout.setOnRefreshListener {
-            ratesViewModel.getRates(
-                ratesBinding.etAmount.text.toString()
-            )
+            ratesViewModel.getRates()
         }
     }
 

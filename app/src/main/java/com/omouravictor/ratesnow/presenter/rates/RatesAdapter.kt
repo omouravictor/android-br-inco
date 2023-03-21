@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
-class RatesAdapter() : ListAdapter<CurrencyEntity, RatesAdapter.CurrencyViewHolder>(diffCallback) {
+class RatesAdapter : ListAdapter<CurrencyEntity, RatesAdapter.CurrencyViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         val binding =

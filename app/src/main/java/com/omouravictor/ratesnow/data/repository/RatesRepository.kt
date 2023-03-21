@@ -2,7 +2,7 @@ package com.omouravictor.ratesnow.data.repository
 
 import com.omouravictor.ratesnow.data.local.AppDataBase
 import com.omouravictor.ratesnow.data.local.entity.CurrencyEntity
-import com.omouravictor.ratesnow.data.network.base.ResultStatus
+import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesnow.data.network.ApiService
 import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
 import kotlinx.coroutines.Dispatchers
@@ -20,15 +20,15 @@ class RatesLocalRepository(private val database: AppDataBase) {
 }
 
 class RatesApiRepository(private val apiService: ApiService) {
-    suspend fun getRemoteRates(field: String): Flow<ResultStatus<SourceRequestCurrencyModel>> {
+    suspend fun getRemoteRates(field: String): Flow<NetworkResultStatus<SourceRequestCurrencyModel>> {
         return withContext(Dispatchers.IO) {
             flow {
-                emit(ResultStatus.Loading)
+                emit(NetworkResultStatus.Loading)
                 try {
                     val request = apiService.getCurrencies(field)
-                    emit(ResultStatus.Success(request))
+                    emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
-                    emit(ResultStatus.Error(e))
+                    emit(NetworkResultStatus.Error(e))
                 }
             }
         }
