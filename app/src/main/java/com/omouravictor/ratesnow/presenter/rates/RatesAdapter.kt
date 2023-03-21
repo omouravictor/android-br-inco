@@ -37,6 +37,7 @@ class RatesAdapter() : ListAdapter<CurrencyEntity, RatesAdapter.CurrencyViewHold
                 "JPY" -> Locale("ja", "JP")
                 "GBP" -> Locale("en", "GB")
                 "CAD" -> Locale("en", "CA")
+                "AUD" -> Locale("en", "AU")
                 else -> defaultLocale
             }
             val dateFormatter = SimpleDateFormat("dd/MM/yy", defaultLocale)
