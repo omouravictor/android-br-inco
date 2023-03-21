@@ -2,8 +2,6 @@ package com.omouravictor.ratesnow.presenter.rates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesnow.databinding.ConversionItemListBinding
 import com.omouravictor.ratesnow.presenter.rates.model.RateUiModel
@@ -12,26 +10,30 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.round
 
-class RatesAdapter : ListAdapter<RateUiModel, RatesAdapter.CurrencyViewHolder>(diffCallback) {
+class RatesAdapter(
+    private var ratesList: List<RateUiModel>
+) : RecyclerView.Adapter<RatesAdapter.ConversionViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversionViewHolder {
         val binding =
             ConversionItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CurrencyViewHolder(binding)
+        return ConversionViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it)
-        }
+    override fun getItemCount(): Int {
+        return ratesList.size
     }
 
-    class CurrencyViewHolder(
-        private val currencyItem: ConversionItemListBinding
-    ) : RecyclerView.ViewHolder(currencyItem.root) {
-        fun bind(rateEntity: RateUiModel) {
+    override fun onBindViewHolder(holder: ConversionViewHolder, position: Int) {
+        holder.bind(ratesList[position])
+    }
+
+    class ConversionViewHolder(
+        private val conversionItem: ConversionItemListBinding
+    ) : RecyclerView.ViewHolder(conversionItem.root) {
+        fun bind(rateUiModel: RateUiModel) {
             val defaultLocale = Locale("pt", "BR")
-            val locale = when (rateEntity.toCurrency) {
+            val locale = when (rateUiModel.toCurrency) {
                 "USD" -> Locale("en", "US")
                 "EUR" -> Locale("en", "EU")
                 "JPY" -> Locale("ja", "JP")
@@ -43,24 +45,12 @@ class RatesAdapter : ListAdapter<RateUiModel, RatesAdapter.CurrencyViewHolder>(d
             val dateFormatter = SimpleDateFormat("dd/MM/yy", defaultLocale)
             val timeFormatter = SimpleDateFormat("HH:mm", defaultLocale)
 
-            currencyItem.tvFromCurrency.text = rateEntity.fromCurrency
-            currencyItem.tvToCurrency.text = rateEntity.toCurrency
-            currencyItem.tvValue.text = NumberFormat.getCurrencyInstance(locale)
-                .format(round(1 * rateEntity.rate * 100) / 100)
-            "${dateFormatter.format(rateEntity.rateDate)}\n${timeFormatter.format(rateEntity.rateDate)}".also {
-                currencyItem.tvDateTime.text = it
-            }
-        }
-    }
-
-    companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<RateUiModel>() {
-            override fun areItemsTheSame(oldItem: RateUiModel, newItem: RateUiModel): Boolean {
-                return oldItem.fromCurrency == newItem.fromCurrency && oldItem.toCurrency == newItem.toCurrency
-            }
-
-            override fun areContentsTheSame(oldItem: RateUiModel, newItem: RateUiModel): Boolean {
-                return oldItem == newItem
+            conversionItem.tvFromCurrency.text = rateUiModel.fromCurrency
+            conversionItem.tvToCurrency.text = rateUiModel.toCurrency
+            conversionItem.tvValue.text = NumberFormat.getCurrencyInstance(locale)
+                .format(round(1 * rateUiModel.rate * 100) / 100)
+            "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
+                conversionItem.tvDateTime.text = it
             }
         }
     }

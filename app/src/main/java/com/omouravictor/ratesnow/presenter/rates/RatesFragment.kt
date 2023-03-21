@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesnow.databinding.FragmentRatesBinding
 import com.omouravictor.ratesnow.presenter.base.UiResultState
+import com.omouravictor.ratesnow.presenter.rates.model.RateUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,14 +34,13 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter()
         initEtAmount()
         initSwipeRefreshLayout()
 
         ratesViewModel.rates.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
-                    ratesAdapter.submitList(it.data)
+                    initAdapter(it.data)
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
                     ratesBinding.rvConversions.isVisible = true
@@ -60,8 +60,8 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initAdapter() {
-        ratesAdapter = RatesAdapter()
+    private fun initAdapter(ratesList: List<RateUiModel>) {
+        ratesAdapter = RatesAdapter(ratesList)
 
         ratesBinding.rvConversions.apply {
             adapter = ratesAdapter
