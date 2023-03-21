@@ -1,12 +1,8 @@
 package com.omouravictor.ratesnow.framework.di
 
 import android.content.Context
-import com.omouravictor.ratesnow.BuildConfig
 import com.omouravictor.ratesnow.data.local.AppDataBase
-import com.omouravictor.ratesnow.data.network.apilayer.RatesApi
-import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.BitCoinApi
-import com.omouravictor.ratesnow.data.network.hgbrasil.rates.CurrencyApi
-import com.omouravictor.ratesnow.data.network.hgbrasil.stock.StocksApi
+import com.omouravictor.ratesnow.data.network.hgbrasil.rates.ApiService
 import com.omouravictor.ratesnow.data.repository.BitCoinRepository
 import com.omouravictor.ratesnow.data.repository.RatesApiRepository
 import com.omouravictor.ratesnow.data.repository.RatesLocalRepository
@@ -19,9 +15,6 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -30,28 +23,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideStocksApi(): StocksApi = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL_HG)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(StocksApi::class.java)
-
-    @Singleton
-    @Provides
-    fun provideBitCoinsApi(): BitCoinApi = Retrofit.Builder()
-        .baseUrl(BuildConfig.BASE_URL_HG)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(BitCoinApi::class.java)
-
-    @Singleton
-    @Provides
     fun provideAppDataBase(@ApplicationContext appContext: Context): AppDataBase =
         AppDataBase.getDatabase(appContext)
 
     @Singleton
     @Provides
-    fun provideRatesApiRepository(api: CurrencyApi): RatesApiRepository =
+    fun provideRatesApiRepository(api: ApiService): RatesApiRepository =
         RatesApiRepository(api)
 
     @Singleton
@@ -61,12 +38,12 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideStocksRepository(api: StocksApi, dataBase: AppDataBase): StocksRepository =
+    fun provideStocksRepository(api: ApiService, dataBase: AppDataBase): StocksRepository =
         StocksRepository(api, dataBase)
 
     @Singleton
     @Provides
-    fun provideBitCoinsRepository(api: BitCoinApi, dataBase: AppDataBase): BitCoinRepository =
+    fun provideBitCoinsRepository(api: ApiService, dataBase: AppDataBase): BitCoinRepository =
         BitCoinRepository(api, dataBase)
 
     @Singleton
