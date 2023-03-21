@@ -24,7 +24,7 @@
             android:paddingVertical="10dp">
 
             <TextView
-                android:id="@+id/tvToCurrency"
+                android:id="@+id/tvFromCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
@@ -41,23 +41,22 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="Arrow"
-                android:rotation="180"
                 app:layout_constraintBottom_toBottomOf="@+id/tvFromCurrency"
-                app:layout_constraintEnd_toStartOf="@+id/tvFromCurrency"
-                app:layout_constraintStart_toEndOf="@+id/tvToCurrency"
-                app:layout_constraintTop_toTopOf="@+id/tvToCurrency"
+                app:layout_constraintEnd_toStartOf="@+id/tvToCurrency"
+                app:layout_constraintStart_toEndOf="@+id/tvFromCurrency"
+                app:layout_constraintTop_toTopOf="@+id/tvFromCurrency"
                 app:srcCompat="@drawable/ic_round_double_arrow" />
 
             <TextView
-                android:id="@+id/tvFromCurrency"
+                android:id="@+id/tvToCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/grey"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvToCurrency"
+                app:layout_constraintBottom_toBottomOf="@+id/tvFromCurrency"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvToCurrency"
+                app:layout_constraintTop_toTopOf="@+id/tvFromCurrency"
                 tools:text="USD" />
 
             <TextView
@@ -74,9 +73,9 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tvToCurrency"
-                app:layout_constraintTop_toBottomOf="@+id/tvToCurrency"
-                tools:text="R$ 10000000000000" />
+                app:layout_constraintStart_toStartOf="@+id/tvFromCurrency"
+                app:layout_constraintTop_toBottomOf="@+id/tvFromCurrency"
+                tools:text="R$ 5,60" />
 
             <TextView
                 android:id="@+id/tvDateTime"
