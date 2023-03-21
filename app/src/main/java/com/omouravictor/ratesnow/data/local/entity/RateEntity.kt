@@ -1,13 +1,16 @@
 package com.omouravictor.ratesnow.data.local.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.omouravictor.ratesnow.presenter.rates.model.RateUiModel
 import java.util.*
 
-@Entity(tableName = "rate_table")
+@Entity(tableName = "rate_table", primaryKeys = ["fromCurrency", "toCurrency"])
 data class RateEntity(
-    @PrimaryKey(autoGenerate = false)
-    val currencyName: String,
-    val rate: Double,
-    val date: Date
+    val fromCurrency: String,
+    val toCurrency: String,
+    val rateDate: Date,
+    val rate: Double
 )
+
+fun RateEntity.toRateUiModel() =
+    RateUiModel(fromCurrency, toCurrency, rateDate, rate)

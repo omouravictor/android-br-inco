@@ -2,8 +2,8 @@ package com.omouravictor.ratesnow.data.repository
 
 import com.omouravictor.ratesnow.data.local.AppDataBase
 import com.omouravictor.ratesnow.data.local.entity.BitCoinEntity
-import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.SourceRequestBitcoinModel
 import com.omouravictor.ratesnow.data.network.ApiService
+import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.SourceRequestBitcoinModel
 import com.omouravictor.ratesnow.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

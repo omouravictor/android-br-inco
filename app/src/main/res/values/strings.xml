@@ -20,13 +20,4 @@
     <string name="start">INICIAR</string>
     <string name="previous">Anterior</string>
     <string name="next">Próximo</string>
-
-    <string-array name="from_currency_names">
-        <item>USD</item>
-        <item>EUR</item>
-        <item>JPY</item>
-        <item>GBP</item>
-        <item>CAD</item>
-        <item>BRL</item>
-    </string-array>
 </resources>

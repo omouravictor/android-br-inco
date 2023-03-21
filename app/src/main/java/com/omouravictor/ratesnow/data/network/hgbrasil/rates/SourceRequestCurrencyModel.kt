@@ -22,21 +22,13 @@ data class SourceRequestCurrencyModel(
 )
 
 fun SourceRequestCurrencyModel.toListRateEntity(currencies: String): List<RateEntity> {
+    val listCurrencies = currencies.split(",")
     val list: MutableList<RateEntity> = mutableListOf()
-    val date = Date()
+    val rateDate = Date()
 
-    currencies.split(",").forEach { currency ->
-        val rate = when (currency) {
-            "USD" -> sourceResultCurrency.resultsCurrencies["USD"]?.requestCurrencyBuy ?: 0.0
-            "EUR" -> sourceResultCurrency.resultsCurrencies["EUR"]?.requestCurrencyBuy ?: 0.0
-            "JPY" -> sourceResultCurrency.resultsCurrencies["JPY"]?.requestCurrencyBuy ?: 0.0
-            "GBP" -> sourceResultCurrency.resultsCurrencies["GBP"]?.requestCurrencyBuy ?: 0.0
-            "CAD" -> sourceResultCurrency.resultsCurrencies["CAD"]?.requestCurrencyBuy ?: 0.0
-            "AUD" -> sourceResultCurrency.resultsCurrencies["AUD"]?.requestCurrencyBuy ?: 0.0
-            else -> -1.0
-        }
-
-        list.add(RateEntity(currency, rate, date))
+    listCurrencies.forEach { currency ->
+        val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy ?: -1.0
+        list.add(RateEntity("BRL", currency, rateDate, rate))
     }
 
     return list
