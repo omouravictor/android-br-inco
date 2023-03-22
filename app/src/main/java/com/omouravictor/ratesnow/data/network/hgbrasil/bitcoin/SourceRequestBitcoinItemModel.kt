@@ -20,4 +20,4 @@ data class SourceRequestBitcoinItemModel(
 
     @SerializedName("variation")
     val requestBitcoinBrokerVariation: Double
-) {}
+)

@@ -19,8 +19,8 @@
 
     <fragment
         android:id="@+id/nav_bitcoin"
-        android:name="com.omouravictor.ratesnow.presenter.bitcoins.BitCoinFragment"
+        android:name="com.omouravictor.ratesnow.presenter.bitcoins.BitCoinsFragment"
         android:label="@string/bitcoin"
-        tools:layout="@layout/fragment_bitcoin" />
+        tools:layout="@layout/fragment_bitcoins" />
 
 </navigation>

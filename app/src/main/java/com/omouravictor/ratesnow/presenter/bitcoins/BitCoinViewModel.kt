@@ -1,78 +1,53 @@
 package com.omouravictor.ratesnow.presenter.bitcoins
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesnow.data.local.entity.BitCoinEntity
-import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.SourceRequestBitcoinItemModel
-import com.omouravictor.ratesnow.data.repository.BitCoinRepository
-import com.omouravictor.ratesnow.utils.DispatcherProvider
-import com.omouravictor.ratesnow.utils.Resource
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.omouravictor.ratesnow.data.local.entity.toBitCoinUiModel
+import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
+import com.omouravictor.ratesnow.data.network.hgbrasil.bitcoin.toListBitCoinEntity
+import com.omouravictor.ratesnow.data.repository.BitCoinsApiRepository
+import com.omouravictor.ratesnow.data.repository.BitCoinsLocalRepository
+import com.omouravictor.ratesnow.presenter.base.UiResultState
+import com.omouravictor.ratesnow.presenter.bitcoins.model.BitCoinUiModel
 import kotlinx.coroutines.launch
-import java.util.*
 
-class BitCoinViewModel @ViewModelInject constructor(
-
-    private val repository: BitCoinRepository,
-    private val dispatchers: DispatcherProvider
-
+class BitCoinsViewModel @ViewModelInject constructor(
+    private val bitCoinsLocalRepository: BitCoinsLocalRepository,
+    private val bitCoinsApiRepository: BitCoinsApiRepository
 ) : ViewModel() {
+    val bitCoins = MutableLiveData<UiResultState<List<BitCoinUiModel>>>()
+    private val filds = "bitcoin"
 
-    val bitCoinsList = repository.getAllFromDb().asLiveData()
-
-    sealed class BitCoinEvent {
-        class Failure(val errorText: String) : BitCoinEvent()
-        class Success(val text: String = "") : BitCoinEvent()
-        object Loading : BitCoinEvent()
+    init {
+        getBitCoins()
     }
 
-    private val bitCoinFields = "bitcoin"
-    private val _bitCoins = MutableStateFlow<BitCoinEvent>(BitCoinEvent.Success())
-    val bitCoins: StateFlow<BitCoinEvent> = _bitCoins
+    fun getBitCoins() {
+        viewModelScope.launch {
+            bitCoinsApiRepository.getRemoteBitCoins(filds).collect { networkResultStatus ->
+                when (networkResultStatus) {
+                    is NetworkResultStatus.Success -> {
+                        val remoteBitCoins = networkResultStatus.data.toListBitCoinEntity()
+                        bitCoinsLocalRepository.insertBitCoins(remoteBitCoins)
+                        bitCoins.postValue(UiResultState.Success(remoteBitCoins.map { it.toBitCoinUiModel() }))
+                    }
 
-    fun getBitCoin() {
-        viewModelScope.launch(dispatchers.io) {
-            _bitCoins.value = BitCoinEvent.Loading
-            tryBitCoinsFromApi()
-        }
-    }
+                    is NetworkResultStatus.Error -> {
+                        bitCoinsLocalRepository.getLocalBitCoins().collect { localBitCoins ->
+                            if (localBitCoins.isNotEmpty())
+                                bitCoins.postValue(UiResultState.Success(localBitCoins.map { it.toBitCoinUiModel() }))
+                            else
+                                bitCoins.postValue(UiResultState.Error(networkResultStatus.e))
+                        }
+                    }
 
-    private suspend fun tryBitCoinsFromApi() {
-        when (val request = repository.getAllFromApi(bitCoinFields)) {
-            is Resource.Success -> {
-                replaceBitCoinOnDb(request.data!!.sourceResultBitcoin.resultsBitcoin)
-                _bitCoins.value = BitCoinEvent.Success()
-            }
-            is Resource.Error -> {
-                if (bitCoinsList.value!!.isNotEmpty()) {
-                    _bitCoins.value = BitCoinEvent.Success()
-                } else {
-                    _bitCoins.value = BitCoinEvent.Failure("Verifique sua conexão :(")
+                    is NetworkResultStatus.Loading -> {
+                        bitCoins.postValue(UiResultState.Loading)
+                    }
                 }
             }
         }
-    }
-
-    private fun replaceBitCoinOnDb(apiResponse: LinkedHashMap<String, SourceRequestBitcoinItemModel>) {
-        val bitCoinsList: MutableList<BitCoinEntity> = mutableListOf()
-        apiResponse.forEach {
-            bitCoinsList.add(
-                BitCoinEntity(
-                    it.key,
-                    it.value.requestBitcoinBrokerName,
-                    it.value.requestBitcoinFormat[0],
-                    it.value.requestBitcoinFormat[1],
-                    it.value.requestBitcoinBrokerLast,
-                    it.value.requestBitcoinBrokerBuy,
-                    it.value.requestBitcoinBrokerSell,
-                    it.value.requestBitcoinBrokerVariation,
-                    Date()
-                )
-            )
-        }
-        repository.insertOnDb(bitCoinsList)
     }
 }
