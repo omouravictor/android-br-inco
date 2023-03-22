@@ -28,7 +28,7 @@ fun SourceRequestCurrencyModel.toListRateEntity(currencies: String): List<RateEn
 
     listCurrencies.forEach { currency ->
         val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy ?: -1.0
-        list.add(RateEntity("BRL", currency, rateDate, rate))
+        list.add(RateEntity(currency, "BRL", rate, rateDate))
     }
 
     return list

@@ -28,27 +28,25 @@ class RatesAdapter(
         holder.bind(ratesList[position])
     }
 
+    fun updateConversionRates(amount: Double) {
+        ratesList.forEach {
+            it.conversionRate = it.unityRate * amount
+        }
+        notifyDataSetChanged()
+    }
+
     class ConversionViewHolder(
         private val conversionItem: ConversionItemListBinding
     ) : RecyclerView.ViewHolder(conversionItem.root) {
         fun bind(rateUiModel: RateUiModel) {
-            val defaultLocale = Locale("pt", "BR")
-            val locale = when (rateUiModel.toCurrency) {
-                "USD" -> Locale("en", "US")
-                "EUR" -> Locale("en", "EU")
-                "JPY" -> Locale("ja", "JP")
-                "GBP" -> Locale("en", "GB")
-                "CAD" -> Locale("en", "CA")
-                "AUD" -> Locale("en", "AU")
-                else -> defaultLocale
-            }
-            val dateFormatter = SimpleDateFormat("dd/MM/yy", defaultLocale)
-            val timeFormatter = SimpleDateFormat("HH:mm", defaultLocale)
+            val locale = Locale("pt", "BR")
+            val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
+            val timeFormatter = SimpleDateFormat("HH:mm", locale)
 
             conversionItem.tvFromCurrency.text = rateUiModel.fromCurrency
             conversionItem.tvToCurrency.text = rateUiModel.toCurrency
             conversionItem.tvValue.text = NumberFormat.getCurrencyInstance(locale)
-                .format(round(1 * rateUiModel.rate * 100) / 100)
+                .format(round(1 * rateUiModel.conversionRate * 100) / 100)
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
                 conversionItem.tvDateTime.text = it
             }

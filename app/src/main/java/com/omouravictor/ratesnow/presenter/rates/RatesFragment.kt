@@ -60,26 +60,30 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initAdapter(ratesList: List<RateUiModel>) {
-        ratesAdapter = RatesAdapter(ratesList)
-
-        ratesBinding.rvConversions.apply {
-            adapter = ratesAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
-    }
-
     private fun initEtAmount() {
         ratesBinding.etAmount.setText("1")
         ratesBinding.etAmount.setSelection(1)
-        ratesBinding.etAmount.doAfterTextChanged { text ->
-//            ratesViewModel.convert(text.toString())
+        ratesBinding.etAmount.doAfterTextChanged {
+            val amount = it.toString()
+            if (amount.isNotEmpty())
+                ratesAdapter.updateConversionRates(amount.toDouble())
+            else
+                ratesAdapter.updateConversionRates(0.0)
         }
     }
 
     private fun initSwipeRefreshLayout() {
         ratesBinding.swipeRefreshLayout.setOnRefreshListener {
             ratesViewModel.getRates()
+        }
+    }
+
+    private fun initAdapter(ratesList: List<RateUiModel>) {
+        ratesAdapter = RatesAdapter(ratesList)
+
+        ratesBinding.rvConversions.apply {
+            adapter = ratesAdapter
+            layoutManager = LinearLayoutManager(context)
         }
     }
 

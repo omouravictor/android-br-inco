@@ -5,6 +5,7 @@ import java.util.*
 data class RateUiModel(
     val fromCurrency: String,
     val toCurrency: String,
-    val rateDate: Date,
-    val rate: Double
+    val unityRate: Double,
+    var conversionRate: Double,
+    val rateDate: Date
 )

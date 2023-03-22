@@ -8,9 +8,9 @@ import java.util.*
 data class RateEntity(
     val fromCurrency: String,
     val toCurrency: String,
-    val rateDate: Date,
-    val rate: Double
+    val unityRate: Double,
+    val rateDate: Date
 )
 
 fun RateEntity.toRateUiModel() =
-    RateUiModel(fromCurrency, toCurrency, rateDate, rate)
+    RateUiModel(fromCurrency, toCurrency, unityRate, unityRate, rateDate)

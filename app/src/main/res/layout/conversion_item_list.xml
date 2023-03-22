@@ -32,7 +32,7 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="BRL" />
+                tools:text="USD" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -57,19 +57,19 @@
                 app:layout_constraintBottom_toBottomOf="@+id/tvFromCurrency"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvFromCurrency"
-                tools:text="USD" />
+                tools:text="BRL" />
 
             <TextView
                 android:id="@+id/tvValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="32dp"
+                android:layout_marginEnd="24dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-medium"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="28sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
                 app:layout_constraintHorizontal_bias="0.0"

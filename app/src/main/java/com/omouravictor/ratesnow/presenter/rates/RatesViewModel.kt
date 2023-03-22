@@ -18,7 +18,7 @@ class RatesViewModel @ViewModelInject constructor(
     private val ratesApiRepository: RatesApiRepository
 ) : ViewModel() {
     val rates = MutableLiveData<UiResultState<List<RateUiModel>>>()
-    private val currencies = "USD,EUR,GBP,CAD,AUD,JPY"
+    private val currencies = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
 
     init {
         getRates()
@@ -29,9 +29,9 @@ class RatesViewModel @ViewModelInject constructor(
             ratesApiRepository.getRemoteRates(currencies).collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
-                        val listRateEntity = networkResultStatus.data.toListRateEntity(currencies)
-                        ratesLocalRepository.insertRates(listRateEntity)
-                        rates.postValue(UiResultState.Success(listRateEntity.map { it.toRateUiModel() }))
+                        val remoteRates = networkResultStatus.data.toListRateEntity(currencies)
+                        ratesLocalRepository.insertRates(remoteRates)
+                        rates.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
