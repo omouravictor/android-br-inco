@@ -13,4 +13,10 @@ data class RateEntity(
 )
 
 fun RateEntity.toRateUiModel() =
-    RateUiModel(fromCurrency, toCurrency, unityRate, unityRate, rateDate)
+    RateUiModel(
+        fromCurrency,
+        toCurrency,
+        unityRate,
+        unityRate,
+        rateDate
+    )

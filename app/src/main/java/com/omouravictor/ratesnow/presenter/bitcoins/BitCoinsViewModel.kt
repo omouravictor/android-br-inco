@@ -18,7 +18,7 @@ class BitCoinsViewModel @ViewModelInject constructor(
     private val bitCoinsApiRepository: BitCoinsApiRepository
 ) : ViewModel() {
     val bitCoins = MutableLiveData<UiResultState<List<BitCoinUiModel>>>()
-    private val filds = "bitcoin"
+    private val fields = "bitcoin"
 
     init {
         getBitCoins()
@@ -26,7 +26,7 @@ class BitCoinsViewModel @ViewModelInject constructor(
 
     fun getBitCoins() {
         viewModelScope.launch {
-            bitCoinsApiRepository.getRemoteBitCoins(filds).collect { networkResultStatus ->
+            bitCoinsApiRepository.getRemoteBitCoins(fields).collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteBitCoins = networkResultStatus.data.toListBitCoinEntity()

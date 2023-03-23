@@ -19,12 +19,12 @@ class BitCoinsLocalRepository(private val database: AppDataBase) {
 }
 
 class BitCoinsApiRepository(private val apiService: ApiService) {
-    suspend fun getRemoteBitCoins(filds: String): Flow<NetworkResultStatus<SourceRequestBitCoinModel>> {
+    suspend fun getRemoteBitCoins(fields: String): Flow<NetworkResultStatus<SourceRequestBitCoinModel>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)
                 try {
-                    val request = apiService.getBitCoins(filds)
+                    val request = apiService.getBitCoins(fields)
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
                     emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados da internet :(")))
