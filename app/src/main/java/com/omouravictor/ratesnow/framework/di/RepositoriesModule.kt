@@ -25,17 +25,22 @@ object RepositoriesModule {
 
     @Singleton
     @Provides
-    fun provideBitCoinApiRepository(api: ApiService): BitCoinsApiRepository =
+    fun provideBitCoinsApiRepository(api: ApiService): BitCoinsApiRepository =
         BitCoinsApiRepository(api)
 
     @Singleton
     @Provides
-    fun provideBitCoisLocalRepository(dataBase: AppDataBase): BitCoinsLocalRepository =
+    fun provideBitCoinsLocalRepository(dataBase: AppDataBase): BitCoinsLocalRepository =
         BitCoinsLocalRepository(dataBase)
 
     @Singleton
     @Provides
-    fun provideStocksRepository(api: ApiService, dataBase: AppDataBase): StocksRepository =
-        StocksRepository(api, dataBase)
+    fun provideStocksApiRepository(api: ApiService): StocksApiRepository =
+        StocksApiRepository(api)
+
+    @Singleton
+    @Provides
+    fun provideStocksLocalRepository(dataBase: AppDataBase): StocksLocalRepository =
+        StocksLocalRepository(dataBase)
 
 }

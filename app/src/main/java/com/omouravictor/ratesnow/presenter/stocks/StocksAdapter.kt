@@ -1,26 +1,24 @@
 package com.omouravictor.ratesnow.presenter.stocks
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesnow.R
-import com.omouravictor.ratesnow.data.local.entity.StockEntity
 import com.omouravictor.ratesnow.databinding.StockItemListBinding
+import com.omouravictor.ratesnow.presenter.stocks.model.StockUiModel
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StockAdapter(
-    private var list: List<StockEntity>,
-    private val context: Context
-) : RecyclerView.Adapter<StockAdapter.StockViewHolder>() {
+class StocksAdapter(
+    private var list: List<StockUiModel>
+) : RecyclerView.Adapter<StocksAdapter.StockViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
             StockItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StockViewHolder(binding, context)
+        return StockViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -32,31 +30,27 @@ class StockAdapter(
     }
 
     class StockViewHolder(
-        private val stockItem: StockItemListBinding,
-        private val context: Context,
+        private val stockItem: StockItemListBinding
     ) : RecyclerView.ViewHolder(stockItem.root) {
-        fun bind(stock: StockEntity) {
+        fun bind(stock: StockUiModel) {
             val locale = Locale("pt", "BR")
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
             val decimalFormat = DecimalFormat("#0.00#", DecimalFormatSymbols.getInstance(locale))
 
-            "${stock.stockTerm} - ${stock.stockLocation}".also {
-                stockItem.textViewStockName.text = it
-            }
-            stockItem.textViewStockVariation.text = decimalFormat.format(stock.stockVariation)
-            "${dateFormatter.format(stock.date)}\n${timeFormatter.format(stock.date)}".also {
-                stockItem.tvDateTime.text = it
-            }
+            stockItem.textViewStockName.text = "${stock.stockTerm} / ${stock.stockLocation}"
+            stockItem.tvDateTime.text =
+                "${dateFormatter.format(stock.date)}\n${timeFormatter.format(stock.date)}"
 
-            if (stock.stockVariation <= 0.0) {
-                stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
-                stockItem.textViewStockVariation.setTextColor(Color.RED)
-                stockItem.percent.setTextColor(Color.RED)
-            } else {
+            if (stock.stockVariation >= 0.0) {
+                stockItem.textViewStockVariation.text =
+                    "+${decimalFormat.format(stock.stockVariation)}"
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
                 stockItem.textViewStockVariation.setTextColor(Color.GREEN)
                 stockItem.percent.setTextColor(Color.GREEN)
+            } else {
+                stockItem.textViewStockVariation.text = decimalFormat.format(stock.stockVariation)
+                stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
             }
         }
     }

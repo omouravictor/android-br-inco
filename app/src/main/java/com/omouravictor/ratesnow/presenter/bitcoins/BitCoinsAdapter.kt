@@ -46,10 +46,12 @@ class BitCoinsAdapter(
                 decimalFormat.format(bitcoin.bitcoinVariation) + "%"
             bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.bitcoinLast)
 
-            bitCoinItem.textViewBitcoinVariation.text = if (bitcoin.bitcoinVariation >= 0)
-                "+${bitcoin.bitcoinVariation}"
-            else
-                "${bitcoin.bitcoinVariation}"
+            if (bitcoin.bitcoinVariation >= 0) {
+                bitCoinItem.textViewBitcoinVariation.text = "+${bitcoin.bitcoinVariation}%"
+                bitCoinItem.textViewBitcoinVariation.setTextColor(Color.GREEN)
+            } else {
+                bitCoinItem.textViewBitcoinVariation.text = "${bitcoin.bitcoinVariation}%"
+            }
 
             bitCoinItem.tvDateTime.text =
                 "${dateFormatter.format(bitcoin.date)}\n${timeFormatter.format(bitcoin.date)}"

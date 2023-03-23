@@ -21,5 +21,5 @@ interface ApiService {
     @GET("finance")
     suspend fun getStocks(
         @Query("fields") field: String
-    ): Response<SourceRequestStockModel>
+    ): SourceRequestStockModel
 }
