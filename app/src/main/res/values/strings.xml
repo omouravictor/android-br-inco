@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">RatesNow</string>
-    <string name="stock_exchanges">Bolsa de valores</string>
-    <string name="bitcoin">Bitcoin</string>
+    <string name="stock_exchanges">Bolsas de valores</string>
+    <string name="stocks">Bolsas</string>
+    <string name="bitcoins">Bitcoins</string>
     <string name="conversion">Conversão</string>
     <string name="bit_coin_fragment_tittle">Cotação do bitcoin nas principais corretoras</string>
     <string name="stocks_fragment_tittle">Índices de bolsa de valores pelo mundo</string>
