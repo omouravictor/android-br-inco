@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/follow_the_index_of_some_stock_exchanges"
+        android:text="@string/follow_the_index_of_stock_exchanges"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp" />
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/follow_the_index_of_the_price_of_bitcoin_in_some_brokers"
+        android:text="@string/follow_the_index_of_the_price_bitcoin"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp" />
