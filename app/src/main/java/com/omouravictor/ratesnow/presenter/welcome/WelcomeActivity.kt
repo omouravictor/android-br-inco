@@ -43,8 +43,7 @@ class WelcomeActivity : AppCompatActivity() {
         val pagerAdapter = FragmentsViewPagerManager(this)
         welcomePager.adapter = pagerAdapter
 
-        TabLayoutMediator(tabWelcome, welcomePager) { tab, position ->
-        }.attach()
+        TabLayoutMediator(tabWelcome, welcomePager) { tab, position -> }.attach()
 
         welcomePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

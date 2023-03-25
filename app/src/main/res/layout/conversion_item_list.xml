@@ -70,7 +70,6 @@
                 android:maxLines="1"
                 android:textColor="@color/white"
                 android:textSize="26sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tvFromCurrency"
