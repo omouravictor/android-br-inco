@@ -42,17 +42,20 @@ class BitCoinsFragment : Fragment() {
                     bitCoinBinding.swipeRefreshLayout.isRefreshing = false
                     bitCoinBinding.progressBar.isVisible = false
                     bitCoinBinding.rvBitCoins.isVisible = true
+                    bitCoinBinding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     bitCoinBinding.swipeRefreshLayout.isRefreshing = false
                     bitCoinBinding.progressBar.isVisible = false
                     bitCoinBinding.rvBitCoins.isVisible = false
-                    Toast.makeText(context, it.e.message, Toast.LENGTH_SHORT).show()
+                    bitCoinBinding.includeViewError.root.isVisible = true
+                    bitCoinBinding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     bitCoinBinding.swipeRefreshLayout.isRefreshing = false
                     bitCoinBinding.progressBar.isVisible = true
                     bitCoinBinding.rvBitCoins.isVisible = false
+                    bitCoinBinding.includeViewError.root.isVisible = false
                 }
             }
         }

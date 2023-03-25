@@ -42,17 +42,20 @@ class StocksFragment : Fragment() {
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = false
                     stockBinding.rvStocks.isVisible = true
+                    stockBinding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = false
                     stockBinding.rvStocks.isVisible = false
-                    Toast.makeText(context, it.e.message, Toast.LENGTH_SHORT).show()
+                    stockBinding.includeViewError.root.isVisible = true
+                    stockBinding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = true
                     stockBinding.rvStocks.isVisible = false
+                    stockBinding.includeViewError.root.isVisible = false
                 }
             }
         }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
+import com.omouravictor.ratesbr.presenter.stocks.StocksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,17 +45,20 @@ class RatesFragment : Fragment() {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
                     ratesBinding.rvConversions.isVisible = true
+                    ratesBinding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
                     ratesBinding.rvConversions.isVisible = false
-                    Toast.makeText(context, it.e.message, Toast.LENGTH_SHORT).show()
+                    ratesBinding.includeViewError.root.isVisible = true
+                    ratesBinding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = true
                     ratesBinding.rvConversions.isVisible = false
+                    ratesBinding.includeViewError.root.isVisible = false
                 }
             }
         }
