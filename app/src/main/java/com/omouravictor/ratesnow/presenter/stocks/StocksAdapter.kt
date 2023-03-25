@@ -41,15 +41,13 @@ class StocksAdapter(
             stockItem.textViewStockName.text = "${stock.stockTerm} / ${stock.stockLocation}"
             stockItem.tvDateTime.text =
                 "${dateFormatter.format(stock.date)}\n${timeFormatter.format(stock.date)}"
+            stockItem.textViewStockVariation.text = "${decimalFormat.format(stock.stockVariation)}%"
 
             if (stock.stockVariation >= 0.0) {
-                stockItem.textViewStockVariation.text =
-                    "+${decimalFormat.format(stock.stockVariation)}"
+                stockItem.textViewStockVariation.text = "+${stockItem.textViewStockVariation.text}"
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
                 stockItem.textViewStockVariation.setTextColor(Color.GREEN)
-                stockItem.percent.setTextColor(Color.GREEN)
             } else {
-                stockItem.textViewStockVariation.text = decimalFormat.format(stock.stockVariation)
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
             }
         }

@@ -19,6 +19,7 @@
             android:theme="@style/Theme.App" />
         <activity
             android:name=".presenter.MainActivity"
+            android:windowSoftInputMode="adjustResize|adjustNothing"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -48,24 +48,13 @@
                 android:id="@+id/textViewStockVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/gray"
+                android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
                 app:layout_constraintStart_toEndOf="@+id/imageViewStockVariation"
                 app:layout_constraintTop_toTopOf="@+id/imageViewStockVariation"
                 tools:text="0.00" />
-
-            <TextView
-                android:id="@+id/percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="%"
-                android:textColor="@color/gray"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
-                app:layout_constraintStart_toEndOf="@+id/textViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
 
             <TextView
                 android:id="@+id/tvDateTime"
