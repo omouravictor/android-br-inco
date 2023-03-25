@@ -13,7 +13,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.omouravictor.ratesnow"
+        applicationId "com.omouravictor.ratesbr"
         minSdkVersion 22
         targetSdk 32
         versionCode 1
