@@ -7,20 +7,20 @@
 
     <fragment
         android:id="@+id/nav_conversions"
-        android:name="com.omouravictor.ratesnow.ui.view.fragment.RateFragment"
+        android:name="com.omouravictor.ratesnow.presenter.rates.RatesFragment"
         android:label="@string/conversion"
-        tools:layout="@layout/fragment_rate" />
+        tools:layout="@layout/fragment_rates" />
 
     <fragment
-        android:id="@+id/nav_stock"
-        android:name="com.omouravictor.ratesnow.ui.view.fragment.StockFragment"
+        android:id="@+id/nav_stocks"
+        android:name="com.omouravictor.ratesnow.presenter.stocks.StocksFragment"
         android:label="@string/stock_exchanges"
-        tools:layout="@layout/fragment_stock" />
+        tools:layout="@layout/fragment_stocks" />
 
     <fragment
-        android:id="@+id/nav_bitcoin"
-        android:name="com.omouravictor.ratesnow.ui.view.fragment.BitCoinFragment"
-        android:label="@string/bitcoin"
-        tools:layout="@layout/fragment_bitcoin" />
+        android:id="@+id/nav_bitcoins"
+        android:name="com.omouravictor.ratesnow.presenter.bitcoins.BitCoinsFragment"
+        android:label="@string/bitcoins"
+        tools:layout="@layout/fragment_bitcoins" />
 
 </navigation>

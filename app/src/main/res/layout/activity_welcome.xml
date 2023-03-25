@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.view.activity.WelcomeActivity">
+    tools:context=".presenter.welcome.WelcomeActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_welcome"
@@ -23,11 +23,11 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerWelcome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_layout_welcome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewPrevious"

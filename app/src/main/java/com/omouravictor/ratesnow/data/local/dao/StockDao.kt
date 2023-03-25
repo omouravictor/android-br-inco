@@ -13,5 +13,5 @@ interface StockDao {
     fun getAllStocks(): Flow<List<StockEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertStock(stocks: List<StockEntity>)
+    suspend fun insertStocks(listStockEntity: List<StockEntity>)
 }

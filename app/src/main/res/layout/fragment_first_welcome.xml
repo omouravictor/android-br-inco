@@ -12,7 +12,7 @@
         android:layout_marginBottom="20dp"
         android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="34sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <TextView
@@ -22,15 +22,13 @@
         android:layout_marginBottom="10dp"
         android:text="@string/hello_welcome"
         android:textColor="@color/black"
-        android:textSize="34sp" />
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/textViewSecondWelcomeTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ems="15"
-        android:text="@string/before_continuing_we_want_you_to_know_a_little_about_our_functions"
+        android:text="@string/before_continuing_we_want"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp" />

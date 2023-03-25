@@ -13,5 +13,5 @@ interface BitCoinDao {
     fun getAllBitCoins(): Flow<List<BitCoinEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBitCoin(bitCoins: List<BitCoinEntity>)
+    suspend fun insertBitCoins(listBitCoinEntity: List<BitCoinEntity>)
 }

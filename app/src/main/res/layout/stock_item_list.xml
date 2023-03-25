@@ -10,7 +10,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,10 +30,31 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="IBOVESPA / São Paulo, Brazil" />
+
+            <ImageView
+                android:id="@+id/imageViewStockVariation"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_arrow_down"
+                app:layout_constraintBottom_toTopOf="@+id/tvDateTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewStockName" />
+
+            <TextView
+                android:id="@+id/textViewStockVariation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/gray"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
+                app:layout_constraintStart_toEndOf="@+id/imageViewStockVariation"
+                app:layout_constraintTop_toTopOf="@+id/imageViewStockVariation"
+                tools:text="0.00" />
 
             <TextView
                 android:id="@+id/tvDateTime"
@@ -47,36 +68,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="06/07/22\n15:53" />
-
-            <ImageView
-                android:id="@+id/imageViewStockVariation"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_arrow_down"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStockName" />
-
-            <TextView
-                android:id="@+id/textViewStockVariation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
-                app:layout_constraintStart_toEndOf="@+id/imageViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/imageViewStockVariation"
-                tools:text="0.00" />
-
-            <TextView
-                android:id="@+id/percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="%"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
-                app:layout_constraintStart_toEndOf="@+id/textViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

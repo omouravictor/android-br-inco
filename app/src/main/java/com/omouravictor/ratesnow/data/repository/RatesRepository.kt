@@ -1,38 +1,35 @@
 package com.omouravictor.ratesnow.data.repository
 
-import com.omouravictor.ratesnow.data.remote.apilayer.RatesApi
-import com.omouravictor.ratesnow.data.remote.apilayer.SourceRequestRatesModel
 import com.omouravictor.ratesnow.data.local.AppDataBase
-import com.omouravictor.ratesnow.data.local.entity.RatesEntity
-import com.omouravictor.ratesnow.utils.Resource
-import javax.inject.Inject
+import com.omouravictor.ratesnow.data.local.entity.RateEntity
+import com.omouravictor.ratesnow.data.network.ApiService
+import com.omouravictor.ratesnow.data.network.base.NetworkResultStatus
+import com.omouravictor.ratesnow.data.network.hgbrasil.rates.SourceRequestCurrencyModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
-private const val API_KEY = "vun27fVe86DqCJOVkaomPgQNItQg6sus"
+class RatesLocalRepository(private val database: AppDataBase) {
+    fun getLocalRates(): Flow<List<RateEntity>> = database.rateDao().getAllRates()
 
-class RatesRepository @Inject constructor(
-    private val api: RatesApi, private val database: AppDataBase
-) {
-    suspend fun getAllFromApi(
-        fromCurrency: String,
-        toCurrencies: String
-    ): Resource<SourceRequestRatesModel> {
-        return try {
-            val response = api.getRates(fromCurrency, toCurrencies, API_KEY)
-            val result = response.body()
-            if (response.isSuccessful && result != null)
-                Resource.Success(result)
-            else
-                Resource.Error(response.message())
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
+    suspend fun insertRates(listRateEntity: List<RateEntity>) {
+        database.rateDao().insertRates(listRateEntity)
+    }
+}
+
+class RatesApiRepository(private val apiService: ApiService) {
+    suspend fun getRemoteRates(currencies: String): Flow<NetworkResultStatus<SourceRequestCurrencyModel>> {
+        return withContext(Dispatchers.IO) {
+            flow {
+                emit(NetworkResultStatus.Loading)
+                try {
+                    val request = apiService.getRates(currencies)
+                    emit(NetworkResultStatus.Success(request))
+                } catch (e: Exception) {
+                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados da internet :(")))
+                }
+            }
         }
-    }
-
-    fun getFromDb(currencyBase: String): RatesEntity? {
-        return database.rateDao().getRatesForCurrency(currencyBase)
-    }
-
-    fun insertOnDb(rates: RatesEntity) {
-        database.rateDao().insertRate(rates)
     }
 }
