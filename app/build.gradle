@@ -5,9 +5,9 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
-def apisPropertiesFile = rootProject.file("apis.properties")
-def apisProperties = new Properties()
-apisProperties.load(new FileInputStream(apisPropertiesFile))
+def apiPropertiesFile = rootProject.file("api.properties")
+def apiProperties = new Properties()
+apiProperties.load(new FileInputStream(apiPropertiesFile))
 
 android {
     compileSdk 32
@@ -20,7 +20,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY_HG", apisProperties['API_KEY_HG'])
+        buildConfigField("String", "API_KEY_HG", apiProperties['API_KEY_HG'])
         buildConfigField("String", "BASE_URL_HG", '"https://api.hgbrasil.com/"')
     }
 
