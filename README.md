@@ -9,7 +9,7 @@
 
 Some application screens:
 
-<img src="https://github.com/omouravictor/assets/blob/main/assets/rates-now/app-screens.png" alt="app-screens">
+![app-screens](https://user-images.githubusercontent.com/64164023/227753715-065e3936-c801-435a-af29-3cc93383ee6e.png)
 
 ## About this project
 
