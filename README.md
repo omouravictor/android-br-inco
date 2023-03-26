@@ -15,7 +15,7 @@ Some application screens:
 
 - MVVM
 
-## Techs Used
+## Techs used
 
 - [Room](https://developer.android.com/training/data-storage/room)
 - [Retrofit2](https://square.github.io/retrofit/)
