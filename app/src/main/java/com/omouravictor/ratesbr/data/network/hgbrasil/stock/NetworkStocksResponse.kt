@@ -12,7 +12,7 @@ data class SourceRequestStockModel(
     val sourceValidKey: Boolean,
 
     @SerializedName("results")
-    val sourceResultStocks: SourceRequestResultStockModel,
+    val sourceResultStocks: NetworkStocksResultsResponse,
 
     @SerializedName("execution_time")
     val sourceExecutionTime: Double,

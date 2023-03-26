@@ -2,7 +2,7 @@ package com.omouravictor.ratesbr.data.network.hgbrasil.rates
 
 import com.google.gson.annotations.SerializedName
 
-data class SourceRequestCurrencyItemModel(
+data class NetworkRatesResultsItemResponse(
     @SerializedName("name")
     val requestCurrencyName: String,
 

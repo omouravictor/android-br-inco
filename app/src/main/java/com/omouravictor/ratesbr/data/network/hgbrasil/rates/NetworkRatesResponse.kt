@@ -12,7 +12,7 @@ data class SourceRequestCurrencyModel(
     val sourceValidKey: Boolean,
 
     @SerializedName("results")
-    val sourceResultCurrency: SourceRequestResultCurrencyModel,
+    val sourceResultCurrency: NetworkRatesResultsResponse,
 
     @SerializedName("execution_time")
     val sourceExecutionTime: Double,

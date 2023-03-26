@@ -2,7 +2,7 @@ package com.omouravictor.ratesbr.data.network.hgbrasil.stock
 
 import com.google.gson.annotations.SerializedName
 
-data class SourceRequestResultStockModel(
+data class NetworkStocksResultsResponse(
     @SerializedName("stocks")
-    val resultsStocks: LinkedHashMap<String, SourceRequestStockItemModel>
+    val resultsStocks: LinkedHashMap<String, NetworkStocksResultsItemResponse>
 )

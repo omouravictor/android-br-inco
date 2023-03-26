@@ -2,7 +2,7 @@ package com.omouravictor.ratesbr.data.network.hgbrasil.rates
 
 import com.google.gson.annotations.SerializedName
 
-data class SourceRequestResultCurrencyModel(
+data class NetworkRatesResultsResponse(
     @SerializedName("currencies")
-    val resultsCurrencies: LinkedHashMap<String, SourceRequestCurrencyItemModel>,
+    val resultsCurrencies: LinkedHashMap<String, NetworkRatesResultsItemResponse>,
 )

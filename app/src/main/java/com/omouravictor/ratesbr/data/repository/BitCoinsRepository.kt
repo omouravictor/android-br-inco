@@ -4,7 +4,7 @@ import com.omouravictor.ratesbr.data.local.AppDataBase
 import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
 import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.SourceRequestBitCoinModel
+import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitCoinResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,7 +19,7 @@ class BitCoinsLocalRepository(private val database: AppDataBase) {
 }
 
 class BitCoinsApiRepository(private val apiService: ApiService) {
-    suspend fun getRemoteBitCoins(fields: String): Flow<NetworkResultStatus<SourceRequestBitCoinModel>> {
+    suspend fun getRemoteBitCoins(fields: String): Flow<NetworkResultStatus<NetworkBitCoinResult>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)

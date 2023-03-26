@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
 import java.util.*
 
-data class SourceRequestBitCoinModel(
+data class NetworkBitCoinResult(
     @SerializedName("by")
     val sourceBy: String,
 
@@ -12,7 +12,7 @@ data class SourceRequestBitCoinModel(
     val sourceValidKey: Boolean,
 
     @SerializedName("results")
-    val sourceResultBitcoin: SourceRequestResultBitcoinModel,
+    val sourceResultBitcoin: NetworkBitCoinsResultsResponse,
 
     @SerializedName("execution_time")
     val sourceExecutionTime: Double,
@@ -21,7 +21,7 @@ data class SourceRequestBitCoinModel(
     val from_cache: Boolean
 )
 
-fun SourceRequestBitCoinModel.toListBitCoinEntity(): List<BitCoinEntity> {
+fun NetworkBitCoinResult.toListBitCoinEntity(): List<BitCoinEntity> {
     val list: MutableList<BitCoinEntity> = mutableListOf()
     val date = Date()
 
