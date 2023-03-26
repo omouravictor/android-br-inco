@@ -13,7 +13,7 @@ Some application screens:
 
 ## Architecture
 
-- [MVVM](https://medium.com/android-dev-br/arquiteturas-em-android-mvvm-kotlin-android-architecture-components-databinding-lifecycle-d5e7a9023cf3)
+- MVVM
 
 ## Techs Used
 
