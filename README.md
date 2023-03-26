@@ -11,6 +11,21 @@ Some application screens:
 
 ![app-screens](https://user-images.githubusercontent.com/64164023/227753715-065e3936-c801-435a-af29-3cc93383ee6e.png)
 
+## Architecture
+
+- [MVVM](https://medium.com/android-dev-br/arquiteturas-em-android-mvvm-kotlin-android-architecture-components-databinding-lifecycle-d5e7a9023cf3)
+
+## Techs Used
+
+- [Room](https://developer.android.com/training/data-storage/room)
+- [Retrofit2](https://square.github.io/retrofit/)
+- [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+- [OkHttp](https://square.github.io/okhttp/)
+- [Swiperefreshlayout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+- [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+
 ## About this project
 
 In this application you can:
