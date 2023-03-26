@@ -27,7 +27,7 @@ class StocksApiRepository(private val apiService: ApiService) {
                     val request = apiService.getStocks(fields)
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
-                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados da internet :(")))
+                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :(")))
                 }
             }
         }
