@@ -28,6 +28,7 @@
         android:id="@+id/textViewSecondWelcomeTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:text="@string/before_continuing_we_want"
         android:textAlignment="center"
         android:textColor="@color/black"
