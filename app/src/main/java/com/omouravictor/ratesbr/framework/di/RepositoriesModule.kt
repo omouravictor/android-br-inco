@@ -21,7 +21,7 @@ object RepositoriesModule {
     @Singleton
     @Provides
     fun provideRatesLocalRepository(dataBase: AppDataBase): RatesLocalRepository =
-        RatesLocalRepository(dataBase)
+        RatesLocalRepository(dataBase.rateDao())
 
     @Singleton
     @Provides
@@ -31,7 +31,7 @@ object RepositoriesModule {
     @Singleton
     @Provides
     fun provideBitCoinsLocalRepository(dataBase: AppDataBase): BitCoinsLocalRepository =
-        BitCoinsLocalRepository(dataBase)
+        BitCoinsLocalRepository(dataBase.bitCoinDao())
 
     @Singleton
     @Provides
@@ -41,6 +41,6 @@ object RepositoriesModule {
     @Singleton
     @Provides
     fun provideStocksLocalRepository(dataBase: AppDataBase): StocksLocalRepository =
-        StocksLocalRepository(dataBase)
+        StocksLocalRepository(dataBase.stockDao())
 
 }

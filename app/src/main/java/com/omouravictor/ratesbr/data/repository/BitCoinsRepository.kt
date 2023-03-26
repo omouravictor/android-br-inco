@@ -1,6 +1,6 @@
 package com.omouravictor.ratesbr.data.repository
 
-import com.omouravictor.ratesbr.data.local.AppDataBase
+import com.omouravictor.ratesbr.data.local.dao.BitCoinDao
 import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
 import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class BitCoinsLocalRepository(private val database: AppDataBase) {
-    fun getLocalBitCoins(): Flow<List<BitCoinEntity>> = database.bitCoinDao().getAllBitCoins()
+class BitCoinsLocalRepository(private val bitCoinDao: BitCoinDao) {
+    fun getLocalBitCoins(): Flow<List<BitCoinEntity>> = bitCoinDao.getAllBitCoins()
 
     suspend fun insertBitCoins(listBitCoinEntity: List<BitCoinEntity>) {
-        database.bitCoinDao().insertBitCoins(listBitCoinEntity)
+        bitCoinDao.insertBitCoins(listBitCoinEntity)
     }
 }
 
