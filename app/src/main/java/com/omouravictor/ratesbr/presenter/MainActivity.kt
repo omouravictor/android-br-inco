@@ -41,15 +41,17 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        getNewUser()
+        checkIfIsAppFirstRun()
     }
 
-    private fun getNewUser() {
-        val newUser = booleanPreferencesKey("newUser")
-        val newUserFlow: Flow<Boolean> = application.dataStore.data.map { it[newUser] ?: true }
+    private fun checkIfIsAppFirstRun() {
+        val appFirstRunPrefKey = booleanPreferencesKey("appFirstRun")
+        val appFirstRunFlow: Flow<Boolean> = application.dataStore.data.map { preferences ->
+            preferences[appFirstRunPrefKey] ?: true
+        }
 
         lifecycleScope.launch {
-            newUserFlow.collect {
+            appFirstRunFlow.collect {
                 if (it) {
                     val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                     startActivity(intent)
