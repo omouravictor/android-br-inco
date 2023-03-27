@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import java.util.*
 
-data class SourceRequestCurrencyModel(
+data class NetworkRatesResponse(
     @SerializedName("by")
     val sourceBy: String,
 
@@ -21,7 +21,7 @@ data class SourceRequestCurrencyModel(
     val from_cache: Boolean
 )
 
-fun SourceRequestCurrencyModel.toListRateEntity(currencies: String): List<RateEntity> {
+fun NetworkRatesResponse.toListRateEntity(currencies: String): List<RateEntity> {
     val listCurrencies = currencies.split(",")
     val list: MutableList<RateEntity> = mutableListOf()
     val rateDate = Date()

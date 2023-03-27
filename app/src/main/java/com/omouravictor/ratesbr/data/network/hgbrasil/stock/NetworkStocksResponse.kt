@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.StockEntity
 import java.util.*
 
-data class SourceRequestStockModel(
+data class NetworkStocksResponse(
     @SerializedName("by")
     val sourceBy: String,
 
@@ -21,7 +21,7 @@ data class SourceRequestStockModel(
     val from_cache: Boolean
 )
 
-fun SourceRequestStockModel.toListStockEntity(): List<StockEntity> {
+fun NetworkStocksResponse.toListStockEntity(): List<StockEntity> {
     val list: MutableList<StockEntity> = mutableListOf()
     val date = Date()
 
