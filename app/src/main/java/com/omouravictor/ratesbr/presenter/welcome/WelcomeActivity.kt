@@ -26,43 +26,32 @@ class WelcomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initWelcomePager()
-        getClicks()
+        setClickListeners()
     }
 
-    private fun getClicks() {
+    private fun setClickListeners() {
         binding.textViewNext.setOnClickListener {
-            welcomePager.currentItem = welcomePager.currentItem + 1
+            welcomePager.currentItem++
         }
 
         binding.textViewPrevious.setOnClickListener {
-            welcomePager.currentItem = welcomePager.currentItem - 1
+            welcomePager.currentItem--
         }
     }
 
     private fun initWelcomePager() {
-        val pagerAdapter = FragmentsViewPagerManager(this)
-        welcomePager.adapter = pagerAdapter
-
-        TabLayoutMediator(tabWelcome, welcomePager) { tab, position -> }.attach()
+        welcomePager.adapter = FragmentsViewPagerManager(this)
 
         welcomePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                when (position) {
-                    0 -> {
-                        binding.textViewPrevious.visibility = View.GONE
-                        binding.textViewNext.visibility = View.VISIBLE
-                    }
-                    1 -> {
-                        binding.textViewPrevious.visibility = View.VISIBLE
-                        binding.textViewNext.visibility = View.VISIBLE
-                    }
-                    2 -> {
-                        binding.textViewPrevious.visibility = View.VISIBLE
-                        binding.textViewNext.visibility = View.GONE
-                    }
-                }
+                binding.textViewPrevious.visibility = if (position > 0) View.VISIBLE else View.GONE
+
+                binding.textViewNext.visibility = if (position < 2) View.VISIBLE else View.GONE
+
                 super.onPageSelected(position)
             }
         })
+
+        TabLayoutMediator(tabWelcome, welcomePager) { tab, position -> }.attach()
     }
 }
