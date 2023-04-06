@@ -29,7 +29,7 @@ class RatesViewModel @ViewModelInject constructor(
             ratesApiRepository.getRemoteRates(currencies).collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
-                        val remoteRates = networkResultStatus.data.toListRateEntity(currencies)
+                        val remoteRates = networkResultStatus.data.toListRateEntity()
                         ratesLocalRepository.insertRates(remoteRates)
                         rates.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
                     }

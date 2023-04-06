@@ -21,12 +21,11 @@ data class NetworkRatesResponse(
     val from_cache: Boolean
 )
 
-fun NetworkRatesResponse.toListRateEntity(currencies: String): List<RateEntity> {
-    val listCurrencies = currencies.split(",")
+fun NetworkRatesResponse.toListRateEntity(): List<RateEntity> {
     val list: MutableList<RateEntity> = mutableListOf()
     val rateDate = Date()
 
-    listCurrencies.forEach { currency ->
+    sourceResultCurrency.resultsCurrencies.keys.forEach { currency ->
         val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy ?: -1.0
         list.add(RateEntity(currency, "BRL", rate, rateDate))
     }
