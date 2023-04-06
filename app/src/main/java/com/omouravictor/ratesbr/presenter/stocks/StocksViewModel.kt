@@ -7,15 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesbr.data.local.entity.toStockUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgbrasil.stock.toListStockEntity
-import com.omouravictor.ratesbr.data.repository.StocksApiRepository
-import com.omouravictor.ratesbr.data.repository.StocksLocalRepository
+import com.omouravictor.ratesbr.data.repository.StocksRepository
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import kotlinx.coroutines.launch
 
 class StocksViewModel @ViewModelInject constructor(
-    private val stocksLocalRepository: StocksLocalRepository,
-    private val stocksApiRepository: StocksApiRepository
+    private val stocksRepository: StocksRepository
 ) : ViewModel() {
     val stocks = MutableLiveData<UiResultState<List<StockUiModel>>>()
     private val fields = "stocks"
@@ -26,16 +24,16 @@ class StocksViewModel @ViewModelInject constructor(
 
     fun getStocks() {
         viewModelScope.launch {
-            stocksApiRepository.getRemoteStocks(fields).collect { networkResultStatus ->
+            stocksRepository.getRemoteStocks(fields).collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteStocks = networkResultStatus.data.toListStockEntity()
-                        stocksLocalRepository.insertStocks(remoteStocks)
+                        stocksRepository.insertStocks(remoteStocks)
                         stocks.postValue(UiResultState.Success(remoteStocks.map { it.toStockUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
-                        stocksLocalRepository.getLocalStocks().collect { localStocks ->
+                        stocksRepository.getLocalStocks().collect { localStocks ->
                             if (localStocks.isNotEmpty())
                                 stocks.postValue(UiResultState.Success(localStocks.map { it.toStockUiModel() }))
                             else

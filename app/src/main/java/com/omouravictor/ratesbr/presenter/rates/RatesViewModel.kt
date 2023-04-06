@@ -7,15 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.toListRateEntity
-import com.omouravictor.ratesbr.data.repository.RatesApiRepository
-import com.omouravictor.ratesbr.data.repository.RatesLocalRepository
+import com.omouravictor.ratesbr.data.repository.RatesRepository
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import kotlinx.coroutines.launch
 
 class RatesViewModel @ViewModelInject constructor(
-    private val ratesLocalRepository: RatesLocalRepository,
-    private val ratesApiRepository: RatesApiRepository
+    private val ratesRepository: RatesRepository
 ) : ViewModel() {
     val rates = MutableLiveData<UiResultState<List<RateUiModel>>>()
     private val currencies = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
@@ -26,16 +24,16 @@ class RatesViewModel @ViewModelInject constructor(
 
     fun getRates() {
         viewModelScope.launch {
-            ratesApiRepository.getRemoteRates(currencies).collect { networkResultStatus ->
+            ratesRepository.getRemoteRates(currencies).collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteRates = networkResultStatus.data.toListRateEntity()
-                        ratesLocalRepository.insertRates(remoteRates)
+                        ratesRepository.insertRates(remoteRates)
                         rates.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
-                        ratesLocalRepository.getLocalRates().collect { localRates ->
+                        ratesRepository.getLocalRates().collect { localRates ->
                             if (localRates.isNotEmpty())
                                 rates.postValue(UiResultState.Success(localRates.map { it.toRateUiModel() }))
                             else

@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class RatesLocalRepository(private val rateDao: RateDao) {
+class RatesRepository(
+    private val rateDao: RateDao,
+    private val apiService: ApiService
+) {
     fun getLocalRates(): Flow<List<RateEntity>> = rateDao.getAllRates()
 
     suspend fun insertRates(listRateEntity: List<RateEntity>) {
         rateDao.insertRates(listRateEntity)
     }
-}
 
-class RatesApiRepository(private val apiService: ApiService) {
     suspend fun getRemoteRates(currencies: String): Flow<NetworkResultStatus<NetworkRatesResponse>> {
         return withContext(Dispatchers.IO) {
             flow {

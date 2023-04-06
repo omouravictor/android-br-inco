@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class StocksLocalRepository(private val stockDao: StockDao) {
+class StocksRepository(
+    private val stockDao: StockDao,
+    private val apiService: ApiService
+) {
     fun getLocalStocks(): Flow<List<StockEntity>> = stockDao.getAllStocks()
 
     suspend fun insertStocks(listStockEntity: List<StockEntity>) {
         stockDao.insertStocks(listStockEntity)
     }
-}
 
-class StocksApiRepository(private val apiService: ApiService) {
     suspend fun getRemoteStocks(fields: String): Flow<NetworkResultStatus<NetworkStocksResponse>> {
         return withContext(Dispatchers.IO) {
             flow {

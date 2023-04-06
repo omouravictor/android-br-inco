@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class BitCoinsLocalRepository(private val bitCoinDao: BitCoinDao) {
+class BitCoinsRepository(
+    private val bitCoinDao: BitCoinDao,
+    private val apiService: ApiService
+) {
     fun getLocalBitCoins(): Flow<List<BitCoinEntity>> = bitCoinDao.getAllBitCoins()
 
     suspend fun insertBitCoins(listBitCoinEntity: List<BitCoinEntity>) {
         bitCoinDao.insertBitCoins(listBitCoinEntity)
     }
-}
 
-class BitCoinsApiRepository(private val apiService: ApiService) {
     suspend fun getRemoteBitCoins(fields: String): Flow<NetworkResultStatus<NetworkBitCoinResult>> {
         return withContext(Dispatchers.IO) {
             flow {
