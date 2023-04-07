@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class RatesRepository(
     private val rateDao: RateDao,
@@ -25,8 +26,9 @@ class RatesRepository(
             flow {
                 emit(NetworkResultStatus.Loading)
                 try {
-                    val request = apiService.getRates(currencies)
-                    emit(NetworkResultStatus.Success(request))
+                    val networkRatesResponse = apiService.getRates(currencies)
+                        .apply { rateDate = Date() }
+                    emit(NetworkResultStatus.Success(networkRatesResponse))
                 } catch (e: Exception) {
                     emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :(")))
                 }

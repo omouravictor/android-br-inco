@@ -18,16 +18,17 @@ data class NetworkRatesResponse(
     val sourceExecutionTime: Double,
 
     @SerializedName("from_cache")
-    val from_cache: Boolean
+    val from_cache: Boolean,
+
+    var rateDate: Date
 )
 
 fun NetworkRatesResponse.toListRateEntity(): List<RateEntity> {
     val list: MutableList<RateEntity> = mutableListOf()
-    val rateDate = Date()
 
     sourceResultCurrency.resultsCurrencies.keys.forEach { currency ->
         val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy ?: -1.0
-        list.add(RateEntity(currency, "BRL", rate, rateDate))
+        list.add(RateEntity(currency, rate, rateDate))
     }
 
     return list

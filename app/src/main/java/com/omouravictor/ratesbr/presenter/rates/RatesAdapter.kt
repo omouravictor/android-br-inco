@@ -1,13 +1,16 @@
 package com.omouravictor.ratesbr.presenter.rates
 
+import android.provider.Settings.Secure.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.ConversionItemListBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.coroutineContext
 import kotlin.math.round
 
 class RatesAdapter(
@@ -29,9 +32,7 @@ class RatesAdapter(
     }
 
     fun updateConversionRates(amount: Double) {
-        ratesList.forEach {
-            it.conversionRate = it.unityRate * amount
-        }
+        ratesList.forEach { it.conversionRate = it.unityRate * amount }
         notifyDataSetChanged()
     }
 
@@ -43,8 +44,7 @@ class RatesAdapter(
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
 
-            conversionItem.tvFromCurrency.text = rateUiModel.fromCurrency
-            conversionItem.tvToCurrency.text = rateUiModel.toCurrency
+            conversionItem.tvFromCurrency.text = rateUiModel.currency
             conversionItem.tvValue.text = NumberFormat.getCurrencyInstance(locale)
                 .format(round(1 * rateUiModel.conversionRate * 100) / 100)
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {

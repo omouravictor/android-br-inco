@@ -52,12 +52,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
+                android:text="@string/brl"
                 android:textColor="@color/gray"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvFromCurrency"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvFromCurrency"
-                tools:text="BRL" />
+                app:layout_constraintTop_toTopOf="@+id/tvFromCurrency" />
 
             <TextView
                 android:id="@+id/tvValue"
