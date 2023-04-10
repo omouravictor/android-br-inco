@@ -51,20 +51,20 @@ class RatesViewModelTest {
     fun `when getRates is called, should fetch remote rates successfully`() {
         runBlocking {
             // Given
-            val ratesResultsItemResponse = NetworkRatesResultsItemResponse(
+            val mockRatesResultsItemResponse = NetworkRatesResultsItemResponse(
                 "USD", 1.0, 1.0, 1.0,
             )
-            val ratesResultsResponse = NetworkRatesResultsResponse(
+            val mockRatesResultsResponse = NetworkRatesResultsResponse(
                 LinkedHashMap<String, NetworkRatesResultsItemResponse>().apply {
-                    put("USD", ratesResultsItemResponse)
+                    put("USD", mockRatesResultsItemResponse)
                 }
             )
-            val ratesResponse =
-                NetworkRatesResponse("BRL", true, ratesResultsResponse, 1.0, true, Date())
-            val successResult = NetworkResultStatus.Success(ratesResponse)
-            val mockRatesEntity = RateEntity("USD", 1.0, ratesResponse.rateDate)
+            val mockRatesResponse =
+                NetworkRatesResponse("BRL", true, mockRatesResultsResponse, 1.0, true, Date())
+            val mockRatesEntity = RateEntity("USD", 1.0, mockRatesResponse.rateDate)
+            val mockSuccessResult = NetworkResultStatus.Success(mockRatesResponse)
 
-            `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(successResult))
+            `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(mockSuccessResult))
 
             // When
             viewModel.getRates()
