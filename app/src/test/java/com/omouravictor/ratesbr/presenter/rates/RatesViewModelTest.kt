@@ -2,8 +2,10 @@ package com.omouravictor.ratesbr.presenter.rates
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.omouravictor.ratesbr.data.local.dao.RateDao
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
+import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResponse
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResultsItemResponse
@@ -13,6 +15,7 @@ import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
@@ -61,7 +64,8 @@ class RatesViewModelTest {
             )
             val mockRatesResponse =
                 NetworkRatesResponse("BRL", true, mockRatesResultsResponse, 1.0, true, Date())
-            val mockRatesEntity = RateEntity("USD", 1.0, mockRatesResponse.rateDate)
+            val mockListRatesEntity = listOf(RateEntity("USD", 1.0, mockRatesResponse.rateDate))
+
             val mockSuccessResult = NetworkResultStatus.Success(mockRatesResponse)
 
             `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(mockSuccessResult))
@@ -71,7 +75,48 @@ class RatesViewModelTest {
 
             // Then
             verify(ratesObserver).onChanged(
-                UiResultState.Success(listOf(mockRatesEntity).map { it.toRateUiModel() })
+                UiResultState.Success(mockListRatesEntity.map { it.toRateUiModel() })
+            )
+        }
+    }
+
+    @Test
+    fun `when getRates is called, should fetch local rates successfully`() {
+        runBlocking {
+            // Given
+            val mockErrorResult =
+                NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :("))
+            val mockListRatesEntity = listOf(RateEntity("USD", 1.0, Date()))
+
+            `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(mockErrorResult))
+            `when`(ratesRepository.getLocalRates()).thenReturn(flowOf(mockListRatesEntity))
+
+            // When
+            viewModel.getRates()
+
+            // Then
+            verify(ratesObserver).onChanged(
+                UiResultState.Success(mockListRatesEntity.map { it.toRateUiModel() })
+            )
+        }
+    }
+
+    @Test
+    fun `when getRates is called, should return exception message`() {
+        runBlocking {
+            // Given
+            val mockErrorResult =
+                NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :("))
+
+            `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(mockErrorResult))
+            `when`(ratesRepository.getLocalRates()).thenReturn(flowOf(listOf()))
+
+            // When
+            viewModel.getRates()
+
+            // Then
+            verify(ratesObserver).onChanged(
+                UiResultState.Error(mockErrorResult.e)
             )
         }
     }
