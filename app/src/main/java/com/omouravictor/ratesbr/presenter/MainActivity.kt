@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_stocks, R.id.nav_conversions, R.id.nav_bitcoins
+                R.id.nav_stocks, R.id.nav_rates, R.id.nav_bitcoins
             )
         )
 

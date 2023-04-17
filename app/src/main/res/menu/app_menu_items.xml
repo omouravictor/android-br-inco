@@ -7,8 +7,8 @@
         android:icon="@drawable/ic_stock_icon"/>
 
     <item
-        android:id="@+id/nav_conversions"
-        android:title="@string/conversion"
+        android:id="@+id/nav_rates"
+        android:title="@string/coins"
         android:icon="@drawable/ic_money"/>
 
     <item
