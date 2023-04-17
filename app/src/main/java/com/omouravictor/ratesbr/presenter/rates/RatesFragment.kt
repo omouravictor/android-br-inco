@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.presenter.stocks.StocksAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +18,6 @@ class RatesFragment : Fragment() {
 
     private lateinit var ratesBinding: FragmentRatesBinding
     private val ratesViewModel: RatesViewModel by activityViewModels()
-    private var ratesAdapter = RatesAdapter(emptyList())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,44 +31,31 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initEtAmount()
         initSwipeRefreshLayout()
 
         ratesViewModel.rates.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
-                    initAdapter(it.data)
+                    configureRecyclerView(it.data)
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
-                    ratesBinding.rvConversions.isVisible = true
+                    ratesBinding.rvRates.isVisible = true
                     ratesBinding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = false
-                    ratesBinding.rvConversions.isVisible = false
+                    ratesBinding.rvRates.isVisible = false
                     ratesBinding.includeViewError.root.isVisible = true
                     ratesBinding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     ratesBinding.swipeRefreshLayout.isRefreshing = false
                     ratesBinding.progressBar.isVisible = true
-                    ratesBinding.rvConversions.isVisible = false
+                    ratesBinding.rvRates.isVisible = false
                     ratesBinding.includeViewError.root.isVisible = false
                 }
             }
-        }
-    }
-
-    private fun initEtAmount() {
-        ratesBinding.etAmount.setText("1")
-        ratesBinding.etAmount.setSelection(1)
-        ratesBinding.etAmount.doAfterTextChanged {
-            val amount = it.toString()
-            if (amount.isNotEmpty())
-                ratesAdapter.updateConversionRates(amount.toDouble())
-            else
-                ratesAdapter.updateConversionRates(0.0)
         }
     }
 
@@ -82,11 +65,9 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initAdapter(ratesList: List<RateUiModel>) {
-        ratesAdapter = RatesAdapter(ratesList)
-
-        ratesBinding.rvConversions.apply {
-            adapter = ratesAdapter
+    private fun configureRecyclerView(ratesList: List<RateUiModel>) {
+        ratesBinding.rvRates.apply {
+            adapter = RatesAdapter(ratesList)
             layoutManager = LinearLayoutManager(context)
         }
     }

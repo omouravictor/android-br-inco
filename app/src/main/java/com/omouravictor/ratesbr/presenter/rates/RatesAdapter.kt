@@ -1,16 +1,14 @@
 package com.omouravictor.ratesbr.presenter.rates
 
-import android.provider.Settings.Secure.getString
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.R
-import com.omouravictor.ratesbr.databinding.ConversionItemListBinding
+import com.omouravictor.ratesbr.databinding.RateItemListBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.coroutines.coroutineContext
 import kotlin.math.round
 
 class RatesAdapter(
@@ -19,7 +17,7 @@ class RatesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConversionViewHolder {
         val binding =
-            ConversionItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            RateItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ConversionViewHolder(binding)
     }
 
@@ -31,13 +29,8 @@ class RatesAdapter(
         holder.bind(ratesList[position])
     }
 
-    fun updateConversionRates(amount: Double) {
-        ratesList.forEach { it.conversionRate = it.unityRate * amount }
-        notifyDataSetChanged()
-    }
-
     class ConversionViewHolder(
-        private val conversionItem: ConversionItemListBinding
+        private val conversionItem: RateItemListBinding
     ) : RecyclerView.ViewHolder(conversionItem.root) {
         fun bind(rateUiModel: RateUiModel) {
             val locale = Locale("pt", "BR")
@@ -45,8 +38,16 @@ class RatesAdapter(
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
 
             conversionItem.tvFromCurrency.text = rateUiModel.currency
+
+            if (rateUiModel.variation >= 0) {
+                conversionItem.tvVariation.text = "+${rateUiModel.variation}%"
+                conversionItem.tvVariation.setTextColor(Color.GREEN)
+            } else {
+                conversionItem.tvVariation.text = rateUiModel.variation.toString() + "%"
+            }
+
             conversionItem.tvValue.text = NumberFormat.getCurrencyInstance(locale)
-                .format(round(1 * rateUiModel.conversionRate * 100) / 100)
+                .format(round(1 * rateUiModel.unityRate * 100) / 100)
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
                 conversionItem.tvDateTime.text = it
             }

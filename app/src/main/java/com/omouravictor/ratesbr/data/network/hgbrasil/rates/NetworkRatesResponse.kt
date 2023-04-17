@@ -27,8 +27,9 @@ fun NetworkRatesResponse.toListRateEntity(): List<RateEntity> {
     val list: MutableList<RateEntity> = mutableListOf()
 
     sourceResultCurrency.resultsCurrencies.keys.forEach { currency ->
-        val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy ?: -1.0
-        list.add(RateEntity(currency, rate, rateDate))
+        val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy
+        val variation = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyVariation
+        list.add(RateEntity(currency, rate!!, variation!!, rateDate))
     }
 
     return list

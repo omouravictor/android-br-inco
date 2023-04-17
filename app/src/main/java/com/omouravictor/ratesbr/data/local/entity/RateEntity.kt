@@ -10,6 +10,7 @@ data class RateEntity(
     @PrimaryKey(autoGenerate = false)
     val currency: String,
     val unityRate: Double,
+    val variation: Double,
     val rateDate: Date
 )
 
@@ -17,6 +18,6 @@ fun RateEntity.toRateUiModel() =
     RateUiModel(
         currency,
         unityRate,
-        unityRate,
+        variation,
         rateDate
     )

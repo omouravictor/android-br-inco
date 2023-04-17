@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,7 +18,6 @@ class BitCoinsFragment : Fragment() {
 
     private lateinit var bitCoinBinding: FragmentBitcoinsBinding
     private val bitCoinViewModel: BitCoinsViewModel by activityViewModels()
-    private lateinit var bitCoinAdapter: BitCoinsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +36,7 @@ class BitCoinsFragment : Fragment() {
         bitCoinViewModel.bitCoins.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
-                    initAdapter(it.data)
+                    configureRecyclerView(it.data)
                     bitCoinBinding.swipeRefreshLayout.isRefreshing = false
                     bitCoinBinding.progressBar.isVisible = false
                     bitCoinBinding.rvBitCoins.isVisible = true
@@ -67,12 +65,11 @@ class BitCoinsFragment : Fragment() {
         }
     }
 
-    private fun initAdapter(bitCoinList: List<BitCoinUiModel>) {
-        bitCoinAdapter = BitCoinsAdapter(bitCoinList)
-
+    private fun configureRecyclerView(bitCoinList: List<BitCoinUiModel>) {
         bitCoinBinding.rvBitCoins.apply {
-            adapter = bitCoinAdapter
+            adapter = BitCoinsAdapter(bitCoinList)
             layoutManager = LinearLayoutManager(context)
         }
     }
+
 }

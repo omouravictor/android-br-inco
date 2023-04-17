@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,7 +18,6 @@ class StocksFragment : Fragment() {
 
     private lateinit var stockBinding: FragmentStocksBinding
     private val stockViewModel: StocksViewModel by activityViewModels()
-    private lateinit var stockAdapter: StocksAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +36,7 @@ class StocksFragment : Fragment() {
         stockViewModel.stocks.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
-                    initAdapter(it.data)
+                    configureRecyclerView(it.data)
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = false
                     stockBinding.rvStocks.isVisible = true
@@ -67,12 +65,11 @@ class StocksFragment : Fragment() {
         }
     }
 
-    private fun initAdapter(stockList: List<StockUiModel>) {
-        stockAdapter = StocksAdapter(stockList)
-
+    private fun configureRecyclerView(stockList: List<StockUiModel>) {
         stockBinding.rvStocks.apply {
-            adapter = stockAdapter
+            adapter = StocksAdapter(stockList)
             layoutManager = LinearLayoutManager(context)
         }
     }
+
 }

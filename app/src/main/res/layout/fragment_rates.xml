@@ -11,34 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:hint="@string/quantity"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:maxLength="10"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvConversions"
+            android:id="@+id/rvRates"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
             android:clipToPadding="false"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etAmount"
-            tools:listitem="@layout/conversion_item_list" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/rate_item_list" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -48,7 +32,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <include
             android:id="@+id/include_view_error"
