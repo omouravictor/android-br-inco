@@ -14,7 +14,7 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         supportActionBar?.hide()
-        window.statusBarColor = Color.parseColor("#000000")
+        window.statusBarColor = Color.parseColor("#00A053")
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
