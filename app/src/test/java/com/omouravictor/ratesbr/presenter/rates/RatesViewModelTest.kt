@@ -2,10 +2,8 @@ package com.omouravictor.ratesbr.presenter.rates
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.omouravictor.ratesbr.data.local.dao.RateDao
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
-import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResponse
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResultsItemResponse
@@ -15,7 +13,6 @@ import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain

@@ -38,23 +38,30 @@ class BitCoinsAdapter(
             val locale = Locale(language, country)
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
-            val decimalFormat = DecimalFormat("#0.00#", DecimalFormatSymbols.getInstance(locale))
+            val decimalFormat =
+                DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale("pt", "BR")))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            bitCoinItem.textViewBitcoinName.text = "${bitcoin.bitcoinName} / ${bitcoin.bitcoinISO}"
-            bitCoinItem.textViewBitcoinVariation.text =
-                decimalFormat.format(bitcoin.bitcoinVariation) + "%"
-            bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.bitcoinLast)
-
-            if (bitcoin.bitcoinVariation >= 0) {
-                bitCoinItem.textViewBitcoinVariation.text = "+${bitcoin.bitcoinVariation}%"
-                bitCoinItem.textViewBitcoinVariation.setTextColor(Color.GREEN)
-            } else {
-                bitCoinItem.textViewBitcoinVariation.text = "${bitcoin.bitcoinVariation}%"
+            "${bitcoin.bitcoinName} / ${bitcoin.bitcoinISO}".also {
+                bitCoinItem.textViewBitcoinName.text = it
             }
 
-            bitCoinItem.tvDateTime.text =
-                "${dateFormatter.format(bitcoin.date)}\n${timeFormatter.format(bitcoin.date)}"
+            bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.bitcoinLast)
+
+            "${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
+                bitCoinItem.textViewBitcoinVariation.text = it
+            }
+
+            if (bitcoin.bitcoinVariation >= 0) {
+                "+${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
+                    bitCoinItem.textViewBitcoinVariation.text = it
+                }
+                bitCoinItem.textViewBitcoinVariation.setTextColor(Color.GREEN)
+            }
+
+            "${dateFormatter.format(bitcoin.date)}\n${timeFormatter.format(bitcoin.date)}".also {
+                bitCoinItem.tvDateTime.text = it
+            }
 
         }
     }
