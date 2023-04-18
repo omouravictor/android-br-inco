@@ -14,13 +14,14 @@ import java.util.*
 import kotlin.math.round
 
 class RatesAdapter(
-    private val ratesList: List<RateUiModel>
+    private val ratesList: List<RateUiModel>,
+    private val onClickItem: (RateUiModel) -> Unit
 ) : RecyclerView.Adapter<RatesAdapter.RatesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
             RateItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RatesViewHolder(binding)
+        return RatesViewHolder(binding, onClickItem)
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +33,8 @@ class RatesAdapter(
     }
 
     class RatesViewHolder(
-        private val rateItem: RateItemListBinding
+        private val rateItem: RateItemListBinding,
+        private val onClickItem: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(rateItem.root) {
         fun bind(rateUiModel: RateUiModel) {
             val locale = Locale("pt", "BR")
@@ -59,6 +61,10 @@ class RatesAdapter(
 
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
                 rateItem.tvDateTime.text = it
+            }
+
+            itemView.setOnClickListener {
+                onClickItem(rateUiModel)
             }
         }
     }

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
+import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +20,7 @@ class RatesFragment : Fragment() {
 
     private lateinit var ratesBinding: FragmentRatesBinding
     private val ratesViewModel: RatesViewModel by activityViewModels()
+    private val converterViewModel: ConverterViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,9 +70,15 @@ class RatesFragment : Fragment() {
 
     private fun configureRecyclerView(ratesList: List<RateUiModel>) {
         ratesBinding.rvRates.apply {
-            adapter = RatesAdapter(ratesList)
+            adapter = RatesAdapter(ratesList) { ratesOnClickItem(it) }
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun ratesOnClickItem(rateUiModel: RateUiModel) {
+        converterViewModel.setCurrency(rateUiModel)
+        val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
+        findNavController().navigate(action)
     }
 
 }

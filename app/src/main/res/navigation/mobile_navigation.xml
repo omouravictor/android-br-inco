@@ -3,22 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_rates">
+    app:startDestination="@id/rates_fragment">
 
     <fragment
-        android:id="@+id/nav_rates"
+        android:id="@+id/rates_fragment"
         android:name="com.omouravictor.ratesbr.presenter.rates.RatesFragment"
         android:label="@string/coins"
-        tools:layout="@layout/fragment_rates" />
-
+        tools:layout="@layout/fragment_rates">
+        <action
+            android:id="@+id/action_rates_fragment_to_converter_fragment"
+            app:destination="@id/converter_fragment" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_stocks"
+        android:id="@+id/converter_fragment"
+        android:name="com.omouravictor.ratesbr.presenter.converter.ConverterFragment"
+        android:label="@string/conversion"
+        tools:layout="@layout/fragment_converter"/>
+    <fragment
+        android:id="@+id/stocks_fragment"
         android:name="com.omouravictor.ratesbr.presenter.stocks.StocksFragment"
         android:label="@string/stock_exchanges"
         tools:layout="@layout/fragment_stocks" />
-
     <fragment
-        android:id="@+id/nav_bitcoins"
+        android:id="@+id/bitcoins_fragment"
         android:name="com.omouravictor.ratesbr.presenter.bitcoins.BitCoinsFragment"
         android:label="@string/bitcoins"
         tools:layout="@layout/fragment_bitcoins" />
