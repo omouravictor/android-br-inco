@@ -10,16 +10,16 @@ class ConverterViewModel : ViewModel() {
     val result = MutableLiveData<String>()
     private val decimalFormat = DecimalFormat("0.00")
 
-    fun setRateUiModel(rateUiModel: RateUiModel) {
+    fun setRate(rateUiModel: RateUiModel) {
         rate.postValue(rateUiModel)
+    }
+
+    fun setInitialResult() {
+        result.postValue(rate.value?.unityRate.toString())
     }
 
     fun calculateConversion(value: Double) {
         val resultValue = value * decimalFormat.format(rate.value?.unityRate).toDouble()
         result.postValue(resultValue.toString())
-    }
-
-    fun setRateStartValue() {
-        result.postValue(rate.value?.unityRate.toString())
     }
 }

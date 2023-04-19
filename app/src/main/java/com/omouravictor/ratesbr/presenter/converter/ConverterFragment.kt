@@ -26,7 +26,7 @@ class ConverterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         converterViewModel = ViewModelProvider(requireActivity())[ConverterViewModel::class.java]
-        converterViewModel.setRateStartValue()
+        converterViewModel.setInitialResult()
 
         converterBinding = FragmentConverterBinding.inflate(layoutInflater, container, false)
         return converterBinding.root
@@ -35,7 +35,7 @@ class ConverterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         converterBinding.textInputEditTextValueConverter.setText("1")
-        getValue()
+        initTextInputEditTextValueConverter()
     }
 
     override fun onStart() {
@@ -49,7 +49,7 @@ class ConverterFragment : Fragment() {
         }
     }
 
-    private fun getValue() {
+    private fun initTextInputEditTextValueConverter() {
         converterBinding.textInputEditTextValueConverter.doAfterTextChanged {
             if (it.toString().isNotEmpty() && it.toString() != ".")
                 converterViewModel.calculateConversion(it.toString().toDouble())
