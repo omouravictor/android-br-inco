@@ -46,10 +46,6 @@ class StocksAdapter(
                 stockItem.tvDateTime.text = it
             }
 
-            "${decimalFormat.format(stock.stockVariation)}%".also {
-                stockItem.textViewStockVariation.text = it
-            }
-
             if (stock.stockVariation >= 0.0) {
                 "+${decimalFormat.format(stock.stockVariation)}%".also {
                     stockItem.textViewStockVariation.text = it
@@ -57,6 +53,9 @@ class StocksAdapter(
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
                 stockItem.textViewStockVariation.setTextColor(Color.GREEN)
             } else {
+                "${decimalFormat.format(stock.stockVariation)}%".also {
+                    stockItem.textViewStockVariation.text = it
+                }
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
             }
         }

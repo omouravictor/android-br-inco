@@ -45,15 +45,15 @@ class RatesAdapter(
 
             rateItem.tvFromCurrency.text = rateUiModel.currencyTerm
 
-            "${decimalFormat.format(rateUiModel.variation)}%".also {
-                rateItem.tvVariation.text = it
-            }
-
             if (rateUiModel.variation >= 0) {
                 "+${decimalFormat.format(rateUiModel.variation)}%".also {
                     rateItem.tvVariation.text = it
                 }
                 rateItem.tvVariation.setTextColor(Color.GREEN)
+            }else {
+                "${decimalFormat.format(rateUiModel.variation)}%".also {
+                    rateItem.tvVariation.text = it
+                }
             }
 
             rateItem.tvValue.text =

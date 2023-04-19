@@ -48,15 +48,15 @@ class BitCoinsAdapter(
 
             bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.bitcoinLast)
 
-            "${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
-                bitCoinItem.textViewBitcoinVariation.text = it
-            }
-
             if (bitcoin.bitcoinVariation >= 0) {
                 "+${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
                     bitCoinItem.textViewBitcoinVariation.text = it
                 }
                 bitCoinItem.textViewBitcoinVariation.setTextColor(Color.GREEN)
+            } else {
+                "${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
+                    bitCoinItem.textViewBitcoinVariation.text = it
+                }
             }
 
             "${dateFormatter.format(bitcoin.date)}\n${timeFormatter.format(bitcoin.date)}".also {
