@@ -13,9 +13,7 @@ import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class RatesFragment : Fragment() {
 
     private lateinit var ratesBinding: FragmentRatesBinding
@@ -76,7 +74,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun ratesOnClickItem(rateUiModel: RateUiModel) {
-        converterViewModel.setRate(rateUiModel)
+        converterViewModel.setRateAndResult(rateUiModel)
         val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
         findNavController().navigate(action)
     }

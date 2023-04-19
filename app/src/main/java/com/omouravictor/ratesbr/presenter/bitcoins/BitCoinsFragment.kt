@@ -13,7 +13,6 @@ import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitCoinUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class BitCoinsFragment : Fragment() {
 
     private lateinit var bitCoinBinding: FragmentBitcoinsBinding
