@@ -8,7 +8,7 @@ import java.util.*
 @Entity(tableName = "rate_table")
 data class RateEntity(
     @PrimaryKey(autoGenerate = false)
-    val currency: String,
+    val currencyTerm: String,
     val unityRate: Double,
     val variation: Double,
     val rateDate: Date
@@ -16,8 +16,19 @@ data class RateEntity(
 
 fun RateEntity.toRateUiModel() =
     RateUiModel(
-        currency,
-        unityRate,
-        variation,
-        rateDate
+        currencyName = when (currencyTerm) {
+            "USD" -> "Dólar Americano"
+            "EUR" -> "Euro"
+            "GBP" -> "Libra Esterlina"
+            "ARS" -> "Peso Argentino"
+            "CAD" -> "Dólar Canadense"
+            "AUD" -> "Dólar Australiano"
+            "JPY" -> "Iene Japonês"
+            "CNY" -> "Yuan Chinês"
+            else -> "Moeda não encontrada"
+        },
+        currencyTerm = currencyTerm,
+        unityRate = unityRate,
+        variation = variation,
+        rateDate = rateDate
     )

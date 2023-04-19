@@ -3,50 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="16dp">
 
     <TextView
         android:id="@+id/textViewConverterTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="asdas"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Dólar americano" />
 
     <TextView
         android:id="@+id/textViewUnitaryValueConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="asdasd"
-        android:textColor="@color/gray"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/textInputValueLayoutConverter"
-        app:layout_constraintTop_toBottomOf="@+id/textViewConverterTitle" />
+        app:layout_constraintTop_toTopOf="@+id/textViewTermConverter"
+        tools:text="R$ 4,99" />
 
     <TextView
         android:id="@+id/textViewTermConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="wefwef"
-        android:textColor="@color/gray"
+        android:layout_marginTop="16dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewUnitaryValueConverter"
-        app:layout_constraintStart_toStartOf="@+id/textInputValueLayoutConverter" />
+        app:layout_constraintStart_toStartOf="@+id/textInputValueLayoutConverter"
+        app:layout_constraintTop_toBottomOf="@+id/textViewConverterTitle"
+        tools:text="USD" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputValueLayoutConverter"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
-        android:hint="fewefw"
+        android:layout_marginTop="8dp"
+        android:hint="Valor para conversão"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUnitaryValueConverter">
@@ -55,17 +51,15 @@
             android:id="@+id/textInputEditTextValueConverter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:textColor="@color/black" />
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textViewResultConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="fewfew"
-        android:textColor="@color/black"
+        android:layout_marginTop="24dp"
+        android:text="Resultado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputValueLayoutConverter" />
@@ -74,15 +68,11 @@
         android:id="@+id/textViewResultValueConverter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="4dp"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewResultConverter"
-        android:text="fewfw"
-        android:maxEms="7"
-        android:ellipsize="end"
-        android:maxLines="1"/>
+        tools:text="R$ 4,99"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

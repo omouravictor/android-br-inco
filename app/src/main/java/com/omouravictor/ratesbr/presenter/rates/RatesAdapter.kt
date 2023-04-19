@@ -43,7 +43,7 @@ class RatesAdapter(
             val decimalFormat = DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(locale))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            rateItem.tvFromCurrency.text = rateUiModel.currency
+            rateItem.tvFromCurrency.text = rateUiModel.currencyTerm
 
             "${decimalFormat.format(rateUiModel.variation)}%".also {
                 rateItem.tvVariation.text = it

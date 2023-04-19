@@ -76,7 +76,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun ratesOnClickItem(rateUiModel: RateUiModel) {
-        converterViewModel.setCurrency(rateUiModel)
+        converterViewModel.setRateUiModel(rateUiModel)
         val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
         findNavController().navigate(action)
     }
