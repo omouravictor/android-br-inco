@@ -13,7 +13,6 @@ import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class StocksFragment : Fragment() {
 
     private lateinit var stockBinding: FragmentStocksBinding

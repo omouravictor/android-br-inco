@@ -15,7 +15,6 @@ import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class RatesFragment : Fragment() {
 
     private lateinit var ratesBinding: FragmentRatesBinding

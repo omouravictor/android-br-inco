@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.util.*
 
 class ConverterFragment : Fragment() {
 
     private lateinit var converterBinding: FragmentConverterBinding
-    private lateinit var converterViewModel: ConverterViewModel
+    private val converterViewModel: ConverterViewModel by activityViewModels()
     private val locale = Locale("pt", "BR")
     private val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
@@ -25,9 +27,6 @@ class ConverterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        converterViewModel = ViewModelProvider(requireActivity())[ConverterViewModel::class.java]
-        converterViewModel.setInitialResult()
-
         converterBinding = FragmentConverterBinding.inflate(layoutInflater, container, false)
         return converterBinding.root
     }
