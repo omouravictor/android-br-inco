@@ -61,11 +61,9 @@
                 android:id="@+id/tvDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
                 android:textAlignment="textEnd"
                 android:textColor="@color/darkWhite"
                 android:textSize="14sp"
-                android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="06/07/22\n15:53" />
