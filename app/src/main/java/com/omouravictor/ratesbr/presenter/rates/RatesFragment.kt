@@ -13,6 +13,7 @@ import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
+import dagger.hilt.android.AndroidEntryPoint
 
 class RatesFragment : Fragment() {
 

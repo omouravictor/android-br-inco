@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_item_stocks"
+        android:id="@+id/stocks_nav"
         android:title="@string/stocks"
         android:icon="@drawable/ic_stock_icon"/>
 
     <item
-        android:id="@+id/menu_item_coins"
+        android:id="@+id/rates_nav"
         android:title="@string/coins"
         android:icon="@drawable/ic_money"/>
 
     <item
-        android:id="@+id/menu_item_bitcoins"
+        android:id="@+id/bitcoins_nav"
         android:title="@string/bitcoins"
         android:icon="@drawable/ic_currency_bitcoin"/>
 

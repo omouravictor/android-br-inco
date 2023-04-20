@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/menu_item_coins">
+    android:id="@+id/rates_nav"
+    app:startDestination="@id/rates_fragment">
 
     <fragment
-        android:id="@+id/menu_item_coins"
+        android:id="@+id/rates_fragment"
         android:name="com.omouravictor.ratesbr.presenter.rates.RatesFragment"
         android:label="@string/coins"
         tools:layout="@layout/fragment_rates">
@@ -19,15 +19,4 @@
         android:name="com.omouravictor.ratesbr.presenter.converter.ConverterFragment"
         android:label="@string/conversion"
         tools:layout="@layout/fragment_converter" />
-    <fragment
-        android:id="@+id/menu_item_stocks"
-        android:name="com.omouravictor.ratesbr.presenter.stocks.StocksFragment"
-        android:label="@string/stock_exchanges"
-        tools:layout="@layout/fragment_stocks" />
-    <fragment
-        android:id="@+id/menu_item_bitcoins"
-        android:name="com.omouravictor.ratesbr.presenter.bitcoins.BitCoinsFragment"
-        android:label="@string/bitcoins"
-        tools:layout="@layout/fragment_bitcoins" />
-
 </navigation>

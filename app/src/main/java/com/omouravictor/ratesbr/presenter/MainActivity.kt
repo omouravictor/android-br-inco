@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             topLevelDestinationIds = setOf(
-                R.id.menu_item_stocks,
-                R.id.menu_item_coins,
-                R.id.menu_item_bitcoins
+                R.id.stocks_fragment,
+                R.id.rates_fragment,
+                R.id.bitcoins_fragment
             )
         )
 
