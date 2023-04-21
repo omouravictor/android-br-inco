@@ -21,13 +21,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            tools:text="Falha ao recuperar os dados da internet :(" />
+            android:textSize="16sp"
+            tools:text="Falha ao buscar os dados na internet :(" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="@string/swipe_down_to_try_again" />
+            android:text="@string/swipe_down_to_try_again"
+            android:textSize="16sp" />
 
         <ImageView
             android:layout_width="wrap_content"
