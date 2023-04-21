@@ -9,9 +9,9 @@ import java.util.*
 data class RateEntity(
     @PrimaryKey(autoGenerate = false)
     val currencyTerm: String,
-    val unityRate: Double,
+    val unitaryRate: Double,
     val variation: Double,
-    val rateDate: Date
+    val date: Date
 )
 
 fun RateEntity.toRateUiModel() =
@@ -27,8 +27,8 @@ fun RateEntity.toRateUiModel() =
             "CNY" -> "Yuan Chinês"
             else -> "Moeda não encontrada"
         },
-        currencyTerm = currencyTerm,
-        unityRate = unityRate,
-        variation = variation,
-        rateDate = rateDate
+        currencyTerm,
+        unitaryRate,
+        variation,
+        date
     )

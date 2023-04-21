@@ -17,16 +17,16 @@ class RatesRepository(
 ) {
     fun getLocalRates(): Flow<List<RateEntity>> = rateDao.getAllRates()
 
-    suspend fun insertRates(listRateEntity: List<RateEntity>) {
-        rateDao.insertRates(listRateEntity)
+    suspend fun insertRates(rateEntityList: List<RateEntity>) {
+        rateDao.insertRates(rateEntityList)
     }
 
-    suspend fun getRemoteRates(currencies: String): Flow<NetworkResultStatus<NetworkRatesResponse>> {
+    suspend fun getRemoteRates(fields: String): Flow<NetworkResultStatus<NetworkRatesResponse>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)
                 try {
-                    val networkRatesResponse = apiService.getRates(currencies)
+                    val networkRatesResponse = apiService.getRates(fields)
                         .apply { rateDate = Date() }
                     emit(NetworkResultStatus.Success(networkRatesResponse))
                 } catch (e: Exception) {

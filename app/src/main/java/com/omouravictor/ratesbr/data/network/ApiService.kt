@@ -1,6 +1,6 @@
 package com.omouravictor.ratesbr.data.network
 
-import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitCoinResult
+import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitCoinsResponse
 import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResponse
 import com.omouravictor.ratesbr.data.network.hgbrasil.stock.NetworkStocksResponse
 import retrofit2.http.GET
@@ -15,7 +15,7 @@ interface ApiService {
     @GET("finance")
     suspend fun getBitCoins(
         @Query("fields") field: String
-    ): NetworkBitCoinResult
+    ): NetworkBitCoinsResponse
 
     @GET("finance")
     suspend fun getStocks(

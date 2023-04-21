@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.util.*
 
@@ -38,12 +36,12 @@ class ConverterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        converterViewModel.rate.observe(this) {
+        converterViewModel.rateResult.observe(this) {
             setRateInfo(it)
         }
 
-        converterViewModel.result.observe(this) {
-            converterBinding.textViewResultValueConverter.text = numberFormat.format(it.toDouble())
+        converterViewModel.conversionResult.observe(this) {
+            converterBinding.textViewResultValue.text = numberFormat.format(it.toDouble())
         }
     }
 
@@ -53,14 +51,14 @@ class ConverterFragment : Fragment() {
             if (it.toString().isNotEmpty() && it.toString() != ".")
                 converterViewModel.calculateConversion(it.toString().toDouble())
             else
-                converterBinding.textViewResultValueConverter.text = getString(R.string.brl_symbol)
+                converterBinding.textViewResultValue.text = getString(R.string.brl_symbol)
         }
     }
 
     private fun setRateInfo(rateUiModel: RateUiModel) {
-        converterBinding.textViewConverterTitle.text = rateUiModel.currencyName
-        converterBinding.textViewTermConverter.text = rateUiModel.currencyTerm
-        converterBinding.textViewUnitaryValueConverter.text =
-            numberFormat.format(rateUiModel.unityRate)
+        converterBinding.textViewResultTittle.text = rateUiModel.currencyName
+        converterBinding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
+        converterBinding.textViewUnitaryRateValue.text =
+            numberFormat.format(rateUiModel.unitaryRate)
     }
 }

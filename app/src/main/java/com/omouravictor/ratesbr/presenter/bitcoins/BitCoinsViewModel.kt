@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 class BitCoinsViewModel @ViewModelInject constructor(
     private val bitCoinsRepository: BitCoinsRepository
 ) : ViewModel() {
-    val bitCoins = MutableLiveData<UiResultState<List<BitCoinUiModel>>>()
-    private val fields = "bitcoin"
+
+    val bitCoinsResult = MutableLiveData<UiResultState<List<BitCoinUiModel>>>()
 
     init {
         getBitCoins()
@@ -24,25 +24,25 @@ class BitCoinsViewModel @ViewModelInject constructor(
 
     fun getBitCoins() {
         viewModelScope.launch {
-            bitCoinsRepository.getRemoteBitCoins(fields).collect { networkResultStatus ->
+            bitCoinsRepository.getRemoteBitCoins("bitcoin").collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteBitCoins = networkResultStatus.data.toListBitCoinEntity()
                         bitCoinsRepository.insertBitCoins(remoteBitCoins)
-                        bitCoins.postValue(UiResultState.Success(remoteBitCoins.map { it.toBitCoinUiModel() }))
+                        bitCoinsResult.postValue(UiResultState.Success(remoteBitCoins.map { it.toBitCoinUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
                         bitCoinsRepository.getLocalBitCoins().collect { localBitCoins ->
                             if (localBitCoins.isNotEmpty())
-                                bitCoins.postValue(UiResultState.Success(localBitCoins.map { it.toBitCoinUiModel() }))
+                                bitCoinsResult.postValue(UiResultState.Success(localBitCoins.map { it.toBitCoinUiModel() }))
                             else
-                                bitCoins.postValue(UiResultState.Error(networkResultStatus.e))
+                                bitCoinsResult.postValue(UiResultState.Error(networkResultStatus.e))
                         }
                     }
 
                     is NetworkResultStatus.Loading -> {
-                        bitCoins.postValue(UiResultState.Loading)
+                        bitCoinsResult.postValue(UiResultState.Loading)
                     }
                 }
             }

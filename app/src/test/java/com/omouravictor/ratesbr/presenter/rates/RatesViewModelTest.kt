@@ -44,7 +44,7 @@ class RatesViewModelTest {
     fun setUp() {
         Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = RatesViewModel(ratesRepository)
-        viewModel.rates.observeForever(ratesObserver)
+        viewModel.ratesResult.observeForever(ratesObserver)
     }
 
     @Test

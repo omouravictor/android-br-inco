@@ -38,22 +38,22 @@ class StocksAdapter(
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
             val decimalFormat = DecimalFormat("#0.00#", DecimalFormatSymbols.getInstance(locale))
 
-            "${stock.stockTerm} / ${stock.stockLocation}".also {
+            "${stock.name} / ${stock.location}".also {
                 stockItem.textViewStockName.text = it
             }
 
             "${dateFormatter.format(stock.date)}\n${timeFormatter.format(stock.date)}".also {
-                stockItem.tvDateTime.text = it
+                stockItem.textViewDateTime.text = it
             }
 
-            if (stock.stockVariation >= 0.0) {
-                "+${decimalFormat.format(stock.stockVariation)}%".also {
+            if (stock.variation >= 0.0) {
+                "+${decimalFormat.format(stock.variation)}%".also {
                     stockItem.textViewStockVariation.text = it
                 }
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
                 stockItem.textViewStockVariation.setTextColor(Color.GREEN)
             } else {
-                "${decimalFormat.format(stock.stockVariation)}%".also {
+                "${decimalFormat.format(stock.variation)}%".also {
                     stockItem.textViewStockVariation.text = it
                 }
                 stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)

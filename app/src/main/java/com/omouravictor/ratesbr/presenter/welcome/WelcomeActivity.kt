@@ -52,6 +52,6 @@ class WelcomeActivity : AppCompatActivity() {
             }
         })
 
-        TabLayoutMediator(tabWelcome, welcomePager) { tab, position -> }.attach()
+        TabLayoutMediator(tabWelcome, welcomePager) { _, _ -> }.attach()
     }
 }

@@ -8,7 +8,7 @@
     tools:context=".presenter.welcome.WelcomeActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_welcome"
+        android:id="@+id/tabLayoutWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -24,7 +24,7 @@
         android:id="@+id/viewPagerWelcome"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/tab_layout_welcome"
+        app:layout_constraintBottom_toTopOf="@+id/tabLayoutWelcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +36,9 @@
         android:layout_marginStart="32dp"
         android:text="@string/previous"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/tab_layout_welcome"
+        app:layout_constraintBottom_toBottomOf="@+id/tabLayoutWelcome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tab_layout_welcome" />
+        app:layout_constraintTop_toTopOf="@+id/tabLayoutWelcome" />
 
     <TextView
         android:id="@+id/textViewNext"
@@ -47,8 +47,8 @@
         android:layout_marginEnd="32dp"
         android:text="@string/next"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/tab_layout_welcome"
+        app:layout_constraintBottom_toBottomOf="@+id/tabLayoutWelcome"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tab_layout_welcome" />
+        app:layout_constraintTop_toTopOf="@+id/tabLayoutWelcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

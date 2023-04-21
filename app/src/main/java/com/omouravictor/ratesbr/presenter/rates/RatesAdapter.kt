@@ -43,24 +43,24 @@ class RatesAdapter(
             val decimalFormat = DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(locale))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            rateItem.tvFromCurrency.text = rateUiModel.currencyTerm
+            rateItem.textViewRateCurrencyTerm.text = rateUiModel.currencyTerm
 
             if (rateUiModel.variation >= 0) {
                 "+${decimalFormat.format(rateUiModel.variation)}%".also {
-                    rateItem.tvVariation.text = it
+                    rateItem.textViewRateVariation.text = it
                 }
-                rateItem.tvVariation.setTextColor(Color.GREEN)
+                rateItem.textViewRateVariation.setTextColor(Color.GREEN)
             }else {
                 "${decimalFormat.format(rateUiModel.variation)}%".also {
-                    rateItem.tvVariation.text = it
+                    rateItem.textViewRateVariation.text = it
                 }
             }
 
-            rateItem.tvValue.text =
-                numberFormat.format(round(1 * rateUiModel.unityRate * 100) / 100)
+            rateItem.textViewRateValue.text =
+                numberFormat.format(round(1 * rateUiModel.unitaryRate * 100) / 100)
 
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
-                rateItem.tvDateTime.text = it
+                rateItem.textViewDateTime.text = it
             }
 
             itemView.setOnClickListener {

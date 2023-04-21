@@ -15,7 +15,8 @@ import kotlinx.coroutines.launch
 class RatesViewModel @ViewModelInject constructor(
     private val ratesRepository: RatesRepository
 ) : ViewModel() {
-    val rates = MutableLiveData<UiResultState<List<RateUiModel>>>()
+
+    val ratesResult = MutableLiveData<UiResultState<List<RateUiModel>>>()
     private val currencies = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
 
     init {
@@ -29,20 +30,20 @@ class RatesViewModel @ViewModelInject constructor(
                     is NetworkResultStatus.Success -> {
                         val remoteRates = networkResultStatus.data.toListRateEntity()
                         ratesRepository.insertRates(remoteRates)
-                        rates.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
+                        ratesResult.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
                         ratesRepository.getLocalRates().collect { localRates ->
                             if (localRates.isNotEmpty())
-                                rates.postValue(UiResultState.Success(localRates.map { it.toRateUiModel() }))
+                                ratesResult.postValue(UiResultState.Success(localRates.map { it.toRateUiModel() }))
                             else
-                                rates.postValue(UiResultState.Error(networkResultStatus.e))
+                                ratesResult.postValue(UiResultState.Error(networkResultStatus.e))
                         }
                     }
 
                     is NetworkResultStatus.Loading -> {
-                        rates.postValue(UiResultState.Loading)
+                        ratesResult.postValue(UiResultState.Loading)
                     }
                 }
             }

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/text_view_error_message"
+            android:id="@+id/textViewErrorMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="Deslize para baixo para tentar novamente." />
+            android:text="@string/swipe_down_to_try_again" />
 
         <ImageView
             android:layout_width="wrap_content"

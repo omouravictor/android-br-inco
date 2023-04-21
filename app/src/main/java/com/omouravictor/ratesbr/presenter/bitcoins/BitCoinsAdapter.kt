@@ -33,8 +33,8 @@ class BitCoinsAdapter(
         private val bitCoinItem: BitcoinItemListBinding
     ) : RecyclerView.ViewHolder(bitCoinItem.root) {
         fun bind(bitcoin: BitCoinUiModel) {
-            val language = bitcoin.bitcoinLanguage.substring(0..1)
-            val country = bitcoin.bitcoinLanguage.substring(3..4)
+            val language = bitcoin.language.substring(0..1)
+            val country = bitcoin.language.substring(3..4)
             val locale = Locale(language, country)
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
@@ -42,25 +42,25 @@ class BitCoinsAdapter(
                 DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale("pt", "BR")))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            "${bitcoin.bitcoinName} / ${bitcoin.bitcoinISO}".also {
+            "${bitcoin.name} / ${bitcoin.iSO}".also {
                 bitCoinItem.textViewBitcoinName.text = it
             }
 
-            bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.bitcoinLast)
+            bitCoinItem.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
 
-            if (bitcoin.bitcoinVariation >= 0) {
-                "+${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
+            if (bitcoin.variation >= 0) {
+                "+${decimalFormat.format(bitcoin.variation)}%".also {
                     bitCoinItem.textViewBitcoinVariation.text = it
                 }
                 bitCoinItem.textViewBitcoinVariation.setTextColor(Color.GREEN)
             } else {
-                "${decimalFormat.format(bitcoin.bitcoinVariation)}%".also {
+                "${decimalFormat.format(bitcoin.variation)}%".also {
                     bitCoinItem.textViewBitcoinVariation.text = it
                 }
             }
 
             "${dateFormatter.format(bitcoin.date)}\n${timeFormatter.format(bitcoin.date)}".also {
-                bitCoinItem.tvDateTime.text = it
+                bitCoinItem.textViewDateTime.text = it
             }
 
         }

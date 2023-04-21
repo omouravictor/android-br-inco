@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class StocksRepository(
     private val stockDao: StockDao,
@@ -16,8 +17,8 @@ class StocksRepository(
 ) {
     fun getLocalStocks(): Flow<List<StockEntity>> = stockDao.getAllStocks()
 
-    suspend fun insertStocks(listStockEntity: List<StockEntity>) {
-        stockDao.insertStocks(listStockEntity)
+    suspend fun insertStocks(stockEntityList: List<StockEntity>) {
+        stockDao.insertStocks(stockEntityList)
     }
 
     suspend fun getRemoteStocks(fields: String): Flow<NetworkResultStatus<NetworkStocksResponse>> {
@@ -26,6 +27,7 @@ class StocksRepository(
                 emit(NetworkResultStatus.Loading)
                 try {
                     val request = apiService.getStocks(fields)
+                        .apply { stockDate = Date() }
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
                     emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :(")))

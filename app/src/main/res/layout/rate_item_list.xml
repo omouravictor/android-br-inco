@@ -24,7 +24,7 @@
             android:paddingVertical="10dp">
 
             <TextView
-                android:id="@+id/tvFromCurrency"
+                android:id="@+id/textViewRateCurrencyTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
@@ -36,29 +36,29 @@
                 tools:text="USD" />
 
             <TextView
-                android:id="@+id/tvVariation"
+                android:id="@+id/textViewRateVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvFromCurrency"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewRateCurrencyTerm"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvFromCurrency"
+                app:layout_constraintTop_toTopOf="@+id/textViewRateCurrencyTerm"
                 tools:text="-1.34%" />
 
             <TextView
-                android:id="@+id/tvValue"
+                android:id="@+id/textViewRateValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFromCurrency"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRateCurrencyTerm"
                 tools:text="R$ 5,60" />
 
             <TextView
-                android:id="@+id/tvDateTime"
+                android:id="@+id/textViewDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"

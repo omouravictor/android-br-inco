@@ -4,20 +4,14 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkBitCoinsResultsItemResponse(
     @SerializedName("name")
-    val requestBitcoinBrokerName: String,
+    val name: String,
 
     @SerializedName("format")
-    val requestBitcoinFormat: ArrayList<String>,
+    val format: ArrayList<String>,
 
     @SerializedName("last")
-    val requestBitcoinBrokerLast: Double,
-
-    @SerializedName("buy")
-    val requestBitcoinBrokerBuy: Double,
-
-    @SerializedName("sell")
-    val requestBitcoinBrokerSell: Double,
+    val last: Double,
 
     @SerializedName("variation")
-    val requestBitcoinBrokerVariation: Double
+    val variation: Double
 )

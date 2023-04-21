@@ -8,7 +8,7 @@
     android:layout_marginTop="24dp">
 
     <TextView
-        android:id="@+id/textViewConverterTitle"
+        android:id="@+id/textViewCurrencyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
@@ -18,26 +18,26 @@
         tools:text="Dólar americano" />
 
     <TextView
-        android:id="@+id/textViewUnitaryValueConverter"
+        android:id="@+id/textViewUnitaryRateValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/textInputValueLayoutConverter"
-        app:layout_constraintTop_toTopOf="@+id/textViewTermConverter"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutConverter"
+        app:layout_constraintTop_toTopOf="@+id/textViewCurrencyTerm"
         tools:text="R$ 4,99" />
 
     <TextView
-        android:id="@+id/textViewTermConverter"
+        android:id="@+id/textViewCurrencyTerm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/textInputValueLayoutConverter"
-        app:layout_constraintTop_toBottomOf="@+id/textViewConverterTitle"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutConverter"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCurrencyName"
         tools:text="USD" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputValueLayoutConverter"
+        android:id="@+id/textInputLayoutConverter"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:hint="@string/value_for_conversion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUnitaryValueConverter">
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnitaryRateValue">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditTextValueConverter"
@@ -55,24 +55,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textViewResultConverter"
+        android:id="@+id/textViewResultTittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/result"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputValueLayoutConverter" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConverter" />
 
     <TextView
-        android:id="@+id/textViewResultValueConverter"
+        android:id="@+id/textViewResultValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewResultConverter"
-        tools:text="R$ 4,99"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewResultTittle"
+        tools:text="R$ 4,99" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

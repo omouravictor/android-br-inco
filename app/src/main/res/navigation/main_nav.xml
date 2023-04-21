@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_nav"
-    app:startDestination="@id/rates_nav">
+    android:id="@+id/mainNav"
+    app:startDestination="@id/ratesItemMenu">
 
     <include app:graph="@navigation/stocks_nav" />
     <include app:graph="@navigation/rates_nav" />
