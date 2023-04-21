@@ -56,7 +56,7 @@ class ConverterFragment : Fragment() {
     }
 
     private fun setRateInfo(rateUiModel: RateUiModel) {
-        converterBinding.textViewResultTittle.text = rateUiModel.currencyName
+        converterBinding.textViewCurrencyName.text = rateUiModel.currencyName
         converterBinding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
         converterBinding.textViewUnitaryRateValue.text =
             numberFormat.format(rateUiModel.unitaryRate)
