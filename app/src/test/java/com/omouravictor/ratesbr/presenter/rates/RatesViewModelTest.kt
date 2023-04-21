@@ -52,7 +52,7 @@ class RatesViewModelTest {
         runBlocking {
             // Given
             val mockRatesResultsItemResponse = NetworkRatesResultsItemResponse(
-                "USD", 1.0, 1.0, 1.0,
+                1.0, 1.0
             )
             val mockRatesResultsResponse = NetworkRatesResultsResponse(
                 LinkedHashMap<String, NetworkRatesResultsItemResponse>().apply {
@@ -60,8 +60,9 @@ class RatesViewModelTest {
                 }
             )
             val mockRatesResponse =
-                NetworkRatesResponse("BRL", true, mockRatesResultsResponse, 1.0, true, Date())
-            val mockListRatesEntity = listOf(RateEntity("USD", 1.0, mockRatesResponse.rateDate))
+                NetworkRatesResponse(mockRatesResultsResponse, Date())
+            val mockListRatesEntity =
+                listOf(RateEntity("USD", 1.0, 1.0, mockRatesResponse.rateDate))
 
             val mockSuccessResult = NetworkResultStatus.Success(mockRatesResponse)
 
@@ -83,7 +84,7 @@ class RatesViewModelTest {
             // Given
             val mockErrorResult =
                 NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :("))
-            val mockListRatesEntity = listOf(RateEntity("USD", 1.0, Date()))
+            val mockListRatesEntity = listOf(RateEntity("USD", 1.0, 1.0, Date()))
 
             `when`(ratesRepository.getRemoteRates(anyString())).thenReturn(flowOf(mockErrorResult))
             `when`(ratesRepository.getLocalRates()).thenReturn(flowOf(mockListRatesEntity))
