@@ -40,7 +40,7 @@ class RatesAdapter(
             val locale = Locale("pt", "BR")
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
-            val decimalFormat = DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(locale))
+            val decimalFormat = DecimalFormat("#0.000", DecimalFormatSymbols(locale))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
             rateItem.textViewRateCurrencyTerm.text = rateUiModel.currencyTerm
