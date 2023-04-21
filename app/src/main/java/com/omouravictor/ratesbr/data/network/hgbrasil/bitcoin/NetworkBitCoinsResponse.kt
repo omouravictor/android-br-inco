@@ -4,39 +4,26 @@ import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
 import java.util.*
 
-data class NetworkBitCoinResult(
-    @SerializedName("by")
-    val sourceBy: String,
-
-    @SerializedName("valid_key")
-    val sourceValidKey: Boolean,
+data class NetworkBitCoinsResponse(
 
     @SerializedName("results")
-    val sourceResultBitcoin: NetworkBitCoinsResultsResponse,
+    val results: NetworkBitCoinsResultsResponse,
 
-    @SerializedName("execution_time")
-    val sourceExecutionTime: Double,
-
-    @SerializedName("from_cache")
-    val from_cache: Boolean
+    var bitcoinDate: Date
 )
 
-fun NetworkBitCoinResult.toListBitCoinEntity(): List<BitCoinEntity> {
+fun NetworkBitCoinsResponse.toListBitCoinEntity(): List<BitCoinEntity> {
     val list: MutableList<BitCoinEntity> = mutableListOf()
-    val date = Date()
 
-    sourceResultBitcoin.resultsBitcoin.forEach {
+    results.bitcoins.forEach { bitcoinResponse ->
         list.add(
             BitCoinEntity(
-                it.key,
-                it.value.requestBitcoinBrokerName,
-                it.value.requestBitcoinFormat[0],
-                it.value.requestBitcoinFormat[1],
-                it.value.requestBitcoinBrokerLast,
-                it.value.requestBitcoinBrokerBuy,
-                it.value.requestBitcoinBrokerSell,
-                it.value.requestBitcoinBrokerVariation,
-                date
+                bitcoinResponse.value.name,
+                bitcoinResponse.value.format[0],
+                bitcoinResponse.value.format[1],
+                bitcoinResponse.value.last,
+                bitcoinResponse.value.variation,
+                bitcoinDate
             )
         )
     }

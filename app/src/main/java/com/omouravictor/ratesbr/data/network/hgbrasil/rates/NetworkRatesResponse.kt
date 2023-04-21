@@ -5,20 +5,8 @@ import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import java.util.*
 
 data class NetworkRatesResponse(
-    @SerializedName("by")
-    val sourceBy: String,
-
-    @SerializedName("valid_key")
-    val sourceValidKey: Boolean,
-
     @SerializedName("results")
-    val sourceResultCurrency: NetworkRatesResultsResponse,
-
-    @SerializedName("execution_time")
-    val sourceExecutionTime: Double,
-
-    @SerializedName("from_cache")
-    val from_cache: Boolean,
+    val results: NetworkRatesResultsResponse,
 
     var rateDate: Date
 )
@@ -26,10 +14,10 @@ data class NetworkRatesResponse(
 fun NetworkRatesResponse.toListRateEntity(): List<RateEntity> {
     val list: MutableList<RateEntity> = mutableListOf()
 
-    sourceResultCurrency.resultsCurrencies.keys.forEach { currency ->
-        val rate = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyBuy
-        val variation = sourceResultCurrency.resultsCurrencies[currency]?.requestCurrencyVariation
-        list.add(RateEntity(currency, rate!!, variation!!, rateDate))
+    results.currencies.keys.forEach { currencyTerm ->
+        val rate = results.currencies[currencyTerm]?.buy
+        val variation = results.currencies[currencyTerm]?.variation
+        list.add(RateEntity(currencyTerm, rate!!, variation!!, rateDate))
     }
 
     return list

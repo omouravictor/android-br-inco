@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkRatesResultsResponse(
     @SerializedName("currencies")
-    val resultsCurrencies: LinkedHashMap<String, NetworkRatesResultsItemResponse>,
+    val currencies: LinkedHashMap<String, NetworkRatesResultsItemResponse>,
 )

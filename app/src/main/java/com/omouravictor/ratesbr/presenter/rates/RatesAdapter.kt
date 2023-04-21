@@ -14,13 +14,14 @@ import java.util.*
 import kotlin.math.round
 
 class RatesAdapter(
-    private val ratesList: List<RateUiModel>
+    private val ratesList: List<RateUiModel>,
+    private val onClickItem: (RateUiModel) -> Unit
 ) : RecyclerView.Adapter<RatesAdapter.RatesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
             RateItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RatesViewHolder(binding)
+        return RatesViewHolder(binding, onClickItem)
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +33,8 @@ class RatesAdapter(
     }
 
     class RatesViewHolder(
-        private val rateItem: RateItemListBinding
+        private val rateItem: RateItemListBinding,
+        private val onClickItem: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(rateItem.root) {
         fun bind(rateUiModel: RateUiModel) {
             val locale = Locale("pt", "BR")
@@ -41,24 +43,28 @@ class RatesAdapter(
             val decimalFormat = DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(locale))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
-            rateItem.tvFromCurrency.text = rateUiModel.currency
-
-            "${decimalFormat.format(rateUiModel.variation)}%".also {
-                rateItem.tvVariation.text = it
-            }
+            rateItem.textViewRateCurrencyTerm.text = rateUiModel.currencyTerm
 
             if (rateUiModel.variation >= 0) {
                 "+${decimalFormat.format(rateUiModel.variation)}%".also {
-                    rateItem.tvVariation.text = it
+                    rateItem.textViewRateVariation.text = it
                 }
-                rateItem.tvVariation.setTextColor(Color.GREEN)
+                rateItem.textViewRateVariation.setTextColor(Color.GREEN)
+            }else {
+                "${decimalFormat.format(rateUiModel.variation)}%".also {
+                    rateItem.textViewRateVariation.text = it
+                }
             }
 
-            rateItem.tvValue.text =
-                numberFormat.format(round(1 * rateUiModel.unityRate * 100) / 100)
+            rateItem.textViewRateValue.text =
+                numberFormat.format(round(1 * rateUiModel.unitaryRate * 100) / 100)
 
             "${dateFormatter.format(rateUiModel.rateDate)}\n${timeFormatter.format(rateUiModel.rateDate)}".also {
-                rateItem.tvDateTime.text = it
+                rateItem.textViewDateTime.text = it
+            }
+
+            itemView.setOnClickListener {
+                onClickItem(rateUiModel)
             }
         }
     }

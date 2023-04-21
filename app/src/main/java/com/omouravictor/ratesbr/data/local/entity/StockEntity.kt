@@ -8,18 +8,16 @@ import java.util.*
 @Entity(tableName = "stock_table")
 data class StockEntity(
     @PrimaryKey(autoGenerate = false)
-    val stockTerm: String,
-    val stockName: String,
-    val stockLocation: String,
-    val stockPoints: Double,
-    val stockVariation: Double,
+    val name: String,
+    val location: String,
+    val variation: Double,
     val date: Date,
 )
 
 fun StockEntity.toStockUiModel() =
     StockUiModel(
-        stockTerm,
-        stockLocation,
-        stockVariation,
+        name,
+        location,
+        variation,
         date
     )

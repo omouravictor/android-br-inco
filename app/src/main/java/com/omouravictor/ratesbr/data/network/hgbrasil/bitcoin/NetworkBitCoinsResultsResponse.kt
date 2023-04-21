@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class NetworkBitCoinsResultsResponse(
     @SerializedName("bitcoin")
-    val resultsBitcoin: LinkedHashMap<String, NetworkBitCoinsResultsItemResponse>
-) {}
+    val bitcoins: LinkedHashMap<String, NetworkBitCoinsResultsItemResponse>
+)

@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class StocksFragment : Fragment() {
 
     private lateinit var stockBinding: FragmentStocksBinding
@@ -33,26 +31,26 @@ class StocksFragment : Fragment() {
 
         initSwipeRefreshLayout()
 
-        stockViewModel.stocks.observe(viewLifecycleOwner) {
+        stockViewModel.stocksResult.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = false
-                    stockBinding.rvStocks.isVisible = true
+                    stockBinding.recyclerViewStocks.isVisible = true
                     stockBinding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = false
-                    stockBinding.rvStocks.isVisible = false
+                    stockBinding.recyclerViewStocks.isVisible = false
                     stockBinding.includeViewError.root.isVisible = true
                     stockBinding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     stockBinding.swipeRefreshLayout.isRefreshing = false
                     stockBinding.progressBar.isVisible = true
-                    stockBinding.rvStocks.isVisible = false
+                    stockBinding.recyclerViewStocks.isVisible = false
                     stockBinding.includeViewError.root.isVisible = false
                 }
             }
@@ -66,7 +64,7 @@ class StocksFragment : Fragment() {
     }
 
     private fun configureRecyclerView(stockList: List<StockUiModel>) {
-        stockBinding.rvStocks.apply {
+        stockBinding.recyclerViewStocks.apply {
             adapter = StocksAdapter(stockList)
             layoutManager = LinearLayoutManager(context)
         }

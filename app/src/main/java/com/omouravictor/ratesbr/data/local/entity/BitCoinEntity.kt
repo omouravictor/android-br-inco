@@ -8,23 +8,20 @@ import java.util.*
 @Entity(tableName = "bitcoin_table")
 data class BitCoinEntity(
     @PrimaryKey(autoGenerate = false)
-    val bitcoinTerm: String,
-    val bitcoinName: String,
-    val bitcoinISO: String,
-    val bitcoinLanguage: String,
-    val bitcoinLast: Double,
-    val bitcoinBuy: Double,
-    val bitcoinSell: Double,
-    val bitcoinVariation: Double,
+    val name: String,
+    val iSO: String,
+    val language: String,
+    val value: Double,
+    val variation: Double,
     val date: Date
 )
 
 fun BitCoinEntity.toBitCoinUiModel() =
     BitCoinUiModel(
-        bitcoinName,
-        bitcoinISO,
-        bitcoinLanguage,
-        bitcoinLast,
-        bitcoinVariation,
+        name,
+        iSO,
+        language,
+        value,
+        variation,
         date
     )

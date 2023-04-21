@@ -17,4 +17,8 @@
     <string name="start">INICIAR</string>
     <string name="previous">Anterior</string>
     <string name="next">Próximo</string>
+    <string name="brl_symbol">R$</string>
+    <string name="value_for_conversion">Valor para conversão</string>
+    <string name="result">Resultado</string>
+    <string name="swipe_down_to_try_again">Deslize para baixo para tentar novamente.</string>
 </resources>

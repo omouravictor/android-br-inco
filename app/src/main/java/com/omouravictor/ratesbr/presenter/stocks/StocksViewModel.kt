@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 class StocksViewModel @ViewModelInject constructor(
     private val stocksRepository: StocksRepository
 ) : ViewModel() {
-    val stocks = MutableLiveData<UiResultState<List<StockUiModel>>>()
-    private val fields = "stocks"
+
+    val stocksResult = MutableLiveData<UiResultState<List<StockUiModel>>>()
 
     init {
         getStocks()
@@ -24,25 +24,25 @@ class StocksViewModel @ViewModelInject constructor(
 
     fun getStocks() {
         viewModelScope.launch {
-            stocksRepository.getRemoteStocks(fields).collect { networkResultStatus ->
+            stocksRepository.getRemoteStocks("stocks").collect { networkResultStatus ->
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteStocks = networkResultStatus.data.toListStockEntity()
                         stocksRepository.insertStocks(remoteStocks)
-                        stocks.postValue(UiResultState.Success(remoteStocks.map { it.toStockUiModel() }))
+                        stocksResult.postValue(UiResultState.Success(remoteStocks.map { it.toStockUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
                         stocksRepository.getLocalStocks().collect { localStocks ->
                             if (localStocks.isNotEmpty())
-                                stocks.postValue(UiResultState.Success(localStocks.map { it.toStockUiModel() }))
+                                stocksResult.postValue(UiResultState.Success(localStocks.map { it.toStockUiModel() }))
                             else
-                                stocks.postValue(UiResultState.Error(networkResultStatus.e))
+                                stocksResult.postValue(UiResultState.Error(networkResultStatus.e))
                         }
                     }
 
                     is NetworkResultStatus.Loading -> {
-                        stocks.postValue(UiResultState.Loading)
+                        stocksResult.postValue(UiResultState.Loading)
                     }
                 }
             }

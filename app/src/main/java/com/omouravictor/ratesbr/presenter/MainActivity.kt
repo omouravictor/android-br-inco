@@ -3,13 +3,13 @@ package com.omouravictor.ratesbr.presenter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.data.Datastore.dataStore
 import com.omouravictor.ratesbr.databinding.ActivityMainBinding
@@ -22,24 +22,37 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var mainActivityBinding: ActivityMainBinding
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mainActivityBinding.root)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
 
-        val navView: BottomNavigationView = binding.bottomNav
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_stocks, R.id.nav_rates, R.id.nav_bitcoins
+        navController = navHostFragment.navController
+
+        appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(
+                R.id.stocks_fragment,
+                R.id.rates_fragment,
+                R.id.bitcoins_fragment
             )
         )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setSupportActionBar(mainActivityBinding.toolbar)
+        mainActivityBinding.bottomNav.setupWithNavController(navController)
+        mainActivityBinding.toolbar.setupWithNavController(navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            mainActivityBinding.toolbar.isVisible = destination.id == R.id.converter_fragment
+        }
+
+        supportActionBar?.title = navController.currentDestination?.label
 
         checkIfIsAppFirstRun()
     }
