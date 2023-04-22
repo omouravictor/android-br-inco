@@ -4,16 +4,16 @@
     <item
         android:id="@+id/stocksItemMenu"
         android:title="@string/stocks"
-        android:icon="@drawable/ic_stock_icon"/>
+        android:icon="@drawable/stock_icon"/>
 
     <item
         android:id="@+id/ratesItemMenu"
         android:title="@string/coins"
-        android:icon="@drawable/ic_money"/>
+        android:icon="@drawable/money_icon"/>
 
     <item
         android:id="@+id/bitcoinsItemMenu"
         android:title="@string/bitcoins"
-        android:icon="@drawable/ic_currency_bitcoin"/>
+        android:icon="@drawable/currency_bitcoin_icon"/>
 
 </menu>
