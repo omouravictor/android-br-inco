@@ -39,7 +39,7 @@ class BitCoinsAdapter(
             val dateFormatter = SimpleDateFormat("dd/MM/yy", locale)
             val timeFormatter = SimpleDateFormat("HH:mm", locale)
             val decimalFormat =
-                DecimalFormat("#0.00", DecimalFormatSymbols.getInstance(Locale("pt", "BR")))
+                DecimalFormat("#0.000", DecimalFormatSymbols.getInstance(Locale("pt", "BR")))
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
             "${bitcoin.name} / ${bitcoin.iSO}".also {

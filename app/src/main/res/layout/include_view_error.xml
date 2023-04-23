@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="16dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textAlignment="center"
             android:textSize="16sp"
             tools:text="Falha ao buscar os dados na internet :(" />
 
@@ -29,12 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:text="@string/swipe_down_to_try_again"
+            android:textAlignment="center"
             android:textSize="16sp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_swipe_down" />
+            android:src="@drawable/swipe_down_icon" />
 
     </LinearLayout>
 

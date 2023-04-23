@@ -50,13 +50,13 @@ class StocksAdapter(
                 "+${decimalFormat.format(stock.variation)}%".also {
                     stockItem.textViewStockVariation.text = it
                 }
-                stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_up)
+                stockItem.imageViewStockVariation.setImageResource(R.drawable.arrow_up_icon)
                 stockItem.textViewStockVariation.setTextColor(Color.GREEN)
             } else {
                 "${decimalFormat.format(stock.variation)}%".also {
                     stockItem.textViewStockVariation.text = it
                 }
-                stockItem.imageViewStockVariation.setImageResource(R.drawable.ic_arrow_down)
+                stockItem.imageViewStockVariation.setImageResource(R.drawable.arrow_down_icon)
             }
         }
     }

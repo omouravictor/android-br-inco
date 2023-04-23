@@ -48,10 +48,6 @@ class MainActivity : AppCompatActivity() {
         mainActivityBinding.bottomNav.setupWithNavController(navController)
         mainActivityBinding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            mainActivityBinding.toolbar.isVisible = destination.id == R.id.converter_fragment
-        }
-
         supportActionBar?.title = navController.currentDestination?.label
 
         checkIfIsAppFirstRun()
