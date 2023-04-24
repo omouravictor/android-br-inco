@@ -3,21 +3,26 @@ package com.omouravictor.ratesbr.presenter.converter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import java.text.DecimalFormat
+import kotlin.math.round
 
 class ConverterViewModel : ViewModel() {
 
-    val rateResult = MutableLiveData<RateUiModel>()
-    val conversionResult = MutableLiveData<String>()
-    private val decimalFormat = DecimalFormat("0.00")
+    val rate = MutableLiveData<RateUiModel>()
+    val result = MutableLiveData<Double>()
 
-    fun setInitialRateAndConversionResults(rateUiModel: RateUiModel) {
-        rateResult.postValue(rateUiModel)
-        conversionResult.postValue(rateUiModel.unitaryRate.toString())
+    fun setInitialRateAndResultValues(rateUiModel: RateUiModel) {
+        rate.postValue(rateUiModel)
+        result.postValue(rateUiModel.unitaryRate)
     }
 
-    fun calculateConversion(value: Double) {
-        val resultValue = value * decimalFormat.format(rateResult.value?.unitaryRate).toDouble()
-        conversionResult.postValue(resultValue.toString())
+    fun calculateConversion(strValue: String) {
+        try {
+            val value = strValue.toDouble()
+            val unitaryRate = round(rate.value?.unitaryRate!! * 100) / 100
+            val conversionResult = value * unitaryRate
+            result.postValue(conversionResult)
+        } catch (e: Exception) {
+            result.postValue(0.0)
+        }
     }
 }

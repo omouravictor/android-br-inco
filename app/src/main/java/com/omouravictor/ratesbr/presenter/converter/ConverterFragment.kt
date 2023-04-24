@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import java.text.NumberFormat
@@ -36,22 +35,19 @@ class ConverterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        converterViewModel.rateResult.observe(this) {
+        converterViewModel.rate.observe(this) {
             setRateInfo(it)
         }
 
-        converterViewModel.conversionResult.observe(this) {
-            converterBinding.textViewResultValue.text = numberFormat.format(it.toDouble())
+        converterViewModel.result.observe(this) {
+            converterBinding.textViewResultValue.text = numberFormat.format(it)
         }
     }
 
     private fun initTextInputEditTextValueConverter() {
         converterBinding.textInputEditTextValueConverter.setText("1")
         converterBinding.textInputEditTextValueConverter.doAfterTextChanged {
-            if (it.toString().isNotEmpty() && it.toString() != ".")
-                converterViewModel.calculateConversion(it.toString().toDouble())
-            else
-                converterBinding.textViewResultValue.text = getString(R.string.brl_symbol)
+            converterViewModel.calculateConversion(it.toString())
         }
     }
 
