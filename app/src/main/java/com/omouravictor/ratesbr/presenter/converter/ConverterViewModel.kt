@@ -11,7 +11,7 @@ class ConverterViewModel : ViewModel() {
     val result = MutableLiveData<Double>()
     private var unitaryRate: Double = 0.0
 
-    fun setInitialRateAndResultValues(rateUiModel: RateUiModel) {
+    fun setInitialValues(rateUiModel: RateUiModel) {
         rate.postValue(rateUiModel)
         result.postValue(rateUiModel.unitaryRate)
         unitaryRate = round(rateUiModel.unitaryRate * 100) / 100
