@@ -42,7 +42,7 @@ This project is part of my personal portfolio, so, I'll be happy if you could pr
 ## How to run?
 
 - Open the project with Android Studio.
-- Go to https://hgbrasil.com, create an account and generate a key for HG Finance API.
+- Go to https://console.hgbrasil.com/keys, create an account and generate a key for HG Finance API.
 - Access project root folder (rates-br) and create a file with name "api.properties".
 - Add the line below on "api.properties" file including your HG Finance API key.
 ```
