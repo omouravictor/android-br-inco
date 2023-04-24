@@ -13,7 +13,6 @@
         android:layout_marginBottom="60dp"
         android:text="@string/thanks_for_using_our_app"
         android:textAlignment="center"
-        android:textColor="@color/black"
         android:textSize="28sp" />
 
     <Button
