@@ -53,15 +53,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/textViewStockLocation"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/textViewStockLocation"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="-2,423%" />
 
             <ImageView
                 android:id="@+id/imageViewStockVariation"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/arrow_down_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
                 app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
