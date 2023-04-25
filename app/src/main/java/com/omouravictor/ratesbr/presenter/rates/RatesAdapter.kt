@@ -36,6 +36,8 @@ class RatesAdapter(
         fun bind(rate: RateUiModel) {
             binding.textViewRateCurrencyTerm.text = rate.currencyTerm
 
+            binding.textViewRateCurrencyName.text = rate.currencyName
+
             bindVariation(rate.variation)
 
             binding.textViewRateValue.text =

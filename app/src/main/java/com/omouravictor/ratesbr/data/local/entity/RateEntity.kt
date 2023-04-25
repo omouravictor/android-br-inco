@@ -17,14 +17,14 @@ data class RateEntity(
 fun RateEntity.toRateUiModel() =
     RateUiModel(
         currencyName = when (currencyTerm) {
-            "USD" -> "Dólar Americano"
+            "USD" -> "Dólar americano"
             "EUR" -> "Euro"
-            "GBP" -> "Libra Esterlina"
-            "ARS" -> "Peso Argentino"
-            "CAD" -> "Dólar Canadense"
-            "AUD" -> "Dólar Australiano"
-            "JPY" -> "Iene Japonês"
-            "CNY" -> "Yuan Chinês"
+            "GBP" -> "Libra esterlina"
+            "ARS" -> "Peso argentino"
+            "CAD" -> "Dólar canadense"
+            "AUD" -> "Dólar australiano"
+            "JPY" -> "Iene japonês"
+            "CNY" -> "Yuan chinês"
             else -> "Moeda não encontrada"
         },
         currencyTerm,

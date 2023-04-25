@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,20 +20,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/green"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
 
             <TextView
                 android:id="@+id/textViewRateCurrencyTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/white"
-                android:textSize="32sp"
-                android:textStyle="bold"
+                android:background="@drawable/rectangle_background"
+                android:textColor="@color/green"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="USD" />
+
+            <TextView
+                android:id="@+id/textViewRateCurrencyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRateCurrencyTerm"
+                tools:text="Dólar Americano" />
 
             <TextView
                 android:id="@+id/textViewRateVariation"
@@ -52,9 +64,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRateCurrencyTerm"
+                app:layout_constraintTop_toTopOf="@+id/textViewDate"
                 tools:text="R$ 5,60" />
 
             <TextView
