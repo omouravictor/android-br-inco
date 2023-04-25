@@ -5,14 +5,14 @@
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.bitcoins.BitCoinsFragment">
+    tools:context=".presenter.bitcoins.BitcoinsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewBitCoins"
+            android:id="@+id/recyclerViewBitcoins"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

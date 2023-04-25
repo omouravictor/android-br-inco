@@ -6,5 +6,5 @@ data class StockUiModel(
     val name: String,
     val location: String,
     val variation: Double,
-    val date: Date
+    val stockDate: Date
 )

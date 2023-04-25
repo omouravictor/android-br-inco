@@ -1,32 +1,32 @@
 package com.omouravictor.ratesbr.data.repository
 
-import com.omouravictor.ratesbr.data.local.dao.BitCoinDao
-import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
+import com.omouravictor.ratesbr.data.local.dao.BitcoinDao
+import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitCoinsResponse
+import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitcoinsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class BitCoinsRepository(
-    private val bitCoinDao: BitCoinDao,
+class BitcoinsRepository(
+    private val bitcoinDao: BitcoinDao,
     private val apiService: ApiService
 ) {
-    fun getLocalBitCoins(): Flow<List<BitCoinEntity>> = bitCoinDao.getAllBitCoins()
+    fun getLocalBitcoins(): Flow<List<BitcoinEntity>> = bitcoinDao.getAllBitcoins()
 
-    suspend fun insertBitCoins(bitCoinEntityList: List<BitCoinEntity>) {
-        bitCoinDao.insertBitCoins(bitCoinEntityList)
+    suspend fun insertBitcoins(bitcoinEntityList: List<BitcoinEntity>) {
+        bitcoinDao.insertBitcoins(bitcoinEntityList)
     }
 
-    suspend fun getRemoteBitCoins(fields: String): Flow<NetworkResultStatus<NetworkBitCoinsResponse>> {
+    suspend fun getRemoteBitcoins(fields: String): Flow<NetworkResultStatus<NetworkBitcoinsResponse>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)
                 try {
-                    val request = apiService.getBitCoins(fields)
+                    val request = apiService.getBitcoins(fields)
                         .apply { bitcoinDate = Date() }
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {

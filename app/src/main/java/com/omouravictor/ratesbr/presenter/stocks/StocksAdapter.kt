@@ -28,33 +28,33 @@ class StocksAdapter(
     }
 
     class StockViewHolder(
-        private val stockItem: StockItemListBinding
-    ) : RecyclerView.ViewHolder(stockItem.root) {
+        private val binding: StockItemListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
             "${stock.name} / ${stock.location}".also {
-                stockItem.textViewStockName.text = it
+                binding.textViewStockName.text = it
             }
 
             bindVariation(stock.variation)
 
-            stockItem.textViewDate.text = BrazilianFormats.dateFormat.format(stock.date)
+            binding.textViewDate.text = BrazilianFormats.dateFormat.format(stock.stockDate)
 
-            stockItem.textViewTime.text = BrazilianFormats.timeFormat.format(stock.date)
+            binding.textViewTime.text = BrazilianFormats.timeFormat.format(stock.stockDate)
         }
 
         private fun bindVariation(variation: Double) {
             if (variation >= 0.0) {
                 "+${BrazilianFormats.decimalFormat2Places.format(variation)}%".also {
-                    stockItem.textViewStockVariation.text = it
+                    binding.textViewStockVariation.text = it
                 }
-                stockItem.imageViewStockVariation.setImageResource(R.drawable.arrow_up_icon)
-                stockItem.textViewStockVariation.setTextColor(Color.GREEN)
+                binding.imageViewStockVariation.setImageResource(R.drawable.arrow_up_icon)
+                binding.textViewStockVariation.setTextColor(Color.GREEN)
             } else {
                 "${BrazilianFormats.decimalFormat2Places.format(variation)}%".also {
-                    stockItem.textViewStockVariation.text = it
+                    binding.textViewStockVariation.text = it
                 }
-                stockItem.imageViewStockVariation.setImageResource(R.drawable.arrow_down_icon)
+                binding.imageViewStockVariation.setImageResource(R.drawable.arrow_down_icon)
             }
         }
     }

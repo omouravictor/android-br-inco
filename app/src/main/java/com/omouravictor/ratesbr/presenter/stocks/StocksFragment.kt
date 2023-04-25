@@ -14,7 +14,7 @@ import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 
 class StocksFragment : Fragment() {
 
-    private lateinit var stockBinding: FragmentStocksBinding
+    private lateinit var binding: FragmentStocksBinding
     private val stockViewModel: StocksViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -22,8 +22,8 @@ class StocksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        stockBinding = FragmentStocksBinding.inflate(layoutInflater, container, false)
-        return stockBinding.root
+        binding = FragmentStocksBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,36 +35,36 @@ class StocksFragment : Fragment() {
             when (it) {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
-                    stockBinding.swipeRefreshLayout.isRefreshing = false
-                    stockBinding.progressBar.isVisible = false
-                    stockBinding.recyclerViewStocks.isVisible = true
-                    stockBinding.includeViewError.root.isVisible = false
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
+                    binding.recyclerViewStocks.isVisible = true
+                    binding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
-                    stockBinding.swipeRefreshLayout.isRefreshing = false
-                    stockBinding.progressBar.isVisible = false
-                    stockBinding.recyclerViewStocks.isVisible = false
-                    stockBinding.includeViewError.root.isVisible = true
-                    stockBinding.includeViewError.textViewErrorMessage.text = it.e.message
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
+                    binding.recyclerViewStocks.isVisible = false
+                    binding.includeViewError.root.isVisible = true
+                    binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
-                    stockBinding.swipeRefreshLayout.isRefreshing = false
-                    stockBinding.progressBar.isVisible = true
-                    stockBinding.recyclerViewStocks.isVisible = false
-                    stockBinding.includeViewError.root.isVisible = false
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = true
+                    binding.recyclerViewStocks.isVisible = false
+                    binding.includeViewError.root.isVisible = false
                 }
             }
         }
     }
 
     private fun initSwipeRefreshLayout() {
-        stockBinding.swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             stockViewModel.getStocks()
         }
     }
 
     private fun configureRecyclerView(stockList: List<StockUiModel>) {
-        stockBinding.recyclerViewStocks.apply {
+        binding.recyclerViewStocks.apply {
             adapter = StocksAdapter(stockList)
             layoutManager = LinearLayoutManager(context)
         }

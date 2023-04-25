@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.BitcoinItemListBinding
-import com.omouravictor.ratesbr.presenter.bitcoins.model.BitCoinUiModel
+import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats
 import java.text.NumberFormat
 import java.util.*
 
-class BitCoinsAdapter(
-    private val list: List<BitCoinUiModel>
-) : RecyclerView.Adapter<BitCoinsAdapter.BitcoinViewHolder>() {
+class BitcoinsAdapter(
+    private val list: List<BitcoinUiModel>
+) : RecyclerView.Adapter<BitcoinsAdapter.BitcoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
         val binding =
@@ -29,37 +29,37 @@ class BitCoinsAdapter(
     }
 
     class BitcoinViewHolder(
-        private val bitcoinItemBinding: BitcoinItemListBinding
-    ) : RecyclerView.ViewHolder(bitcoinItemBinding.root) {
+        private val binding: BitcoinItemListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bitcoin: BitCoinUiModel) {
+        fun bind(bitcoin: BitcoinUiModel) {
             val language = bitcoin.language.substring(0..1)
             val country = bitcoin.language.substring(3..4)
             val locale = Locale(language, country)
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
             "${bitcoin.name} / ${bitcoin.iSO}".also {
-                bitcoinItemBinding.textViewBitcoinName.text = it
+                binding.textViewBitcoinName.text = it
             }
 
-            bitcoinItemBinding.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
+            binding.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
 
             bindVariation(bitcoin.variation)
 
-            bitcoinItemBinding.textViewDate.text = BrazilianFormats.dateFormat.format(bitcoin.date)
+            binding.textViewDate.text = BrazilianFormats.dateFormat.format(bitcoin.bitcoinDate)
 
-            bitcoinItemBinding.textViewTime.text = BrazilianFormats.timeFormat.format(bitcoin.date)
+            binding.textViewTime.text = BrazilianFormats.timeFormat.format(bitcoin.bitcoinDate)
         }
 
         private fun bindVariation(variation: Double) {
             if (variation >= 0) {
                 "+${BrazilianFormats.decimalFormat3Places.format(variation)}%".also {
-                    bitcoinItemBinding.textViewBitcoinVariation.text = it
+                    binding.textViewBitcoinVariation.text = it
                 }
-                bitcoinItemBinding.textViewBitcoinVariation.setTextColor(Color.GREEN)
+                binding.textViewBitcoinVariation.setTextColor(Color.GREEN)
             } else {
                 "${BrazilianFormats.decimalFormat3Places.format(variation)}%".also {
-                    bitcoinItemBinding.textViewBitcoinVariation.text = it
+                    binding.textViewBitcoinVariation.text = it
                 }
             }
         }

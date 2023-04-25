@@ -1,4 +1,4 @@
-package com.omouravictor.ratesbr.presenter.rates
+package com.omouravictor.ratesbr.presenter.bitcoins
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,25 +7,22 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
+import com.omouravictor.ratesbr.databinding.FragmentBitcoinsBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultState
-import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
-import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
+import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 
-class RatesFragment : Fragment() {
+class BitcoinsFragment : Fragment() {
 
-    private lateinit var binding: FragmentRatesBinding
-    private val ratesViewModel: RatesViewModel by activityViewModels()
-    private val converterViewModel: ConverterViewModel by activityViewModels()
+    private lateinit var binding: FragmentBitcoinsBinding
+    private val bitcoinViewModel: BitcoinsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRatesBinding.inflate(layoutInflater, container, false)
+        binding = FragmentBitcoinsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -34,26 +31,26 @@ class RatesFragment : Fragment() {
 
         initSwipeRefreshLayout()
 
-        ratesViewModel.ratesResult.observe(viewLifecycleOwner) {
+        bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = false
-                    binding.recyclerViewRates.isVisible = true
+                    binding.recyclerViewBitcoins.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = false
-                    binding.recyclerViewRates.isVisible = false
+                    binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = true
-                    binding.recyclerViewRates.isVisible = false
+                    binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
             }
@@ -62,21 +59,15 @@ class RatesFragment : Fragment() {
 
     private fun initSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            ratesViewModel.getRates()
+            bitcoinViewModel.getBitcoins()
         }
     }
 
-    private fun configureRecyclerView(ratesList: List<RateUiModel>) {
-        binding.recyclerViewRates.apply {
-            adapter = RatesAdapter(ratesList) { ratesOnClickItem(it) }
+    private fun configureRecyclerView(bitcoinList: List<BitcoinUiModel>) {
+        binding.recyclerViewBitcoins.apply {
+            adapter = BitcoinsAdapter(bitcoinList)
             layoutManager = LinearLayoutManager(context)
         }
-    }
-
-    private fun ratesOnClickItem(rateUiModel: RateUiModel) {
-        converterViewModel.setInitialRateAndResultValues(rateUiModel)
-        val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
-        findNavController().navigate(action)
     }
 
 }

@@ -11,7 +11,7 @@ data class RateEntity(
     val currencyTerm: String,
     val unitaryRate: Double,
     val variation: Double,
-    val date: Date
+    val rateDate: Date
 )
 
 fun RateEntity.toRateUiModel() =
@@ -30,5 +30,5 @@ fun RateEntity.toRateUiModel() =
         currencyTerm,
         unitaryRate,
         variation,
-        date
+        rateDate
     )
