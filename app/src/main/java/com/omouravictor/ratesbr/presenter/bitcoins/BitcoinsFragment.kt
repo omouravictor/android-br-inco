@@ -36,20 +36,17 @@ class BitcoinsFragment : Fragment() {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = false
                     binding.recyclerViewBitcoins.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = false
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = true
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }

@@ -36,20 +36,17 @@ class StocksFragment : Fragment() {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = false
-                    binding.progressBar.isVisible = true
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
