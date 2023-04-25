@@ -1,13 +1,12 @@
 package com.omouravictor.ratesbr.presenter.bitcoins
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.BitcoinItemListBinding
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 import java.text.NumberFormat
 import java.util.*
 
@@ -43,28 +42,17 @@ class BitcoinsAdapter(
 
             binding.textViewBitcoinName.text = bitcoin.name
 
-            bindVariation(bitcoin.variation)
+            setVariationOnBind(
+                bitcoin.variation,
+                binding.textViewBitcoinVariation,
+                binding.imageViewBitcoinVariation
+            )
 
             binding.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
 
             binding.textViewDate.text = BrazilianFormats.dateFormat.format(bitcoin.bitcoinDate)
 
             binding.textViewTime.text = BrazilianFormats.timeFormat.format(bitcoin.bitcoinDate)
-        }
-
-        private fun bindVariation(variation: Double) {
-            if (variation >= 0.0) {
-                "+${BrazilianFormats.numberFormat.format(variation)}%".also {
-                    binding.textViewBitcoinVariation.text = it
-                }
-                binding.imageViewBitcoinVariation.setImageResource(R.drawable.arrow_up_icon)
-                binding.textViewBitcoinVariation.setTextColor(Color.GREEN)
-            } else {
-                "${BrazilianFormats.numberFormat.format(variation)}%".also {
-                    binding.textViewBitcoinVariation.text = it
-                }
-                binding.imageViewBitcoinVariation.setImageResource(R.drawable.arrow_down_icon)
-            }
         }
     }
 }

@@ -1,13 +1,12 @@
 package com.omouravictor.ratesbr.presenter.rates
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.RateItemListBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
 
 class RatesAdapter(
@@ -39,10 +38,13 @@ class RatesAdapter(
 
             binding.textViewRateCurrencyName.text = rate.currencyName
 
-            bindVariation(rate.variation)
+            setVariationOnBind(
+                rate.variation,
+                binding.textViewRateVariation,
+                binding.imageViewRateVariation
+            )
 
-            binding.textViewRateValue.text =
-                BrazilianFormats.currencyFormat.format(getRoundedDouble(rate.unitaryRate))
+            binding.textViewRateValue.text = BrazilianFormats.currencyFormat.format(getRoundedDouble(rate.unitaryRate))
 
             binding.textViewDate.text = BrazilianFormats.dateFormat.format(rate.rateDate)
 
@@ -50,21 +52,6 @@ class RatesAdapter(
 
             itemView.setOnClickListener {
                 onClickItem(rate)
-            }
-        }
-
-        private fun bindVariation(variation: Double) {
-            if (variation >= 0.0) {
-                "+${BrazilianFormats.numberFormat.format(variation)}%".also {
-                    binding.textViewRateVariation.text = it
-                }
-                binding.imageViewRateVariation.setImageResource(R.drawable.arrow_up_icon)
-                binding.textViewRateVariation.setTextColor(Color.GREEN)
-            } else {
-                "${BrazilianFormats.numberFormat.format(variation)}%".also {
-                    binding.textViewRateVariation.text = it
-                }
-                binding.imageViewRateVariation.setImageResource(R.drawable.arrow_down_icon)
             }
         }
     }
