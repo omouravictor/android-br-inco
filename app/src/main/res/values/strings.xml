@@ -13,12 +13,13 @@
     <string name="use_the_app_offline_with_the_latest_data_received">Utilizar o app de forma offline, com os utimos dados recebidos!</string>
     <string name="follow_the_index_of_stock_exchanges">Acompanhar o índice de bolsas de valores pelo mundo!</string>
     <string name="follow_the_index_of_the_price_bitcoin">Acompanhar a cotação do bitcoin nas principais corretoras!</string>
-    <string name="thanks_for_using_our_app">Obrigado por utilizar nosso app!</string>
-    <string name="start">INICIAR</string>
+    <string name="thanks_for_using_our_app">Obrigado por utilizar o nosso app!</string>
+    <string name="start">Iniciar</string>
     <string name="previous">Anterior</string>
     <string name="next">Próximo</string>
     <string name="brl_symbol">R$</string>
     <string name="value_for_conversion">Valor para conversão</string>
     <string name="result">Resultado</string>
     <string name="swipe_down_to_try_again">Deslize para baixo para tentar novamente.</string>
+    <string name="try_again">Tentar Novamente</string>
 </resources>

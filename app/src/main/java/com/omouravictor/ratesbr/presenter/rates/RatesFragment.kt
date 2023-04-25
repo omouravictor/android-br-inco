@@ -32,26 +32,23 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSwipeRefreshLayout()
+        initTryAgainButton()
 
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) {
             when (it) {
                 is UiResultState.Success -> {
                     configureRecyclerView(it.data)
-                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = false
                     binding.recyclerViewRates.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
                 is UiResultState.Error -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = false
                     binding.recyclerViewRates.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.progressBar.isVisible = true
                     binding.recyclerViewRates.isVisible = false
                     binding.includeViewError.root.isVisible = false
@@ -60,8 +57,8 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initSwipeRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
+    private fun initTryAgainButton() {
+        binding.includeViewError.buttonTryAgain.setOnClickListener {
             ratesViewModel.getRates()
         }
     }
