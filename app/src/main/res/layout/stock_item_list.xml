@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,40 +20,65 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/green"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <TextView
+                android:id="@+id/textViewStockLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rectangle_background"
+                android:textColor="@color/green"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Brazil" />
 
             <TextView
                 android:id="@+id/textViewStockName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="IBOVESPA / São Paulo, Brazil" />
-
-            <ImageView
-                android:id="@+id/imageViewStockVariation"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/arrow_down_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStockName" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewStockLocation"
+                tools:text="IBOVESPA" />
 
             <TextView
                 android:id="@+id/textViewStockVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/textViewStockLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/textViewStockLocation"
+                tools:text="-2,423%" />
+
+            <ImageView
+                android:id="@+id/imageViewStockVariation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/arrow_down_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
+                app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
+                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
+
+            <TextView
+                android:id="@+id/textViewStockPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
-                app:layout_constraintStart_toEndOf="@+id/imageViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/imageViewStockVariation"
-                tools:text="0.00" />
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
+                app:layout_constraintStart_toStartOf="@+id/textViewStockName"
+                app:layout_constraintTop_toTopOf="@+id/textViewDate"
+                tools:text="193.443,10" />
 
             <TextView
                 android:id="@+id/textViewDate"

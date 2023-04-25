@@ -6,6 +6,9 @@ data class NetworkStocksResultsItemResponse(
     @SerializedName("location")
     val location: String,
 
+    @SerializedName("points")
+    val points: Double,
+
     @SerializedName("variation")
     val variation: Double
 )

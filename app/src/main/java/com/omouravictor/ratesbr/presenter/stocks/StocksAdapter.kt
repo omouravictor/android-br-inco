@@ -32,11 +32,13 @@ class StocksAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
-            "${stock.name} / ${stock.location}".also {
-                binding.textViewStockName.text = it
-            }
+            binding.textViewStockLocation.text = stock.location
+
+            binding.textViewStockName.text = stock.name
 
             bindVariation(stock.variation)
+
+            binding.textViewStockPoints.text = BrazilianFormats.numberFormat.format(stock.points)
 
             binding.textViewDate.text = BrazilianFormats.dateFormat.format(stock.stockDate)
 
@@ -45,13 +47,13 @@ class StocksAdapter(
 
         private fun bindVariation(variation: Double) {
             if (variation >= 0.0) {
-                "+${BrazilianFormats.decimalFormat2Places.format(variation)}%".also {
+                "+${BrazilianFormats.numberFormat.format(variation)}%".also {
                     binding.textViewStockVariation.text = it
                 }
                 binding.imageViewStockVariation.setImageResource(R.drawable.arrow_up_icon)
                 binding.textViewStockVariation.setTextColor(Color.GREEN)
             } else {
-                "${BrazilianFormats.decimalFormat2Places.format(variation)}%".also {
+                "${BrazilianFormats.numberFormat.format(variation)}%".also {
                     binding.textViewStockVariation.text = it
                 }
                 binding.imageViewStockVariation.setImageResource(R.drawable.arrow_down_icon)

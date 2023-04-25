@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.RateItemListBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats
@@ -41,7 +42,7 @@ class RatesAdapter(
             bindVariation(rate.variation)
 
             binding.textViewRateValue.text =
-                BrazilianFormats.numberFormat.format(getRoundedDouble(rate.unitaryRate))
+                BrazilianFormats.currencyFormat.format(getRoundedDouble(rate.unitaryRate))
 
             binding.textViewDate.text = BrazilianFormats.dateFormat.format(rate.rateDate)
 
@@ -53,15 +54,17 @@ class RatesAdapter(
         }
 
         private fun bindVariation(variation: Double) {
-            if (variation >= 0) {
-                "+${BrazilianFormats.decimalFormat3Places.format(variation)}%".also {
+            if (variation >= 0.0) {
+                "+${BrazilianFormats.numberFormat.format(variation)}%".also {
                     binding.textViewRateVariation.text = it
                 }
+                binding.imageViewRateVariation.setImageResource(R.drawable.arrow_up_icon)
                 binding.textViewRateVariation.setTextColor(Color.GREEN)
             } else {
-                "${BrazilianFormats.decimalFormat3Places.format(variation)}%".also {
+                "${BrazilianFormats.numberFormat.format(variation)}%".also {
                     binding.textViewRateVariation.text = it
                 }
+                binding.imageViewRateVariation.setImageResource(R.drawable.arrow_down_icon)
             }
         }
     }

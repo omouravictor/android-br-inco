@@ -19,6 +19,7 @@ fun NetworkStocksResponse.toListStockEntity(): List<StockEntity> {
             StockEntity(
                 it.key,
                 it.value.location,
+                it.value.points,
                 it.value.variation,
                 stockDate
             )

@@ -10,6 +10,7 @@ data class StockEntity(
     @PrimaryKey(autoGenerate = false)
     val name: String,
     val location: String,
+    val points: Double,
     val variation: Double,
     val stockDate: Date,
 )
@@ -17,7 +18,14 @@ data class StockEntity(
 fun StockEntity.toStockUiModel() =
     StockUiModel(
         name,
-        location,
+        location = when (location.split(", ").last()) {
+            "Brazil" -> "Brasil"
+            "United States" -> "Estados Unidos"
+            "French" -> "França"
+            "Japan" -> "Japão"
+            else -> "País não encontrado"
+        },
+        points,
         variation,
         stockDate
     )
