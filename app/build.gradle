@@ -21,8 +21,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY_HG", apiProperties['API_KEY_HG'])
-        buildConfigField("String", "BASE_URL_HG", '"https://api.hgbrasil.com/"')
+        buildConfigField("String", "API_KEY_HG_FINANCE", apiProperties['API_KEY_HG_FINANCE'])
+        buildConfigField("String", "BASE_URL_HG_FINANCE", '"https://api.hgbrasil.com/"')
     }
 
     buildTypes {

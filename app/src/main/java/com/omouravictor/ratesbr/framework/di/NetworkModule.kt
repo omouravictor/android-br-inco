@@ -27,7 +27,7 @@ object NetworkModule {
         provideOkHttpClient: OkHttpClient
     ): ApiService {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL_HG)
+            .baseUrl(BuildConfig.BASE_URL_HG_FINANCE)
             .client(provideOkHttpClient)
             .addConverterFactory(provideGsonConverterFactory)
             .build()
@@ -58,7 +58,7 @@ object NetworkModule {
     @Singleton
     fun provideAuthorizationInterceptor(): AuthorizationInterceptor {
         return AuthorizationInterceptor(
-            apiKey = BuildConfig.API_KEY_HG
+            apiKey = BuildConfig.API_KEY_HG_FINANCE
         )
     }
 
