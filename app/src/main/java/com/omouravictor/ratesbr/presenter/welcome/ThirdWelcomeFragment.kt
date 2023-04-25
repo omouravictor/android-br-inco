@@ -13,6 +13,7 @@ import com.omouravictor.ratesbr.databinding.FragmentThirdWelcomeBinding
 import kotlinx.coroutines.launch
 
 class ThirdWelcomeFragment : Fragment() {
+
     private lateinit var binding: FragmentThirdWelcomeBinding
 
     override fun onCreateView(

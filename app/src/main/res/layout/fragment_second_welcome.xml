@@ -9,6 +9,7 @@
         android:id="@+id/textViewSecondWelcomeOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="40dp"
         android:text="@string/in_this_app_you_can"
         android:textAlignment="center"

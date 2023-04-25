@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import com.omouravictor.ratesbr.databinding.FragmentSecondWelcomeBinding
 
 class SecondWelcomeFragment : Fragment() {
+
     private lateinit var binding: FragmentSecondWelcomeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

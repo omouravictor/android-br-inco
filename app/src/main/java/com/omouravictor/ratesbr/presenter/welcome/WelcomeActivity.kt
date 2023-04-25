@@ -12,7 +12,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeBinding
 
-    private val welcomePager: ViewPager2 by lazy {
+    private val welcomeViewPager: ViewPager2 by lazy {
         binding.viewPagerWelcome
     }
 
@@ -25,24 +25,24 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initWelcomePager()
+        initWelcomeViewPager()
         setClickListeners()
     }
 
     private fun setClickListeners() {
         binding.textViewNext.setOnClickListener {
-            welcomePager.currentItem++
+            welcomeViewPager.currentItem++
         }
 
         binding.textViewPrevious.setOnClickListener {
-            welcomePager.currentItem--
+            welcomeViewPager.currentItem--
         }
     }
 
-    private fun initWelcomePager() {
-        welcomePager.adapter = FragmentsViewPagerManager(this)
+    private fun initWelcomeViewPager() {
+        welcomeViewPager.adapter = FragmentsViewPagerManager(this)
 
-        welcomePager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        welcomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 binding.textViewPrevious.visibility = if (position > 0) View.VISIBLE else View.GONE
 
@@ -52,6 +52,6 @@ class WelcomeActivity : AppCompatActivity() {
             }
         })
 
-        TabLayoutMediator(tabWelcome, welcomePager) { _, _ -> }.attach()
+        TabLayoutMediator(tabWelcome, welcomeViewPager) { _, _ -> }.attach()
     }
 }
