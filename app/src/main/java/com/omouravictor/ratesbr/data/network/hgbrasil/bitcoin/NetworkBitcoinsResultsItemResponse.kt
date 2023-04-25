@@ -2,7 +2,7 @@ package com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkBitCoinsResultsItemResponse(
+data class NetworkBitcoinsResultsItemResponse(
     @SerializedName("name")
     val name: String,
 

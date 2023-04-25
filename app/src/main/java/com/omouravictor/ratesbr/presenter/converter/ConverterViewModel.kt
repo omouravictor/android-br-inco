@@ -3,7 +3,7 @@ package com.omouravictor.ratesbr.presenter.converter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import kotlin.math.round
+import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
 
 class ConverterViewModel : ViewModel() {
 
@@ -14,7 +14,7 @@ class ConverterViewModel : ViewModel() {
     fun setInitialValues(rateUiModel: RateUiModel) {
         rate.postValue(rateUiModel)
         result.postValue(rateUiModel.unitaryRate)
-        unitaryRate = round(rateUiModel.unitaryRate * 100) / 100
+        unitaryRate = getRoundedDouble(rateUiModel.unitaryRate)
     }
 
     fun calculateConversion(value: String) {

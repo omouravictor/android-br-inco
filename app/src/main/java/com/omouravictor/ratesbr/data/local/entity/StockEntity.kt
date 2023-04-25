@@ -11,7 +11,7 @@ data class StockEntity(
     val name: String,
     val location: String,
     val variation: Double,
-    val date: Date,
+    val stockDate: Date,
 )
 
 fun StockEntity.toStockUiModel() =
@@ -19,5 +19,5 @@ fun StockEntity.toStockUiModel() =
         name,
         location,
         variation,
-        date
+        stockDate
     )

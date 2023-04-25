@@ -1,23 +1,23 @@
 package com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin
 
 import com.google.gson.annotations.SerializedName
-import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
+import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import java.util.*
 
-data class NetworkBitCoinsResponse(
+data class NetworkBitcoinsResponse(
 
     @SerializedName("results")
-    val results: NetworkBitCoinsResultsResponse,
+    val results: NetworkBitcoinsResultsResponse,
 
     var bitcoinDate: Date
 )
 
-fun NetworkBitCoinsResponse.toListBitCoinEntity(): List<BitCoinEntity> {
-    val list: MutableList<BitCoinEntity> = mutableListOf()
+fun NetworkBitcoinsResponse.toListBitcoinEntity(): List<BitcoinEntity> {
+    val list: MutableList<BitcoinEntity> = mutableListOf()
 
     results.bitcoins.forEach { bitcoinResponse ->
         list.add(
-            BitCoinEntity(
+            BitcoinEntity(
                 bitcoinResponse.value.name,
                 bitcoinResponse.value.format[0],
                 bitcoinResponse.value.format[1],

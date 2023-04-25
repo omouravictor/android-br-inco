@@ -3,7 +3,6 @@ package com.omouravictor.ratesbr.presenter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -22,14 +21,14 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainActivityBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mainActivityBinding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -44,9 +43,9 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        setSupportActionBar(mainActivityBinding.toolbar)
-        mainActivityBinding.bottomNav.setupWithNavController(navController)
-        mainActivityBinding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        setSupportActionBar(binding.toolbar)
+        binding.bottomNav.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 
         supportActionBar?.title = navController.currentDestination?.label
 

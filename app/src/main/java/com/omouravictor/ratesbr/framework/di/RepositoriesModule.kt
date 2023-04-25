@@ -22,10 +22,10 @@ object RepositoriesModule {
 
     @Singleton
     @Provides
-    fun provideBitCoinsRepository(
+    fun provideBitcoinsRepository(
         dataBase: AppDataBase,
         apiService: ApiService
-    ): BitCoinsRepository = BitCoinsRepository(dataBase.bitCoinDao(), apiService)
+    ): BitcoinsRepository = BitcoinsRepository(dataBase.bitcoinDao(), apiService)
 
     @Singleton
     @Provides

@@ -4,14 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.omouravictor.ratesbr.data.local.entity.BitCoinEntity
+import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface BitCoinDao {
+interface BitcoinDao {
     @Query("SELECT * FROM bitcoin_table")
-    fun getAllBitCoins(): Flow<List<BitCoinEntity>>
+    fun getAllBitcoins(): Flow<List<BitcoinEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertBitCoins(listBitCoinEntity: List<BitCoinEntity>)
+    suspend fun insertBitcoins(listBitcoinEntity: List<BitcoinEntity>)
 }
