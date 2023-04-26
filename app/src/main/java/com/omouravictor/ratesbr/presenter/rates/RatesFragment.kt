@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -60,7 +60,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun initSwipeRefreshLayout() {
-        val greenColor = getColor(requireContext(), R.color.green)
+        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
             ratesViewModel.getRates()
