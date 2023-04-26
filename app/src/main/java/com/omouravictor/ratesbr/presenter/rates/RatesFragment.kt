@@ -69,12 +69,12 @@ class RatesFragment : Fragment() {
 
     private fun configureRecyclerView(ratesList: List<RateUiModel>) {
         binding.recyclerViewRates.apply {
-            adapter = RatesAdapter(ratesList) { ratesOnClickItem(it) }
+            adapter = RatesAdapter(ratesList) { ratesAdapterOnClickItem(it) }
             layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun ratesOnClickItem(rateUiModel: RateUiModel) {
+    private fun ratesAdapterOnClickItem(rateUiModel: RateUiModel) {
         converterViewModel.setInitialValues(rateUiModel)
         val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
         findNavController().navigate(action)
