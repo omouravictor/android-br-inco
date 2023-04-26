@@ -48,7 +48,7 @@ class StocksFragment : Fragment() {
                     binding.includeViewError.textViewErrorMessage.text = it.e.message
                 }
                 is UiResultState.Loading -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefreshLayout.isRefreshing = true
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
