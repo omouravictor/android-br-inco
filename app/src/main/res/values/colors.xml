@@ -6,7 +6,7 @@
     <color name="gray">#595959</color>
     <color name="lightGrey">#777777</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="darkWhite">#E4E4E4</color>
+    <color name="darkWhite">#DDDDDD</color>
     <color name="fluorescentGreen">#19FF00</color>
     <color name="yellow">#FFEB3B</color>
 </resources>

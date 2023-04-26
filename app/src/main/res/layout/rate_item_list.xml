@@ -27,7 +27,7 @@
                 android:id="@+id/textViewRateCurrencyTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_background"
+                android:background="@drawable/rectangle_background_white"
                 android:textColor="@color/green"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
