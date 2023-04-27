@@ -9,23 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import java.text.NumberFormat
-import java.util.*
+import com.omouravictor.ratesbr.util.BrazilianFormats
 
 class ConverterFragment : Fragment() {
 
-    private lateinit var converterBinding: FragmentConverterBinding
+    private lateinit var binding: FragmentConverterBinding
     private val converterViewModel: ConverterViewModel by activityViewModels()
-    private val locale = Locale("pt", "BR")
-    private val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        converterBinding = FragmentConverterBinding.inflate(layoutInflater, container, false)
-        return converterBinding.root
+        binding = FragmentConverterBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,21 +37,20 @@ class ConverterFragment : Fragment() {
         }
 
         converterViewModel.result.observe(this) {
-            converterBinding.textViewResultValue.text = numberFormat.format(it)
+            binding.textViewResultValue.text = BrazilianFormats.currencyFormat.format(it)
         }
     }
 
     private fun initTextInputEditTextValueConverter() {
-        converterBinding.textInputEditTextValueConverter.setText("1")
-        converterBinding.textInputEditTextValueConverter.doAfterTextChanged {
+        binding.textInputEditTextValueConverter.setText("1")
+        binding.textInputEditTextValueConverter.doAfterTextChanged {
             converterViewModel.calculateConversion(it.toString())
         }
     }
 
     private fun setRateInfo(rateUiModel: RateUiModel) {
-        converterBinding.textViewCurrencyName.text = rateUiModel.currencyName
-        converterBinding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
-        converterBinding.textViewUnitaryRateValue.text =
-            numberFormat.format(rateUiModel.unitaryRate)
+        binding.textViewCurrencyName.text = rateUiModel.currencyName
+        binding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
+        binding.textViewUnitaryRateValue.text = BrazilianFormats.currencyFormat.format(rateUiModel.unitaryRate)
     }
 }
