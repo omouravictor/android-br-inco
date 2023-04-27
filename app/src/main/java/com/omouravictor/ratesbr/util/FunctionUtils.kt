@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
 import com.omouravictor.ratesbr.R
+import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
 
 object Functions {
     fun setVariationOnBind(variation: Double, textView: TextView, imageView: ImageView) {
@@ -19,7 +20,7 @@ object Functions {
     }
 
     fun getVariationText(variation: Double): String {
-        val formattedVariation = BrazilianFormats.numberFormat.format(variation)
+        val formattedVariation = numberFormat.format(variation)
         return if (variation >= 0.0) "+${formattedVariation}%" else "${formattedVariation}%"
     }
 }

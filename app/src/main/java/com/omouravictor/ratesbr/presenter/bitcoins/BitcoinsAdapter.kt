@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.BitcoinItemListBinding
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
 import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 import java.text.NumberFormat
 import java.util.*
@@ -39,20 +40,15 @@ class BitcoinsAdapter(
             val numberFormat = NumberFormat.getCurrencyInstance(locale)
 
             binding.textViewBitcoinCurrencyTerm.text = bitcoin.iSO
-
             binding.textViewBitcoinName.text = bitcoin.name
-
             setVariationOnBind(
                 bitcoin.variation,
                 binding.textViewBitcoinVariation,
                 binding.imageViewBitcoinVariation
             )
-
             binding.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
-
-            binding.textViewDate.text = BrazilianFormats.dateFormat.format(bitcoin.bitcoinDate)
-
-            binding.textViewTime.text = BrazilianFormats.timeFormat.format(bitcoin.bitcoinDate)
+            binding.textViewDate.text = dateFormat.format(bitcoin.bitcoinDate)
+            binding.textViewTime.text = timeFormat.format(bitcoin.bitcoinDate)
         }
     }
 }

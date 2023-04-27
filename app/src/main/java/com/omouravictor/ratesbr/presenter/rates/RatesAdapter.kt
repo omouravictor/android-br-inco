@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.RateItemListBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
 import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
 
@@ -35,21 +37,17 @@ class RatesAdapter(
 
         fun bind(rate: RateUiModel) {
             binding.textViewRateCurrencyTerm.text = rate.currencyTerm
-
             binding.textViewRateCurrencyName.text = rate.currencyName
-
             setVariationOnBind(
                 rate.variation,
                 binding.textViewRateVariation,
                 binding.imageViewRateVariation
             )
-
-            binding.textViewRateValue.text = BrazilianFormats.currencyFormat.format(getRoundedDouble(rate.unitaryRate))
-
-            binding.textViewDate.text = BrazilianFormats.dateFormat.format(rate.rateDate)
-
-            binding.textViewTime.text = BrazilianFormats.timeFormat.format(rate.rateDate)
-
+            binding.textViewRateValue.text = currencyFormat.format(
+                getRoundedDouble(rate.unitaryRate)
+            )
+            binding.textViewDate.text = dateFormat.format(rate.rateDate)
+            binding.textViewTime.text = timeFormat.format(rate.rateDate)
             itemView.setOnClickListener {
                 onClickItem(rate)
             }

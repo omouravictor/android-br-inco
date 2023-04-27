@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.StockItemListBinding
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
 import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 
 class StocksAdapter(
@@ -40,21 +42,15 @@ class StocksAdapter(
                 "Japan" -> "Japão"
                 else -> "País não encontrado"
             }
-
             binding.textViewStockName.text = stock.name
-
             setVariationOnBind(
                 stock.variation,
                 binding.textViewStockVariation,
                 binding.imageViewStockVariation
             )
-
-            binding.textViewStockPoints.text = BrazilianFormats.numberFormat.format(stock.points)
-
-            binding.textViewDate.text = BrazilianFormats.dateFormat.format(stock.stockDate)
-
-            binding.textViewTime.text = BrazilianFormats.timeFormat.format(stock.stockDate)
-
+            binding.textViewStockPoints.text = numberFormat.format(stock.points)
+            binding.textViewDate.text = dateFormat.format(stock.stockDate)
+            binding.textViewTime.text = timeFormat.format(stock.stockDate)
             itemView.setOnClickListener {
                 onClickItem(stock)
             }

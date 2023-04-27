@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats
+import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
 
 class ConverterFragment : Fragment() {
 
@@ -37,7 +37,7 @@ class ConverterFragment : Fragment() {
         }
 
         converterViewModel.result.observe(this) {
-            binding.textViewResultValue.text = BrazilianFormats.currencyFormat.format(it)
+            binding.textViewResultValue.text = currencyFormat.format(it)
         }
     }
 
@@ -51,6 +51,6 @@ class ConverterFragment : Fragment() {
     private fun setRateInfo(rateUiModel: RateUiModel) {
         binding.textViewCurrencyName.text = rateUiModel.currencyName
         binding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
-        binding.textViewUnitaryRateValue.text = BrazilianFormats.currencyFormat.format(rateUiModel.unitaryRate)
+        binding.textViewUnitaryRateValue.text = currencyFormat.format(rateUiModel.unitaryRate)
     }
 }
