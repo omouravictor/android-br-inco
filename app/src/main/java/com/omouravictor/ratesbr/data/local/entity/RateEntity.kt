@@ -27,8 +27,8 @@ fun RateEntity.toRateUiModel() =
             "CNY" -> "Yuan chinês"
             else -> "Moeda não encontrada"
         },
-        currencyTerm,
-        unitaryRate,
-        variation,
-        rateDate
+        currencyTerm = currencyTerm,
+        unitaryRate = unitaryRate,
+        variation = variation,
+        rateDate = rateDate
     )

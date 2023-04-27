@@ -97,7 +97,11 @@ class StocksFragment : Fragment() {
 
             stockNameTextView.text = stockUiModel.name
             stockFullNameTextView.text = stockUiModel.fullName
-            stockLocationTextView.text = stockUiModel.location
+            stockLocationTextView.text = getString(
+                R.string.stock_popup_full_location,
+                stockUiModel.cityLocation,
+                stockUiModel.countryLocation
+            )
             stockPointsTextView.text = numberFormat.format(stockUiModel.points)
             stockVariationTextView.text = getVariationText(stockUiModel.variation)
             stockDateTimeTextView.text = getString(

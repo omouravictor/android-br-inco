@@ -5,7 +5,8 @@ import java.util.*
 data class StockUiModel(
     val name: String,
     val fullName: String,
-    val location: String,
+    val countryLocation: String,
+    val cityLocation: String,
     val points: Double,
     val variation: Double,
     val stockDate: Date

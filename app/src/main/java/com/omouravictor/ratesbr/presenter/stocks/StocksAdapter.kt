@@ -35,13 +35,7 @@ class StocksAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
-            binding.textViewStockLocation.text = when (stock.location.split(", ").last()) {
-                "Brazil" -> "Brasil"
-                "United States" -> "Estados Unidos"
-                "French" -> "França"
-                "Japan" -> "Japão"
-                else -> "País não encontrado"
-            }
+            binding.textViewStockLocation.text = stock.countryLocation
             binding.textViewStockName.text = stock.name
             setVariationOnBind(
                 stock.variation,
