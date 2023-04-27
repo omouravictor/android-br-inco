@@ -33,10 +33,10 @@ class BitcoinsFragment : Fragment() {
 
         initSwipeRefreshLayout()
 
-        bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) {
-            when (it) {
+        bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
                 is UiResultState.Success -> {
-                    configureRecyclerView(it.data)
+                    configureRecyclerView(result.data)
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewBitcoins.isVisible = true
                     binding.includeViewError.root.isVisible = false
@@ -45,7 +45,7 @@ class BitcoinsFragment : Fragment() {
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = it.e.message
+                    binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
                 is UiResultState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = true
@@ -59,9 +59,7 @@ class BitcoinsFragment : Fragment() {
     private fun initSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            bitcoinViewModel.getBitcoins()
-        }
+        binding.swipeRefreshLayout.setOnRefreshListener { bitcoinViewModel.getBitcoins() }
     }
 
     private fun configureRecyclerView(bitcoinList: List<BitcoinUiModel>) {

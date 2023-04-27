@@ -36,10 +36,10 @@ class RatesFragment : Fragment() {
 
         initSwipeRefreshLayout()
 
-        ratesViewModel.ratesResult.observe(viewLifecycleOwner) {
-            when (it) {
+        ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
                 is UiResultState.Success -> {
-                    configureRecyclerView(it.data)
+                    configureRecyclerView(result.data)
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewRates.isVisible = true
                     binding.includeViewError.root.isVisible = false
@@ -48,7 +48,7 @@ class RatesFragment : Fragment() {
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewRates.isVisible = false
                     binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = it.e.message
+                    binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
                 is UiResultState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = true
@@ -62,9 +62,7 @@ class RatesFragment : Fragment() {
     private fun initSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            ratesViewModel.getRates()
-        }
+        binding.swipeRefreshLayout.setOnRefreshListener { ratesViewModel.getRates() }
     }
 
     private fun configureRecyclerView(ratesList: List<RateUiModel>) {
