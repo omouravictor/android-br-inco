@@ -1,17 +1,17 @@
-package com.omouravictor.ratesbr.data.network.hgbrasil.stock
+package com.omouravictor.ratesbr.data.network.hgfinanceapi.stock
 
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.StockEntity
 import java.util.*
 
-data class NetworkStocksResponse(
+data class ApiStocksResponse(
     @SerializedName("results")
-    val results: NetworkStocksResultsResponse,
+    val results: ApiStocksResultsResponse,
 
     var stockDate: Date
 )
 
-fun NetworkStocksResponse.toListStockEntity(): List<StockEntity> {
+fun ApiStocksResponse.toListStockEntity(): List<StockEntity> {
     val list: MutableList<StockEntity> = mutableListOf()
 
     results.stocks.forEach {

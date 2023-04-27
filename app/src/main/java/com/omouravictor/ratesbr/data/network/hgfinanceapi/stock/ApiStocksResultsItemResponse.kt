@@ -1,8 +1,8 @@
-package com.omouravictor.ratesbr.data.network.hgbrasil.stock
+package com.omouravictor.ratesbr.data.network.hgfinanceapi.stock
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkStocksResultsItemResponse(
+data class ApiStocksResultsItemResponse(
     @SerializedName("name")
     val name: String,
 

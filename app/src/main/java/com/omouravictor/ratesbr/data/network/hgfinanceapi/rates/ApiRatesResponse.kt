@@ -1,17 +1,17 @@
-package com.omouravictor.ratesbr.data.network.hgbrasil.rates
+package com.omouravictor.ratesbr.data.network.hgfinanceapi.rates
 
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import java.util.*
 
-data class NetworkRatesResponse(
+data class ApiRatesResponse(
     @SerializedName("results")
-    val results: NetworkRatesResultsResponse,
+    val results: ApiRatesResultsResponse,
 
     var rateDate: Date
 )
 
-fun NetworkRatesResponse.toListRateEntity(): List<RateEntity> {
+fun ApiRatesResponse.toListRateEntity(): List<RateEntity> {
     val list: MutableList<RateEntity> = mutableListOf()
 
     results.currencies.keys.forEach { currencyTerm ->

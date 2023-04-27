@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesbr.data.local.entity.toStockUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.stock.toListStockEntity
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.stock.toListStockEntity
 import com.omouravictor.ratesbr.data.repository.StocksRepository
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesbr.data.local.entity.toBitcoinUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.toListBitcoinEntity
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.toListBitcoinEntity
 import com.omouravictor.ratesbr.data.repository.BitcoinsRepository
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel

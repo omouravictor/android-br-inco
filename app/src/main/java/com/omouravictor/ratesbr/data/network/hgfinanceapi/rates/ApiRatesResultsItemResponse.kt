@@ -1,8 +1,8 @@
-package com.omouravictor.ratesbr.data.network.hgbrasil.rates
+package com.omouravictor.ratesbr.data.network.hgfinanceapi.rates
 
 import com.google.gson.annotations.SerializedName
 
-data class NetworkRatesResultsItemResponse(
+data class ApiRatesResultsItemResponse(
     @SerializedName("buy")
     val buy: Double,
 

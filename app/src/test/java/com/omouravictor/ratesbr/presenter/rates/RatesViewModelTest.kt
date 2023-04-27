@@ -5,9 +5,9 @@ import androidx.lifecycle.Observer
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResponse
-import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResultsItemResponse
-import com.omouravictor.ratesbr.data.network.hgbrasil.rates.NetworkRatesResultsResponse
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResponse
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResultsItemResponse
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResultsResponse
 import com.omouravictor.ratesbr.data.repository.RatesRepository
 import com.omouravictor.ratesbr.presenter.base.UiResultState
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
@@ -51,16 +51,16 @@ class RatesViewModelTest {
     fun `when getRates is called, should fetch remote rates successfully`() {
         runBlocking {
             // Given
-            val mockRatesResultsItemResponse = NetworkRatesResultsItemResponse(
+            val mockRatesResultsItemResponse = ApiRatesResultsItemResponse(
                 1.0, 1.0
             )
-            val mockRatesResultsResponse = NetworkRatesResultsResponse(
-                LinkedHashMap<String, NetworkRatesResultsItemResponse>().apply {
+            val mockRatesResultsResponse = ApiRatesResultsResponse(
+                LinkedHashMap<String, ApiRatesResultsItemResponse>().apply {
                     put("USD", mockRatesResultsItemResponse)
                 }
             )
             val mockRatesResponse =
-                NetworkRatesResponse(mockRatesResultsResponse, Date())
+                ApiRatesResponse(mockRatesResultsResponse, Date())
             val mockListRatesEntity =
                 listOf(RateEntity("USD", 1.0, 1.0, mockRatesResponse.rateDate))
 

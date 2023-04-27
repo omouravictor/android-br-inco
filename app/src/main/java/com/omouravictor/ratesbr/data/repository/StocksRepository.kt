@@ -2,9 +2,9 @@ package com.omouravictor.ratesbr.data.repository
 
 import com.omouravictor.ratesbr.data.local.dao.StockDao
 import com.omouravictor.ratesbr.data.local.entity.StockEntity
-import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.stock.NetworkStocksResponse
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.ApiService
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.stock.ApiStocksResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +21,7 @@ class StocksRepository(
         stockDao.insertStocks(stockEntityList)
     }
 
-    suspend fun getRemoteStocks(fields: String): Flow<NetworkResultStatus<NetworkStocksResponse>> {
+    suspend fun getRemoteStocks(fields: String): Flow<NetworkResultStatus<ApiStocksResponse>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)

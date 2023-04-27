@@ -1,7 +1,7 @@
 package com.omouravictor.ratesbr.framework.di
 
 import com.omouravictor.ratesbr.data.local.AppDataBase
-import com.omouravictor.ratesbr.data.network.ApiService
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.ApiService
 import com.omouravictor.ratesbr.data.repository.*
 import dagger.Module
 import dagger.Provides

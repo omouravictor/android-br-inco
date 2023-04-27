@@ -2,9 +2,9 @@ package com.omouravictor.ratesbr.data.repository
 
 import com.omouravictor.ratesbr.data.local.dao.BitcoinDao
 import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
-import com.omouravictor.ratesbr.data.network.ApiService
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
-import com.omouravictor.ratesbr.data.network.hgbrasil.bitcoin.NetworkBitcoinsResponse
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.ApiService
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.ApiBitcoinsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,7 +21,7 @@ class BitcoinsRepository(
         bitcoinDao.insertBitcoins(bitcoinEntityList)
     }
 
-    suspend fun getRemoteBitcoins(fields: String): Flow<NetworkResultStatus<NetworkBitcoinsResponse>> {
+    suspend fun getRemoteBitcoins(fields: String): Flow<NetworkResultStatus<ApiBitcoinsResponse>> {
         return withContext(Dispatchers.IO) {
             flow {
                 emit(NetworkResultStatus.Loading)
