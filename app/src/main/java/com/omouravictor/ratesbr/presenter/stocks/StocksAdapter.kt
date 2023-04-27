@@ -9,13 +9,14 @@ import com.omouravictor.ratesbr.util.BrazilianFormats
 import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 
 class StocksAdapter(
-    private val list: List<StockUiModel>
+    private val list: List<StockUiModel>,
+    private val onClickItem: (StockUiModel) -> Unit
 ) : RecyclerView.Adapter<StocksAdapter.StockViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
             StockItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StockViewHolder(binding)
+        return StockViewHolder(binding, onClickItem)
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -27,11 +28,18 @@ class StocksAdapter(
     }
 
     class StockViewHolder(
-        private val binding: StockItemListBinding
+        private val binding: StockItemListBinding,
+        private val onClickItem: (StockUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
-            binding.textViewStockLocation.text = stock.location
+            binding.textViewStockLocation.text = when (stock.location.split(", ").last()) {
+                "Brazil" -> "Brasil"
+                "United States" -> "Estados Unidos"
+                "French" -> "França"
+                "Japan" -> "Japão"
+                else -> "País não encontrado"
+            }
 
             binding.textViewStockName.text = stock.name
 
@@ -46,6 +54,10 @@ class StocksAdapter(
             binding.textViewDate.text = BrazilianFormats.dateFormat.format(stock.stockDate)
 
             binding.textViewTime.text = BrazilianFormats.timeFormat.format(stock.stockDate)
+
+            itemView.setOnClickListener {
+                onClickItem(stock)
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import java.util.*
 data class StockEntity(
     @PrimaryKey(autoGenerate = false)
     val name: String,
+    val fullName: String,
     val location: String,
     val points: Double,
     val variation: Double,
@@ -18,13 +19,8 @@ data class StockEntity(
 fun StockEntity.toStockUiModel() =
     StockUiModel(
         name,
-        location = when (location.split(", ").last()) {
-            "Brazil" -> "Brasil"
-            "United States" -> "Estados Unidos"
-            "French" -> "França"
-            "Japan" -> "Japão"
-            else -> "País não encontrado"
-        },
+        fullName,
+        location,
         points,
         variation,
         stockDate

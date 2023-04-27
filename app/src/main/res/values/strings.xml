@@ -22,4 +22,10 @@
     <string name="result">Resultado</string>
     <string name="swipe_down_to_try_again">Deslize para baixo para tentar novamente.</string>
     <string name="try_again">Tentar Novamente</string>
+    <string name="full_name">Nome completo</string>
+    <string name="localization">Localização</string>
+    <string name="points">Pontuação</string>
+    <string name="variation_last_hour_variation">Variação (última hora útil)</string>
+    <string name="date_time_data">Data e hora dos dados</string>
+    <string name="stock_popup_date_time">%1$s às %2$s</string>
 </resources>
