@@ -82,7 +82,7 @@ class StocksFragment : Fragment() {
     private fun configureRecyclerView(stockList: List<StockUiModel>) {
         binding.recyclerViewStocks.apply {
             adapter = StocksAdapter(stockList) { stocksAdapterOnClickItem(it) }
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
         }
     }
 
