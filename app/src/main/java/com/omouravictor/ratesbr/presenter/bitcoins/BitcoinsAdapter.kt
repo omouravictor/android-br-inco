@@ -7,18 +7,19 @@ import com.omouravictor.ratesbr.databinding.BitcoinItemListBinding
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
+import com.omouravictor.ratesbr.util.Formats.getFormattedValueForCurrencyLocale
 import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
-import java.text.NumberFormat
 import java.util.*
 
 class BitcoinsAdapter(
-    private val list: List<BitcoinUiModel>
+    private val list: List<BitcoinUiModel>,
+    private val onClickItem: (BitcoinUiModel) -> Unit
 ) : RecyclerView.Adapter<BitcoinsAdapter.BitcoinViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
         val binding =
             BitcoinItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BitcoinViewHolder(binding)
+        return BitcoinViewHolder(binding, onClickItem)
     }
 
     override fun onBindViewHolder(holder: BitcoinViewHolder, position: Int) {
@@ -30,25 +31,29 @@ class BitcoinsAdapter(
     }
 
     class BitcoinViewHolder(
-        private val binding: BitcoinItemListBinding
+        private val binding: BitcoinItemListBinding,
+        private val onClickItem: (BitcoinUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(bitcoin: BitcoinUiModel) {
-            val language = bitcoin.language.substring(0..1)
-            val country = bitcoin.language.substring(3..4)
-            val locale = Locale(language, country)
-            val numberFormat = NumberFormat.getCurrencyInstance(locale)
+            val bitcoinLocale = Locale(bitcoin.language, bitcoin.countryLanguage)
 
-            binding.textViewBitcoinCurrencyTerm.text = bitcoin.iSO
+            binding.textViewBitcoinCurrencyTerm.text = bitcoin.currencyTerm
             binding.textViewBitcoinName.text = bitcoin.name
             setVariationOnBind(
                 bitcoin.variation,
                 binding.textViewBitcoinVariation,
                 binding.imageViewBitcoinVariation
             )
-            binding.textViewBitcoinValue.text = numberFormat.format(bitcoin.last)
+            binding.textViewBitcoinValue.text = getFormattedValueForCurrencyLocale(
+                bitcoin.unitaryRate,
+                bitcoinLocale
+            )
             binding.textViewDate.text = dateFormat.format(bitcoin.bitcoinDate)
             binding.textViewTime.text = timeFormat.format(bitcoin.bitcoinDate)
+            itemView.setOnClickListener {
+                onClickItem(bitcoin)
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
-import com.omouravictor.ratesbr.util.Functions.getVariationText
+import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {
 
@@ -105,7 +105,7 @@ class StocksFragment : Fragment() {
             stockPointsTextView.text = numberFormat.format(stockUiModel.points)
             stockVariationTextView.text = getVariationText(stockUiModel.variation)
             stockDateTimeTextView.text = getString(
-                R.string.stock_popup_date_time,
+                R.string.popup_date_time,
                 dateFormat.format(stockUiModel.stockDate),
                 timeFormat.format(stockUiModel.stockDate)
             )

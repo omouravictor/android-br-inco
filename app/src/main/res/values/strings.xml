@@ -28,5 +28,6 @@
     <string name="variation_last_hour_variation">Variação (última hora útil)</string>
     <string name="date_time_data">Data e hora dos dados</string>
     <string name="stock_popup_full_location">%1$s, %2$s</string>
-    <string name="stock_popup_date_time">%1$s às %2$s</string>
+    <string name="popup_date_time">%1$s às %2$s</string>
+    <string name="popup_currency_buy">%1$s - %2$s</string>
 </resources>

@@ -9,19 +9,20 @@ import java.util.*
 data class BitcoinEntity(
     @PrimaryKey(autoGenerate = false)
     val name: String,
-    val iSO: String,
+    val currencyTerm: String,
     val language: String,
-    val value: Double,
+    val countryLanguage: String,
+    val unitaryRate: Double,
     val variation: Double,
     val bitcoinDate: Date
 )
 
-fun BitcoinEntity.toBitcoinUiModel() =
-    BitcoinUiModel(
-        name,
-        iSO,
-        language,
-        value,
-        variation,
-        bitcoinDate
-    )
+fun BitcoinEntity.toBitcoinUiModel() = BitcoinUiModel(
+    name,
+    currencyTerm,
+    language,
+    countryLanguage,
+    unitaryRate,
+    variation,
+    bitcoinDate
+)

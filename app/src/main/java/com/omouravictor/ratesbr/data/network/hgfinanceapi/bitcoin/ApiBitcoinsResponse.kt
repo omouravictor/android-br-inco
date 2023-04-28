@@ -20,7 +20,8 @@ fun ApiBitcoinsResponse.toListBitcoinEntity(): List<BitcoinEntity> {
             BitcoinEntity(
                 bitcoinResponse.value.name,
                 bitcoinResponse.value.format[0],
-                bitcoinResponse.value.format[1],
+                bitcoinResponse.value.format[1].substring(0..1),
+                bitcoinResponse.value.format[1].substring(3..4),
                 bitcoinResponse.value.last,
                 bitcoinResponse.value.variation,
                 bitcoinDate

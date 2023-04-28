@@ -15,7 +15,7 @@
         android:paddingVertical="16dp">
 
         <TextView
-            android:id="@+id/textViewStockPopupName"
+            android:id="@+id/textViewBitcoinPopupName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -23,86 +23,64 @@
             android:textColor="@color/white"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/stockImageView"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="IBOVESPA" />
+            tools:text="Blockchain.info" />
 
         <ImageView
-            android:id="@+id/stockImageView"
+            android:id="@+id/imageView"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/stock_icon"
+            android:src="@drawable/currency_bitcoin_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white" />
 
         <TextView
-            android:id="@+id/textViewTittleFullName"
+            android:id="@+id/textViewTittleCurrencyBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/full_name"
+            android:text="Moeda de compra"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStockPopupName" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewBitcoinPopupName" />
 
         <TextView
-            android:id="@+id/textViewStockPopupFullName"
+            android:id="@+id/textViewBitcoinPopupCurrencyBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTittleFullName"
-            tools:text="BM\u0026F BOVESPA" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTittleCurrencyBuy"
+            tools:text="USD - Dólar americano" />
 
         <TextView
-            android:id="@+id/textViewTittleLocation"
+            android:id="@+id/textViewTittleUnitaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/localization"
+            android:text="Valor unitário"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStockPopupFullName" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewBitcoinPopupCurrencyBuy" />
 
         <TextView
-            android:id="@+id/textViewStockPopupLocation"
+            android:id="@+id/textViewBitcoinPopupUnitaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTittleLocation"
-            tools:text="São Paulo, Brasil" />
-
-        <TextView
-            android:id="@+id/textViewTittlePoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/points"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStockPopupLocation" />
-
-        <TextView
-            android:id="@+id/textViewStockPopupPoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTittlePoints"
-            tools:text="102.312,1" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewTittleUnitaryValue"
+            tools:text="$29,439.14" />
 
         <TextView
             android:id="@+id/textViewTittleVariation"
@@ -113,10 +91,10 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStockPopupPoints" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewBitcoinPopupUnitaryValue" />
 
         <TextView
-            android:id="@+id/textViewStockPopupVariation"
+            android:id="@+id/textViewBitcoinPopupVariation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
@@ -135,10 +113,10 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStockPopupVariation" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewBitcoinPopupVariation" />
 
         <TextView
-            android:id="@+id/textViewStockPopupDateTime"
+            android:id="@+id/textViewBitcoinPopupDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

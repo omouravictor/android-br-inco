@@ -3,6 +3,8 @@ package com.omouravictor.ratesbr.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
+import com.omouravictor.ratesbr.util.StringUtils.getCityInPortuguese
+import com.omouravictor.ratesbr.util.StringUtils.getCountryInPortuguese
 import java.util.*
 
 @Entity(tableName = "stock_table")
@@ -22,24 +24,12 @@ fun StockEntity.toStockUiModel(): StockUiModel {
     val city = fullLocationList.first()
 
     return StockUiModel(
-        name = name,
-        fullName = fullName,
-        countryLocation = when (country) {
-            "Brazil" -> "Brasil"
-            "United States" -> "Estados Unidos"
-            "French" -> "França"
-            "Japan" -> "Japão"
-            else -> country
-        },
-        cityLocation = when (city) {
-            "Sao Paulo" -> "São Paulo"
-            "New York City" -> "Nova Iorque"
-            "Paris" -> "Paris"
-            "Tokyo" -> "Tóquio"
-            else -> city
-        },
-        points = points,
-        variation = variation,
-        stockDate = stockDate
+        name,
+        fullName,
+        getCountryInPortuguese(country),
+        getCityInPortuguese(city),
+        points,
+        variation,
+        stockDate
     )
 }
