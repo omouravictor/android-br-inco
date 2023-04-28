@@ -5,7 +5,6 @@ import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import java.util.*
 
 data class ApiBitcoinsResponse(
-
     @SerializedName("results")
     val results: ApiBitcoinsResultsResponse,
 
@@ -13,21 +12,15 @@ data class ApiBitcoinsResponse(
 )
 
 fun ApiBitcoinsResponse.toListBitcoinEntity(): List<BitcoinEntity> {
-    val list: MutableList<BitcoinEntity> = mutableListOf()
-
-    results.bitcoins.forEach { bitcoinResponse ->
-        list.add(
-            BitcoinEntity(
-                bitcoinResponse.value.name,
-                bitcoinResponse.value.format[0],
-                bitcoinResponse.value.format[1].substring(0..1),
-                bitcoinResponse.value.format[1].substring(3..4),
-                bitcoinResponse.value.last,
-                bitcoinResponse.value.variation,
-                bitcoinDate
-            )
+    return results.bitcoins.map { (_, bitcoinsMapValue) ->
+        BitcoinEntity(
+            bitcoinsMapValue.name,
+            bitcoinsMapValue.format[0],
+            bitcoinsMapValue.format[1].substring(0..1),
+            bitcoinsMapValue.format[1].substring(3..4),
+            bitcoinsMapValue.last,
+            bitcoinsMapValue.variation,
+            bitcoinDate
         )
     }
-
-    return list
 }

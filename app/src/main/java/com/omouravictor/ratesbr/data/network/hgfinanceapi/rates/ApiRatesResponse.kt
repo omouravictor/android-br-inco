@@ -12,13 +12,12 @@ data class ApiRatesResponse(
 )
 
 fun ApiRatesResponse.toListRateEntity(): List<RateEntity> {
-    val list: MutableList<RateEntity> = mutableListOf()
-
-    results.currencies.keys.forEach { currencyTerm ->
-        val rate = results.currencies[currencyTerm]?.buy
-        val variation = results.currencies[currencyTerm]?.variation
-        list.add(RateEntity(currencyTerm, rate!!, variation!!, rateDate))
+    return results.currencies.mapNotNull { (currenciesMapKey, currenciesMapValue) ->
+        RateEntity(
+            currenciesMapKey,
+            currenciesMapValue.buy,
+            currenciesMapValue.variation,
+            rateDate
+        )
     }
-
-    return list
 }

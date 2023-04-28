@@ -12,24 +12,19 @@ data class StockEntity(
     @PrimaryKey(autoGenerate = false)
     val name: String,
     val fullName: String,
-    val fullLocation: String,
+    val countryLocation: String,
+    val cityLocation: String,
     val points: Double,
     val variation: Double,
     val stockDate: Date,
 )
 
-fun StockEntity.toStockUiModel(): StockUiModel {
-    val fullLocationList = fullLocation.split(", ")
-    val country = fullLocationList.last()
-    val city = fullLocationList.first()
-
-    return StockUiModel(
-        name,
-        fullName,
-        getCountryInPortuguese(country),
-        getCityInPortuguese(city),
-        points,
-        variation,
-        stockDate
-    )
-}
+fun StockEntity.toStockUiModel() = StockUiModel(
+    name,
+    fullName,
+    getCountryInPortuguese(countryLocation),
+    getCityInPortuguese(cityLocation),
+    points,
+    variation,
+    stockDate
+)

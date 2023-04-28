@@ -12,20 +12,19 @@ data class ApiStocksResponse(
 )
 
 fun ApiStocksResponse.toListStockEntity(): List<StockEntity> {
-    val list: MutableList<StockEntity> = mutableListOf()
+    return results.stocks.map { (stocksMapKey, stocksMapValue) ->
+        val fullLocationList = stocksMapValue.location.split(", ")
+        val countryLocation = fullLocationList.last()
+        val cityLocation = fullLocationList.first()
 
-    results.stocks.forEach {
-        list.add(
-            StockEntity(
-                it.key,
-                it.value.name,
-                it.value.location,
-                it.value.points,
-                it.value.variation,
-                stockDate
-            )
+        StockEntity(
+            stocksMapKey,
+            stocksMapValue.name,
+            countryLocation,
+            cityLocation,
+            stocksMapValue.points,
+            stocksMapValue.variation,
+            stockDate
         )
     }
-
-    return list
 }
