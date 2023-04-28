@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/stocksItemMenu"
-        android:title="@string/stocks"
-        android:icon="@drawable/stock_icon"/>
+        android:icon="@drawable/stock_icon"
+        android:title="@string/stocks" />
 
     <item
         android:id="@+id/ratesItemMenu"
-        android:title="@string/coins"
-        android:icon="@drawable/money_icon"/>
+        android:icon="@drawable/money_icon"
+        android:title="@string/coins" />
 
     <item
         android:id="@+id/bitcoinsItemMenu"
-        android:title="@string/bitcoins"
-        android:icon="@drawable/currency_bitcoin_icon"/>
+        android:icon="@drawable/currency_bitcoin_icon"
+        android:title="@string/bitcoins" />
 
 </menu>
