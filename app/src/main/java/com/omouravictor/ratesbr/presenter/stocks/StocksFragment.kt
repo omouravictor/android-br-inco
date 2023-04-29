@@ -88,23 +88,23 @@ class StocksFragment : Fragment() {
 
     private fun stocksAdapterOnClickItem(stockUiModel: StockUiModel) {
         with(dialog) {
-            val stockNameTextView = findViewById<TextView>(R.id.textViewStockPopupName)
-            val stockFullNameTextView = findViewById<TextView>(R.id.textViewStockPopupFullName)
-            val stockLocationTextView = findViewById<TextView>(R.id.textViewStockPopupLocation)
-            val stockPointsTextView = findViewById<TextView>(R.id.textViewStockPopupPoints)
-            val stockVariationTextView = findViewById<TextView>(R.id.textViewStockPopupVariation)
-            val stockDateTimeTextView = findViewById<TextView>(R.id.textViewStockPopupDateTime)
+            val nameTextView = findViewById<TextView>(R.id.textViewStockPopupName)
+            val fullNameTextView = findViewById<TextView>(R.id.textViewStockPopupFullName)
+            val locationTextView = findViewById<TextView>(R.id.textViewStockPopupLocation)
+            val pointsTextView = findViewById<TextView>(R.id.textViewStockPopupPoints)
+            val variationTextView = findViewById<TextView>(R.id.textViewStockPopupVariation)
+            val dateTimeTextView = findViewById<TextView>(R.id.textViewStockPopupDateTime)
 
-            stockNameTextView.text = stockUiModel.name
-            stockFullNameTextView.text = stockUiModel.fullName
-            stockLocationTextView.text = getString(
+            nameTextView.text = stockUiModel.name
+            fullNameTextView.text = stockUiModel.fullName
+            locationTextView.text = getString(
                 R.string.stock_popup_full_location,
                 stockUiModel.cityLocation,
                 stockUiModel.countryLocation
             )
-            stockPointsTextView.text = numberFormat.format(stockUiModel.points)
-            stockVariationTextView.text = getVariationText(stockUiModel.variation)
-            stockDateTimeTextView.text = getString(
+            pointsTextView.text = numberFormat.format(stockUiModel.points)
+            variationTextView.text = getVariationText(stockUiModel.variation)
+            dateTimeTextView.text = getString(
                 R.string.popup_date_time,
                 dateFormat.format(stockUiModel.stockDate),
                 timeFormat.format(stockUiModel.stockDate)

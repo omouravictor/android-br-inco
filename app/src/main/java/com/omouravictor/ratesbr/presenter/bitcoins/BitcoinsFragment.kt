@@ -20,7 +20,6 @@ import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
 import com.omouravictor.ratesbr.util.Formats.getFormattedValueForCurrencyLocale
-import com.omouravictor.ratesbr.util.StringUtils.getCurrencyNameInPortuguese
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.*
 
@@ -91,27 +90,24 @@ class BitcoinsFragment : Fragment() {
     private fun bitcoinsAdapterOnClickItem(bitcoin: BitcoinUiModel) {
         with(dialog) {
             val bitcoinLocale = Locale(bitcoin.language, bitcoin.countryLanguage)
-            val bitcoinNameTextView = findViewById<TextView>(R.id.textViewBitcoinPopupName)
-            val bitcoinCurrencyBuyTextView =
-                findViewById<TextView>(R.id.textViewBitcoinPopupCurrencyBuy)
-            val bitcoinUnitaryValueTextView =
-                findViewById<TextView>(R.id.textViewBitcoinPopupUnitaryValue)
-            val bitcoinVariationTextView =
-                findViewById<TextView>(R.id.textViewBitcoinPopupVariation)
-            val bitcoinDateTimeTextView = findViewById<TextView>(R.id.textViewBitcoinPopupDateTime)
+            val nameTextView = findViewById<TextView>(R.id.textViewBitcoinPopupName)
+            val currencyBuyTextView = findViewById<TextView>(R.id.textViewBitcoinPopupCurrencyBuy)
+            val unitaryValueTextView = findViewById<TextView>(R.id.textViewBitcoinPopupUnitaryValue)
+            val variationTextView = findViewById<TextView>(R.id.textViewBitcoinPopupVariation)
+            val dateTimeTextView = findViewById<TextView>(R.id.textViewBitcoinPopupDateTime)
 
-            bitcoinNameTextView.text = bitcoin.name
-            bitcoinCurrencyBuyTextView.text = getString(
+            nameTextView.text = bitcoin.name
+            currencyBuyTextView.text = getString(
                 R.string.popup_currency_buy,
                 bitcoin.currencyTerm,
-                getCurrencyNameInPortuguese(bitcoin.currencyTerm)
+                bitcoin.currencyName
             )
-            bitcoinUnitaryValueTextView.text = getFormattedValueForCurrencyLocale(
+            unitaryValueTextView.text = getFormattedValueForCurrencyLocale(
                 bitcoin.unitaryRate,
                 bitcoinLocale
             )
-            bitcoinVariationTextView.text = getVariationText(bitcoin.variation)
-            bitcoinDateTimeTextView.text = getString(
+            variationTextView.text = getVariationText(bitcoin.variation)
+            dateTimeTextView.text = getString(
                 R.string.popup_date_time,
                 dateFormat.format(bitcoin.bitcoinDate),
                 timeFormat.format(bitcoin.bitcoinDate)

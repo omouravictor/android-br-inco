@@ -3,6 +3,7 @@ package com.omouravictor.ratesbr.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
+import com.omouravictor.ratesbr.util.StringUtils.getCurrencyNameInPortuguese
 import java.util.*
 
 @Entity(tableName = "bitcoin_table")
@@ -19,6 +20,7 @@ data class BitcoinEntity(
 
 fun BitcoinEntity.toBitcoinUiModel() = BitcoinUiModel(
     name,
+    getCurrencyNameInPortuguese(currencyTerm),
     currencyTerm,
     language,
     countryLanguage,
