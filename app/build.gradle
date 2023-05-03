@@ -96,10 +96,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomDataBaseVersion"
     implementation "androidx.room:room-ktx:$roomDataBaseVersion"
 
-    // Swipe to Refresh
-    def swipeRefreshVersion = "1.1.0"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion"
-
     // Datastore
     def datastoreVersion = "1.0.0"
     implementation "androidx.datastore:datastore-preferences:$datastoreVersion"
