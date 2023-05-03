@@ -4,21 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.omouravictor.ratesbr.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeBinding
-
-    private val welcomeViewPager: ViewPager2 by lazy {
-        binding.viewPagerWelcome
-    }
-
-    private val tabWelcome: TabLayout by lazy {
-        binding.tabLayoutWelcome
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +20,11 @@ class WelcomeActivity : AppCompatActivity() {
         setClickListeners()
     }
 
-    private fun setClickListeners() {
-        binding.textViewNext.setOnClickListener {
-            welcomeViewPager.currentItem++
-        }
-
-        binding.textViewPrevious.setOnClickListener {
-            welcomeViewPager.currentItem--
-        }
-    }
-
     private fun initWelcomeViewPager() {
-        welcomeViewPager.adapter = FragmentsViewPagerManager(this)
+        binding.viewPagerWelcome.adapter = FragmentsViewPagerManager(this)
 
-        welcomeViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewPagerWelcome.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 binding.textViewPrevious.visibility = if (position > 0) View.VISIBLE else View.GONE
 
@@ -52,6 +34,16 @@ class WelcomeActivity : AppCompatActivity() {
             }
         })
 
-        TabLayoutMediator(tabWelcome, welcomeViewPager) { _, _ -> }.attach()
+        TabLayoutMediator(binding.tabLayoutWelcome, binding.viewPagerWelcome) { _, _ -> }.attach()
+    }
+
+    private fun setClickListeners() {
+        binding.textViewNext.setOnClickListener {
+            binding.viewPagerWelcome.currentItem++
+        }
+
+        binding.textViewPrevious.setOnClickListener {
+            binding.viewPagerWelcome.currentItem--
+        }
     }
 }
