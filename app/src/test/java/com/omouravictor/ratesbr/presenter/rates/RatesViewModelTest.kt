@@ -9,7 +9,7 @@ import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResponse
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResultsItemResponse
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResultsResponse
 import com.omouravictor.ratesbr.data.repository.RatesRepository
-import com.omouravictor.ratesbr.presenter.base.UiResultState
+import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,7 +36,7 @@ class RatesViewModelTest {
     private lateinit var ratesRepository: RatesRepository
 
     @Mock
-    private lateinit var ratesObserver: Observer<UiResultState<List<RateUiModel>>>
+    private lateinit var ratesObserver: Observer<UiResultStatus<List<RateUiModel>>>
 
     private lateinit var viewModel: RatesViewModel
 
@@ -73,7 +73,7 @@ class RatesViewModelTest {
 
             // Then
             verify(ratesObserver).onChanged(
-                UiResultState.Success(mockListRatesEntity.map { it.toRateUiModel() })
+                UiResultStatus.Success(mockListRatesEntity.map { it.toRateUiModel() })
             )
         }
     }
@@ -94,7 +94,7 @@ class RatesViewModelTest {
 
             // Then
             verify(ratesObserver).onChanged(
-                UiResultState.Success(mockListRatesEntity.map { it.toRateUiModel() })
+                UiResultStatus.Success(mockListRatesEntity.map { it.toRateUiModel() })
             )
         }
     }
@@ -114,7 +114,7 @@ class RatesViewModelTest {
 
             // Then
             verify(ratesObserver).onChanged(
-                UiResultState.Error(mockErrorResult.e)
+                UiResultStatus.Error(mockErrorResult.e)
             )
         }
     }

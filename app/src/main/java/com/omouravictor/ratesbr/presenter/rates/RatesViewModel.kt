@@ -8,7 +8,7 @@ import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toListRateEntity
 import com.omouravictor.ratesbr.data.repository.RatesRepository
-import com.omouravictor.ratesbr.presenter.base.UiResultState
+import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ class RatesViewModel @ViewModelInject constructor(
     private val ratesRepository: RatesRepository
 ) : ViewModel() {
 
-    val ratesResult = MutableLiveData<UiResultState<List<RateUiModel>>>()
+    val ratesResult = MutableLiveData<UiResultStatus<List<RateUiModel>>>()
     private val currencies = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
 
     init {
@@ -30,20 +30,20 @@ class RatesViewModel @ViewModelInject constructor(
                     is NetworkResultStatus.Success -> {
                         val remoteRates = networkResultStatus.data.toListRateEntity()
                         ratesRepository.insertRates(remoteRates)
-                        ratesResult.postValue(UiResultState.Success(remoteRates.map { it.toRateUiModel() }))
+                        ratesResult.postValue(UiResultStatus.Success(remoteRates.map { it.toRateUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
                         ratesRepository.getLocalRates().collect { localRates ->
                             if (localRates.isNotEmpty())
-                                ratesResult.postValue(UiResultState.Success(localRates.map { it.toRateUiModel() }))
+                                ratesResult.postValue(UiResultStatus.Success(localRates.map { it.toRateUiModel() }))
                             else
-                                ratesResult.postValue(UiResultState.Error(networkResultStatus.e))
+                                ratesResult.postValue(UiResultStatus.Error(networkResultStatus.e))
                         }
                     }
 
                     is NetworkResultStatus.Loading -> {
-                        ratesResult.postValue(UiResultState.Loading)
+                        ratesResult.postValue(UiResultStatus.Loading)
                     }
                 }
             }

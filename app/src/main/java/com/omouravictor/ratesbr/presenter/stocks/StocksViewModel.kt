@@ -8,7 +8,7 @@ import com.omouravictor.ratesbr.data.local.entity.toStockUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.stock.toListStockEntity
 import com.omouravictor.ratesbr.data.repository.StocksRepository
-import com.omouravictor.ratesbr.presenter.base.UiResultState
+import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import kotlinx.coroutines.launch
 
@@ -16,7 +16,7 @@ class StocksViewModel @ViewModelInject constructor(
     private val stocksRepository: StocksRepository
 ) : ViewModel() {
 
-    val stocksResult = MutableLiveData<UiResultState<List<StockUiModel>>>()
+    val stocksResult = MutableLiveData<UiResultStatus<List<StockUiModel>>>()
 
     init {
         getStocks()
@@ -29,20 +29,20 @@ class StocksViewModel @ViewModelInject constructor(
                     is NetworkResultStatus.Success -> {
                         val remoteStocks = networkResultStatus.data.toListStockEntity()
                         stocksRepository.insertStocks(remoteStocks)
-                        stocksResult.postValue(UiResultState.Success(remoteStocks.map { it.toStockUiModel() }))
+                        stocksResult.postValue(UiResultStatus.Success(remoteStocks.map { it.toStockUiModel() }))
                     }
 
                     is NetworkResultStatus.Error -> {
                         stocksRepository.getLocalStocks().collect { localStocks ->
                             if (localStocks.isNotEmpty())
-                                stocksResult.postValue(UiResultState.Success(localStocks.map { it.toStockUiModel() }))
+                                stocksResult.postValue(UiResultStatus.Success(localStocks.map { it.toStockUiModel() }))
                             else
-                                stocksResult.postValue(UiResultState.Error(networkResultStatus.e))
+                                stocksResult.postValue(UiResultStatus.Error(networkResultStatus.e))
                         }
                     }
 
                     is NetworkResultStatus.Loading -> {
-                        stocksResult.postValue(UiResultState.Loading)
+                        stocksResult.postValue(UiResultStatus.Loading)
                     }
                 }
             }

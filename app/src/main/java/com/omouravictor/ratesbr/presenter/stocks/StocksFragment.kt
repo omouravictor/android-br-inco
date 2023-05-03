@@ -14,7 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
-import com.omouravictor.ratesbr.presenter.base.UiResultState
+import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
@@ -44,19 +44,19 @@ class StocksFragment : Fragment() {
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is UiResultState.Success -> {
+                is UiResultStatus.Success -> {
                     configureRecyclerView(result.data)
                     binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
-                is UiResultState.Error -> {
+                is UiResultStatus.Error -> {
                     binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
-                is UiResultState.Loading -> {
+                is UiResultStatus.Loading -> {
                     binding.progressBar.isVisible = true
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = false
