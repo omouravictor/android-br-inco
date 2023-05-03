@@ -6,7 +6,7 @@ object StringUtils {
 
     fun getVariationText(variation: Double): String {
         val formattedVariation = numberFormat.format(variation)
-        return if (variation >= 0.0) "+${formattedVariation}%" else "${formattedVariation}%"
+        return if (variation > 0.0) "+${formattedVariation}%" else "${formattedVariation}%"
     }
 
     fun getCurrencyNameInPortuguese(currencyTerm: String) = when (currencyTerm) {
