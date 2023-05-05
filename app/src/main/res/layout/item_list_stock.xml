@@ -24,19 +24,19 @@
             android:paddingVertical="16dp">
 
             <TextView
-                android:id="@+id/textViewRateCurrencyTerm"
+                android:id="@+id/textViewStockLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_background_white"
+                android:background="@drawable/background_rectangle_white"
                 android:textColor="@color/green"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="USD" />
+                tools:text="Brazil" />
 
             <TextView
-                android:id="@+id/textViewRateCurrencyName"
+                android:id="@+id/textViewStockName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -45,38 +45,40 @@
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRateCurrencyTerm"
-                tools:text="Dólar Americano" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewStockLocation"
+                tools:text="IBOVESPA" />
 
             <TextView
-                android:id="@+id/textViewRateVariation"
+                android:id="@+id/textViewStockVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="-1.34%" />
+                tools:text="-2,423%" />
 
             <ImageView
-                android:id="@+id/imageViewRateVariation"
+                android:id="@+id/imageViewStockVariation"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/arrow_down_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewRateVariation"
-                app:layout_constraintEnd_toStartOf="@+id/textViewRateVariation"
-                app:layout_constraintTop_toTopOf="@+id/textViewRateVariation" />
+                android:src="@drawable/icon_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
+                app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
+                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
 
             <TextView
-                android:id="@+id/textViewRateValue"
+                android:id="@+id/textViewStockPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewStockName"
                 app:layout_constraintTop_toTopOf="@+id/textViewDate"
-                tools:text="R$ 5,60" />
+                tools:text="193.443,10" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -103,5 +105,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

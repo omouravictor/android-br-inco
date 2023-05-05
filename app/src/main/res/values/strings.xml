@@ -30,4 +30,5 @@
     <string name="stock_popup_full_location">%1$s, %2$s</string>
     <string name="popup_date_time">%1$s às %2$s</string>
     <string name="popup_currency_buy">%1$s - %2$s</string>
+    <string name="details">Detalhes</string>
 </resources>

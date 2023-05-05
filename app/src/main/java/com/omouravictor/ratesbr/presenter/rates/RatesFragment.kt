@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -22,7 +23,7 @@ import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 
 class RatesFragment : Fragment() {
 
-    private lateinit var bottomSheetDialog: Dialog
+    private lateinit var rateBottomSheetDialog: Dialog
     private lateinit var binding: FragmentRatesBinding
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
@@ -39,7 +40,7 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initBottomSheetDialog()
+        initRateBottomSheetDialog()
         initTryAgainButton()
 
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
@@ -65,12 +66,12 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initBottomSheetDialog() {
-        bottomSheetDialog = Dialog(requireContext())
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_rates_dialog)
-        bottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        bottomSheetDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-        bottomSheetDialog.window?.setGravity(Gravity.BOTTOM)
+    private fun initRateBottomSheetDialog() {
+        rateBottomSheetDialog = Dialog(requireContext())
+        rateBottomSheetDialog.setContentView(R.layout.bottom_sheet_rate_dialog)
+        rateBottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        rateBottomSheetDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        rateBottomSheetDialog.window?.setGravity(Gravity.BOTTOM)
     }
 
     private fun initTryAgainButton() {
@@ -81,23 +82,26 @@ class RatesFragment : Fragment() {
 
     private fun configureRecyclerView(ratesList: List<RateUiModel>) {
         binding.recyclerViewRates.apply {
-            adapter = RatesAdapter(ratesList) { showBottomSheetDialog(it) }
+            adapter = RatesAdapter(ratesList) { showRateBottomSheetDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun showBottomSheetDialog(rateUiModel: RateUiModel) {
-        with(bottomSheetDialog) {
-            val converterLayout = findViewById<LinearLayout>(R.id.converterLayout)
-            val detailsLayout = findViewById<LinearLayout>(R.id.detailsLayout)
+    private fun showRateBottomSheetDialog(rateUiModel: RateUiModel) {
+        with(rateBottomSheetDialog) {
+            val textViewCurrencyName = findViewById<TextView>(R.id.textViewBottomSheetDialogCurrencyName)
+            val converterLayout = findViewById<LinearLayout>(R.id.converterLayoutBottomSheetDialog)
+            val detailsLayout = findViewById<LinearLayout>(R.id.detailsLayoutBottomSheetDialog)
+
+            textViewCurrencyName.text = rateUiModel.currencyName
 
             converterLayout.setOnClickListener {
-                bottomSheetDialog.dismiss()
+                rateBottomSheetDialog.dismiss()
                 prepareAndNavigateToConverterFragment(rateUiModel)
             }
 
             detailsLayout.setOnClickListener {
-                bottomSheetDialog.dismiss()
+                rateBottomSheetDialog.dismiss()
             }
 
             show()

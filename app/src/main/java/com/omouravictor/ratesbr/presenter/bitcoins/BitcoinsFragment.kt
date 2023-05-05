@@ -24,7 +24,7 @@ import java.util.*
 
 class BitcoinsFragment : Fragment() {
 
-    private lateinit var dialog: Dialog
+    private lateinit var bitcoinDetailsDialog: Dialog
     private lateinit var binding: FragmentBitcoinsBinding
     private val bitcoinViewModel: BitcoinsViewModel by activityViewModels()
 
@@ -40,7 +40,7 @@ class BitcoinsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initBitcoinDialog()
+        initBitcoinDetailsDialog()
         initTryAgainButton()
 
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
@@ -66,11 +66,11 @@ class BitcoinsFragment : Fragment() {
         }
     }
 
-    private fun initBitcoinDialog() {
-        dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.bitcoin_details_dialog)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+    private fun initBitcoinDetailsDialog() {
+        bitcoinDetailsDialog = Dialog(requireContext())
+        bitcoinDetailsDialog.setContentView(R.layout.details_bitcoin_dialog)
+        bitcoinDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        bitcoinDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
     private fun initTryAgainButton() {
@@ -81,13 +81,13 @@ class BitcoinsFragment : Fragment() {
 
     private fun configureRecyclerView(bitcoinList: List<BitcoinUiModel>) {
         binding.recyclerViewBitcoins.apply {
-            adapter = BitcoinsAdapter(bitcoinList) { bitcoinsAdapterOnClickItem(it) }
+            adapter = BitcoinsAdapter(bitcoinList) { showBitcoinDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun bitcoinsAdapterOnClickItem(bitcoin: BitcoinUiModel) {
-        with(dialog) {
+    private fun showBitcoinDetailsDialog(bitcoin: BitcoinUiModel) {
+        with(bitcoinDetailsDialog) {
             val bitcoinLocale = Locale(bitcoin.language, bitcoin.countryLanguage)
             val nameTextView = findViewById<TextView>(R.id.textViewBitcoinPopupName)
             val currencyBuyTextView = findViewById<TextView>(R.id.textViewBitcoinPopupCurrencyBuy)

@@ -3,7 +3,7 @@ package com.omouravictor.ratesbr.presenter.bitcoins
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.databinding.BitcoinItemListBinding
+import com.omouravictor.ratesbr.databinding.ItemListBitcoinBinding
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
@@ -18,7 +18,7 @@ class BitcoinsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
         val binding =
-            BitcoinItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListBitcoinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BitcoinViewHolder(binding, onClickItem)
     }
 
@@ -31,7 +31,7 @@ class BitcoinsAdapter(
     }
 
     class BitcoinViewHolder(
-        private val binding: BitcoinItemListBinding,
+        private val binding: ItemListBitcoinBinding,
         private val onClickItem: (BitcoinUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

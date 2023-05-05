@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.omouravictor.ratesbr.databinding.FragmentFirstWelcomeBinding
+import com.omouravictor.ratesbr.databinding.FragmentWelcomeFirstBinding
 
 class FirstWelcomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentFirstWelcomeBinding
+    private lateinit var binding: FragmentWelcomeFirstBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFirstWelcomeBinding.inflate(layoutInflater, container, false)
+        binding = FragmentWelcomeFirstBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 }

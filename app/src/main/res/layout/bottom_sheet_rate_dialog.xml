@@ -4,69 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_sheet_dialog_background"
+    android:background="@drawable/background_bottom_sheet_dialog"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/choosetxt"
+        android:id="@+id/textViewBottomSheetDialogCurrencyName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Menu"
+        android:layout_marginTop="6dp"
+        android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Dólar americano" />
 
     <LinearLayout
-        android:id="@+id/converterLayout"
+        android:id="@+id/converterLayoutBottomSheetDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/choosetxt">
+        app:layout_constraintTop_toBottomOf="@+id/textViewBottomSheetDialogCurrencyName">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/currency_exchange_icon" />
+            android:src="@drawable/icon_currency_exchange" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Conversor"
+            android:layout_marginStart="16dp"
+            android:text="@string/conversion"
             android:textSize="16sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/detailsLayout"
+        android:id="@+id/detailsLayoutBottomSheetDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/converterLayout">
+        app:layout_constraintTop_toBottomOf="@+id/converterLayoutBottomSheetDialog">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/info_icon" />
+            android:src="@drawable/icon_info" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Detalhes"
+            android:layout_marginStart="16dp"
+            android:text="@string/details"
             android:textSize="16sp" />
 
     </LinearLayout>

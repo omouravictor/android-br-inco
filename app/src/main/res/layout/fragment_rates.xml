@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/rate_item_list" />
+        tools:listitem="@layout/item_list_rate" />
 
     <ProgressBar
         android:id="@+id/progressBar"

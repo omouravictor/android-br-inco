@@ -23,7 +23,7 @@ import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {
 
-    private lateinit var dialog: Dialog
+    private lateinit var stockDetailsDialog: Dialog
     private lateinit var binding: FragmentStocksBinding
     private val stockViewModel: StocksViewModel by activityViewModels()
 
@@ -39,7 +39,7 @@ class StocksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initDialog()
+        initStockDetailsDialog()
         initTryAgainButton()
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
@@ -65,11 +65,11 @@ class StocksFragment : Fragment() {
         }
     }
 
-    private fun initDialog() {
-        dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.stock_details_dialog)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+    private fun initStockDetailsDialog() {
+        stockDetailsDialog = Dialog(requireContext())
+        stockDetailsDialog.setContentView(R.layout.details_stock_dialog)
+        stockDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        stockDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
     private fun initTryAgainButton() {
@@ -80,13 +80,13 @@ class StocksFragment : Fragment() {
 
     private fun configureRecyclerView(stockList: List<StockUiModel>) {
         binding.recyclerViewStocks.apply {
-            adapter = StocksAdapter(stockList) { stocksAdapterOnClickItem(it) }
+            adapter = StocksAdapter(stockList) { showStockDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun stocksAdapterOnClickItem(stockUiModel: StockUiModel) {
-        with(dialog) {
+    private fun showStockDetailsDialog(stockUiModel: StockUiModel) {
+        with(stockDetailsDialog) {
             val nameTextView = findViewById<TextView>(R.id.textViewStockPopupName)
             val fullNameTextView = findViewById<TextView>(R.id.textViewStockPopupFullName)
             val locationTextView = findViewById<TextView>(R.id.textViewStockPopupLocation)

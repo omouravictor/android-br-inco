@@ -3,7 +3,7 @@ package com.omouravictor.ratesbr.presenter.rates
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.databinding.RateItemListBinding
+import com.omouravictor.ratesbr.databinding.ItemListRateBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
@@ -18,7 +18,7 @@ class RatesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
-            RateItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListRateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RatesViewHolder(binding, onClickItem)
     }
 
@@ -31,7 +31,7 @@ class RatesAdapter(
     }
 
     class RatesViewHolder(
-        private val binding: RateItemListBinding,
+        private val binding: ItemListRateBinding,
         private val onClickItem: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 

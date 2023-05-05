@@ -24,19 +24,19 @@
             android:paddingVertical="16dp">
 
             <TextView
-                android:id="@+id/textViewStockLocation"
+                android:id="@+id/textViewBitcoinCurrencyTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rectangle_background_white"
+                android:background="@drawable/background_rectangle_white"
                 android:textColor="@color/green"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Brazil" />
+                tools:text="USD" />
 
             <TextView
-                android:id="@+id/textViewStockName"
+                android:id="@+id/textViewBitcoinName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -45,11 +45,11 @@
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStockLocation"
-                tools:text="IBOVESPA" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewBitcoinCurrencyTerm"
+                tools:text="Blockchain.info" />
 
             <TextView
-                android:id="@+id/textViewStockVariation"
+                android:id="@+id/textViewBitcoinVariation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
@@ -59,16 +59,16 @@
                 tools:text="-2,423%" />
 
             <ImageView
-                android:id="@+id/imageViewStockVariation"
+                android:id="@+id/imageViewBitcoinVariation"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:src="@drawable/arrow_down_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
-                app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
+                android:src="@drawable/icon_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewBitcoinVariation"
+                app:layout_constraintEnd_toStartOf="@+id/textViewBitcoinVariation"
+                app:layout_constraintTop_toTopOf="@+id/textViewBitcoinVariation" />
 
             <TextView
-                android:id="@+id/textViewStockPoints"
+                android:id="@+id/textViewBitcoinValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -76,9 +76,9 @@
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
-                app:layout_constraintStart_toStartOf="@+id/textViewStockName"
+                app:layout_constraintStart_toStartOf="@id/textViewBitcoinName"
                 app:layout_constraintTop_toTopOf="@+id/textViewDate"
-                tools:text="193.443,10" />
+                tools:text="R$0,00" />
 
             <TextView
                 android:id="@+id/textViewDate"
@@ -105,4 +105,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

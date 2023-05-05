@@ -3,7 +3,7 @@ package com.omouravictor.ratesbr.presenter.stocks
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.ratesbr.databinding.StockItemListBinding
+import com.omouravictor.ratesbr.databinding.ItemListStockBinding
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
@@ -17,7 +17,7 @@ class StocksAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
-            StockItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListStockBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StockViewHolder(binding, onClickItem)
     }
 
@@ -30,7 +30,7 @@ class StocksAdapter(
     }
 
     class StockViewHolder(
-        private val binding: StockItemListBinding,
+        private val binding: ItemListStockBinding,
         private val onClickItem: (StockUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
