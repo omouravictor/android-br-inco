@@ -31,9 +31,9 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/icon_currency_bitcoin"
+            android:layout_width="29dp"
+            android:layout_height="29dp"
+            android:src="@drawable/icon_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white" />

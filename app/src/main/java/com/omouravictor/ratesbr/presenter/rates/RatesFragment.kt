@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -89,9 +89,9 @@ class RatesFragment : Fragment() {
 
     private fun showRateBottomSheetDialog(rateUiModel: RateUiModel) {
         with(rateBottomSheetDialog) {
-            val textViewCurrencyName = findViewById<TextView>(R.id.textViewBottomSheetDialogCurrencyName)
-            val converterLayout = findViewById<LinearLayout>(R.id.converterLayoutBottomSheetDialog)
-            val detailsLayout = findViewById<LinearLayout>(R.id.detailsLayoutBottomSheetDialog)
+            val textViewCurrencyName = findViewById<TextView>(R.id.textViewCurrencyNameBottomSheetRateDialog)
+            val converterLayout = findViewById<ConstraintLayout>(R.id.converterLayoutBottomSheetRateDialog)
+            val detailsLayout = findViewById<ConstraintLayout>(R.id.detailsLayoutBottomSheetRateDialog)
 
             textViewCurrencyName.text = rateUiModel.currencyName
 

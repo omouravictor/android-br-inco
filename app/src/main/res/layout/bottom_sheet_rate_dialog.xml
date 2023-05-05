@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textViewBottomSheetDialogCurrencyName"
+        android:id="@+id/textViewCurrencyNameBottomSheetRateDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
@@ -21,8 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Dólar americano" />
 
-    <LinearLayout
-        android:id="@+id/converterLayoutBottomSheetDialog"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/converterLayoutBottomSheetRateDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -30,24 +30,32 @@
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBottomSheetDialogCurrencyName">
+        app:layout_constraintTop_toBottomOf="@+id/textViewCurrencyNameBottomSheetRateDialog">
 
         <ImageView
+            android:id="@+id/imageViewConverterBottomSheetRateDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_currency_exchange" />
+            android:src="@drawable/icon_currency_exchange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textViewConversionBottomSheetRateDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/conversion"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewConverterBottomSheetRateDialog"
+            app:layout_constraintStart_toEndOf="@+id/imageViewConverterBottomSheetRateDialog"
+            app:layout_constraintTop_toTopOf="@+id/imageViewConverterBottomSheetRateDialog" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/detailsLayoutBottomSheetDialog"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detailsLayoutBottomSheetRateDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -57,20 +65,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/converterLayoutBottomSheetDialog">
+        app:layout_constraintTop_toBottomOf="@+id/converterLayoutBottomSheetRateDialog">
 
         <ImageView
+            android:id="@+id/imageViewDetailsBottomSheetRateDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_info" />
+            android:src="@drawable/icon_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textViewDetailsBottomSheetRateDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/details"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewDetailsBottomSheetRateDialog"
+            app:layout_constraintStart_toEndOf="@+id/imageViewDetailsBottomSheetRateDialog"
+            app:layout_constraintTop_toTopOf="@+id/imageViewDetailsBottomSheetRateDialog" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
