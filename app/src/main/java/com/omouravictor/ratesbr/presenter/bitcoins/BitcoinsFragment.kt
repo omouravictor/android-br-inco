@@ -68,7 +68,7 @@ class BitcoinsFragment : Fragment() {
 
     private fun initBitcoinDialog() {
         dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.bitcoin_dialog)
+        dialog.setContentView(R.layout.bitcoin_details_dialog)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }

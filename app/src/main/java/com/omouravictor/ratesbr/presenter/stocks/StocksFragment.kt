@@ -67,7 +67,7 @@ class StocksFragment : Fragment() {
 
     private fun initDialog() {
         dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.stock_dialog)
+        dialog.setContentView(R.layout.stock_details_dialog)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }

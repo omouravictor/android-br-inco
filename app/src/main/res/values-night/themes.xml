@@ -15,6 +15,8 @@
         <item name="android:textColor">@color/darkWhite</item>
         <!-- Toolbar icon color -->
         <item name="colorControlNormal">@color/white</item>
+        <!-- Window background color -->
+        <item name="android:windowBackground">@color/black</item>
         <!-- Force dark mode -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
