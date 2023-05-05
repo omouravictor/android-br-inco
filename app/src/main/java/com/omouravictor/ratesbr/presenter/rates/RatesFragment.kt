@@ -20,10 +20,15 @@ import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
+import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
+import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {
 
     private lateinit var rateBottomSheetDialog: Dialog
+    private lateinit var rateDetailsDialog: Dialog
     private lateinit var binding: FragmentRatesBinding
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
@@ -41,6 +46,7 @@ class RatesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRateBottomSheetDialog()
+        initRateDetailsDialog()
         initTryAgainButton()
 
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
@@ -74,6 +80,13 @@ class RatesFragment : Fragment() {
         rateBottomSheetDialog.window?.setGravity(Gravity.BOTTOM)
     }
 
+    private fun initRateDetailsDialog() {
+        rateDetailsDialog = Dialog(requireContext())
+        rateDetailsDialog.setContentView(R.layout.details_rate_dialog)
+        rateDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        rateDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+    }
+
     private fun initTryAgainButton() {
         binding.includeViewError.buttonTryAgain.setOnClickListener {
             ratesViewModel.getRates()
@@ -89,19 +102,23 @@ class RatesFragment : Fragment() {
 
     private fun showRateBottomSheetDialog(rateUiModel: RateUiModel) {
         with(rateBottomSheetDialog) {
-            val textViewCurrencyName = findViewById<TextView>(R.id.textViewCurrencyNameBottomSheetRateDialog)
-            val converterLayout = findViewById<ConstraintLayout>(R.id.converterLayoutBottomSheetRateDialog)
-            val detailsLayout = findViewById<ConstraintLayout>(R.id.detailsLayoutBottomSheetRateDialog)
+            val textViewCurrencyName =
+                findViewById<TextView>(R.id.textViewCurrencyNameBottomSheetRateDialog)
+            val layoutConverter =
+                findViewById<ConstraintLayout>(R.id.converterLayoutBottomSheetRateDialog)
+            val layoutDetails =
+                findViewById<ConstraintLayout>(R.id.detailsLayoutBottomSheetRateDialog)
 
             textViewCurrencyName.text = rateUiModel.currencyName
 
-            converterLayout.setOnClickListener {
+            layoutConverter.setOnClickListener {
                 rateBottomSheetDialog.dismiss()
                 prepareAndNavigateToConverterFragment(rateUiModel)
             }
 
-            detailsLayout.setOnClickListener {
+            layoutDetails.setOnClickListener {
                 rateBottomSheetDialog.dismiss()
+                showRateDetailsDialog(rateUiModel)
             }
 
             show()
@@ -112,6 +129,28 @@ class RatesFragment : Fragment() {
         converterViewModel.setInitialValues(rateUiModel)
         val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
         findNavController().navigate(action)
+    }
+
+    private fun showRateDetailsDialog(rate: RateUiModel) {
+        with(rateDetailsDialog) {
+            val nameTextView = findViewById<TextView>(R.id.textViewRatePopupName)
+            val currencyTermTextView = findViewById<TextView>(R.id.textViewRatePopupCurrencyTerm)
+            val unitaryValueTextView = findViewById<TextView>(R.id.textViewRatePopupUnitaryValue)
+            val variationTextView = findViewById<TextView>(R.id.textViewRatePopupVariation)
+            val dateTimeTextView = findViewById<TextView>(R.id.textViewRatePopupDateTime)
+
+            nameTextView.text = rate.currencyName
+            currencyTermTextView.text = rate.currencyTerm
+            unitaryValueTextView.text = currencyFormat.format(rate.unitaryRate)
+            variationTextView.text = getVariationText(rate.variation)
+            dateTimeTextView.text = getString(
+                R.string.popup_date_time,
+                dateFormat.format(rate.rateDate),
+                timeFormat.format(rate.rateDate)
+            )
+
+            show()
+        }
     }
 
 }
