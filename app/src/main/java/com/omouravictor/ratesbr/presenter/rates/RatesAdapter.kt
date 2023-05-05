@@ -13,13 +13,13 @@ import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
 
 class RatesAdapter(
     private val list: List<RateUiModel>,
-    private val onClickItem: (RateUiModel) -> Unit
+    private val callBack: (RateUiModel) -> Unit
 ) : RecyclerView.Adapter<RatesAdapter.RatesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
             ItemListRateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RatesViewHolder(binding, onClickItem)
+        return RatesViewHolder(binding, callBack)
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +32,7 @@ class RatesAdapter(
 
     class RatesViewHolder(
         private val binding: ItemListRateBinding,
-        private val onClickItem: (RateUiModel) -> Unit
+        private val callBack: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(rate: RateUiModel) {
@@ -49,7 +49,7 @@ class RatesAdapter(
             binding.textViewDate.text = dateFormat.format(rate.rateDate)
             binding.textViewTime.text = timeFormat.format(rate.rateDate)
             itemView.setOnClickListener {
-                onClickItem(rate)
+                callBack(rate)
             }
         }
     }
