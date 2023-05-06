@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -41,24 +42,24 @@ class BitcoinsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initBitcoinDetailsDialog()
-        initTryAgainButton()
+        initSwipeRefreshLayout()
 
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiResultStatus.Success -> {
                     configureRecyclerView(result.data)
-                    binding.progressBar.isVisible = false
+                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewBitcoins.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
                 is UiResultStatus.Error -> {
-                    binding.progressBar.isVisible = false
+                    binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
                 is UiResultStatus.Loading -> {
-                    binding.progressBar.isVisible = true
+                    binding.swipeRefreshLayout.isRefreshing = true
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
@@ -73,10 +74,10 @@ class BitcoinsFragment : Fragment() {
         bitcoinDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
-    private fun initTryAgainButton() {
-        binding.includeViewError.buttonTryAgain.setOnClickListener {
-            bitcoinViewModel.getBitcoins()
-        }
+    private fun initSwipeRefreshLayout() {
+        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
+        binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
+        binding.swipeRefreshLayout.setOnRefreshListener { bitcoinViewModel.getBitcoins() }
     }
 
     private fun configureRecyclerView(bitcoinList: List<BitcoinUiModel>) {
