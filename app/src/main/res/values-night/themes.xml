@@ -20,4 +20,9 @@
         <!-- Force dark mode -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
+
+    <!-- TabLayout style -->
+    <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/black</item>
+    </style>
 </resources>
