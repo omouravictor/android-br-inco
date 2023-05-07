@@ -2,7 +2,6 @@ package com.omouravictor.ratesbr.presenter.rates
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
@@ -28,7 +28,7 @@ import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {
 
-    private lateinit var rateBottomSheetDialog: Dialog
+    private lateinit var rateBottomSheetDialog: BottomSheetDialog
     private lateinit var rateDetailsDialog: Dialog
     private lateinit var binding: FragmentRatesBinding
     private val ratesViewModel: RatesViewModel by activityViewModels()
@@ -74,11 +74,10 @@ class RatesFragment : Fragment() {
     }
 
     private fun initRateBottomSheetDialog() {
-        rateBottomSheetDialog = Dialog(requireContext())
+        rateBottomSheetDialog =
+            BottomSheetDialog(requireContext(), R.style.ThemeOverlay_App_BottomSheetDialog)
         rateBottomSheetDialog.setContentView(R.layout.bottom_sheet_rate_dialog)
         rateBottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        rateBottomSheetDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-        rateBottomSheetDialog.window?.setGravity(Gravity.BOTTOM)
     }
 
     private fun initRateDetailsDialog() {
@@ -110,14 +109,14 @@ class RatesFragment : Fragment() {
             val layoutDetails =
                 findViewById<ConstraintLayout>(R.id.detailsLayoutBottomSheetRateDialog)
 
-            textViewCurrencyName.text = rateUiModel.currencyName
+            textViewCurrencyName!!.text = rateUiModel.currencyName
 
-            layoutConverter.setOnClickListener {
+            layoutConverter!!.setOnClickListener {
                 rateBottomSheetDialog.dismiss()
                 prepareAndNavigateToConverterFragment(rateUiModel)
             }
 
-            layoutDetails.setOnClickListener {
+            layoutDetails!!.setOnClickListener {
                 rateBottomSheetDialog.dismiss()
                 showRateDetailsDialog(rateUiModel)
             }

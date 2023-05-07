@@ -25,4 +25,14 @@
     <style name="MyTabLayout" parent="Widget.MaterialComponents.TabLayout">
         <item name="android:background">@color/black</item>
     </style>
+
+    <!-- BottomSheetDialog ThemeOverlay style -->
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet.Modal.Transparent</item>
+    </style>
+
+    <!-- BottomSheetModal style -->
+    <style name="BottomSheet.Modal.Transparent" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
 </resources>
