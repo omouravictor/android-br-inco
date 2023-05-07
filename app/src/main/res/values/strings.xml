@@ -6,11 +6,11 @@
     <string name="conversion">Conversão</string>
     <string name="coins">Moedas</string>
     <string name="quantity">Quantidade</string>
-    <string name="hello_welcome">Olá, Seja bem-vindo!</string>
+    <string name="hello_welcome">Olá, seja bem-vindo!</string>
     <string name="before_continuing_we_want">Antes de continuar, queremos que você conheça um pouco de nossas funções!</string>
     <string name="in_this_app_you_can">Neste app você pode</string>
     <string name="make_the_conversion_of_the_chosen_currency">Efetuar a conversão das principais moedas para o Real!</string>
-    <string name="use_the_app_offline_with_the_latest_data_received">Utilizar o app de forma offline, com os utimos dados recebidos!</string>
+    <string name="use_the_app_offline_with_the_latest_data_received">Utilizar o app de forma offline, com os últimos dados recebidos!</string>
     <string name="follow_the_index_of_stock_exchanges">Acompanhar o índice de bolsas de valores pelo mundo!</string>
     <string name="follow_the_index_of_the_price_bitcoin">Acompanhar a cotação do bitcoin nas principais corretoras!</string>
     <string name="thanks_for_using_our_app">Obrigado por utilizar o nosso app!</string>
