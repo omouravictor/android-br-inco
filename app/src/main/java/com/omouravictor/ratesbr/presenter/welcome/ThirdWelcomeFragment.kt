@@ -33,10 +33,8 @@ class ThirdWelcomeFragment : Fragment() {
     private fun getButtonClick() {
         binding.buttonInit.setOnClickListener {
             lifecycleScope.launch {
-                val appFirstRunPrefKey = booleanPreferencesKey("appFirstRun")
-                context?.dataStore?.edit { preferences ->
-                    preferences[appFirstRunPrefKey] = false
-                }
+                val newUserPrefKey = booleanPreferencesKey("newUser")
+                context?.dataStore?.edit { it[newUserPrefKey] = false }
                 activity?.finish()
             }
         }
