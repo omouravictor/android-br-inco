@@ -10,15 +10,15 @@ object StringUtils {
     }
 
     fun getCurrencyNameInPortuguese(currencyTerm: String) = when (currencyTerm) {
-        "BRL" -> "Real brasileiro"
-        "USD" -> "Dólar americano"
+        "BRL" -> "Real Brasileiro"
+        "USD" -> "Dólar Americano"
         "EUR" -> "Euro"
-        "GBP" -> "Libra esterlina"
-        "ARS" -> "Peso argentino"
-        "CAD" -> "Dólar canadense"
-        "AUD" -> "Dólar australiano"
-        "JPY" -> "Iene japonês"
-        "CNY" -> "Yuan chinês"
+        "GBP" -> "Libra Esterlina"
+        "ARS" -> "Peso Argentino"
+        "CAD" -> "Dólar Canadense"
+        "AUD" -> "Dólar Australiano"
+        "JPY" -> "Iene Japonês"
+        "CNY" -> "Yuan Chinês"
         else -> currencyTerm
     }
 
