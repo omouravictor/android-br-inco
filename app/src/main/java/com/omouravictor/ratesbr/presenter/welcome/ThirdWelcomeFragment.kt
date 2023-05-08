@@ -8,7 +8,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.omouravictor.ratesbr.data.Datastore.dataStore
+import com.omouravictor.ratesbr.data.DataStore.dataStore
 import com.omouravictor.ratesbr.databinding.FragmentWelcomeThirdBinding
 import kotlinx.coroutines.launch
 

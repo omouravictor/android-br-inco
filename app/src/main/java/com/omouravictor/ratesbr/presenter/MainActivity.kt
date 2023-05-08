@@ -10,7 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.omouravictor.ratesbr.R
-import com.omouravictor.ratesbr.data.Datastore.dataStore
+import com.omouravictor.ratesbr.data.DataStore.dataStore
 import com.omouravictor.ratesbr.databinding.ActivityMainBinding
 import com.omouravictor.ratesbr.presenter.welcome.WelcomeActivity
 import dagger.hilt.android.AndroidEntryPoint
