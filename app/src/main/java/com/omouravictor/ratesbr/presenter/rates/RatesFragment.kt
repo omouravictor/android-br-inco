@@ -1,18 +1,21 @@
 package com.omouravictor.ratesbr.presenter.rates
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -46,14 +49,15 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initMenu(requireContext(), view)
         initRateBottomSheetDialog()
         initRateDetailsDialog()
-        initSwipeRefreshLayout()
+        configSwipeRefreshLayout()
 
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiResultStatus.Success -> {
-                    configureRecyclerView(result.data)
+                    configRecyclerView(result.data)
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewRates.isVisible = true
                     binding.includeViewError.root.isVisible = false
@@ -73,6 +77,29 @@ class RatesFragment : Fragment() {
         }
     }
 
+    private fun initMenu(context: Context, view: View) {
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.options_menu, menu)
+                val searchView = menu.findItem(R.id.searchMenu).actionView as SearchView
+
+                searchView.queryHint = context.getString(R.string.search)
+
+                searchView.setOnQueryTextListener(object : OnQueryTextListener {
+                    override fun onQueryTextSubmit(text: String): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextChange(text: String): Boolean {
+                        (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
+                        return true
+                    }
+                })
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
     private fun initRateBottomSheetDialog() {
         rateBottomSheetDialog =
             BottomSheetDialog(requireContext(), R.style.ThemeOverlay_App_BottomSheetDialog)
@@ -87,13 +114,13 @@ class RatesFragment : Fragment() {
         rateDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
-    private fun initSwipeRefreshLayout() {
+    private fun configSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener { ratesViewModel.getRates() }
     }
 
-    private fun configureRecyclerView(ratesList: List<RateUiModel>) {
+    private fun configRecyclerView(ratesList: List<RateUiModel>) {
         binding.recyclerViewRates.apply {
             adapter = RatesAdapter(ratesList) { showRateBottomSheetDialog(it) }
             layoutManager = LinearLayoutManager(context)

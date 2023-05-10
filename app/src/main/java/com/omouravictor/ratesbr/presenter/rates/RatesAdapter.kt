@@ -12,9 +12,11 @@ import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
 import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
 
 class RatesAdapter(
-    private val list: List<RateUiModel>,
+    private val originalList: List<RateUiModel>,
     private val callBack: (RateUiModel) -> Unit
 ) : RecyclerView.Adapter<RatesAdapter.RatesViewHolder>() {
+
+    private var filteredList: List<RateUiModel> = originalList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
@@ -23,11 +25,18 @@ class RatesAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return filteredList.size
     }
 
     override fun onBindViewHolder(holder: RatesViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(filteredList[position])
+    }
+
+    fun filterList(text: String) {
+        filteredList = if (text.isNotEmpty())
+            originalList.filter { it.currencyName.contains(text, true) }
+        else originalList
+        notifyDataSetChanged()
     }
 
     class RatesViewHolder(
