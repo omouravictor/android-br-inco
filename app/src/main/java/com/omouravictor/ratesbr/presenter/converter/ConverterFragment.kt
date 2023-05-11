@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.omouravictor.ratesbr.databinding.FragmentConverterBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
 
 class ConverterFragment : Fragment() {
 

@@ -17,9 +17,9 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.numberFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {

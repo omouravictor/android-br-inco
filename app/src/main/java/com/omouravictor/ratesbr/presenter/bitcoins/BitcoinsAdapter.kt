@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.ItemListBitcoinBinding
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
-import com.omouravictor.ratesbr.util.Formats.getFormattedValueForCurrencyLocale
-import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
+import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
 import java.util.*
 
 class BitcoinsAdapter(

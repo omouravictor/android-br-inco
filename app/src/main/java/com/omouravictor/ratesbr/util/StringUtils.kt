@@ -1,9 +1,8 @@
 package com.omouravictor.ratesbr.util
 
-import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.numberFormat
 
 object StringUtils {
-
     fun getVariationText(variation: Double): String {
         val formattedVariation = numberFormat.format(variation)
         return if (variation > 0.0) "+${formattedVariation}%" else "${formattedVariation}%"

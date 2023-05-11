@@ -24,9 +24,9 @@ import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {

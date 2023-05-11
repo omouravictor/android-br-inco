@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.ItemListRateBinding
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.currencyFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
-import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
-import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
+import com.omouravictor.ratesbr.util.NumberUtils.getRoundedDouble
 
 class RatesAdapter(
     private val originalList: List<RateUiModel>,

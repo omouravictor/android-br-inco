@@ -3,7 +3,7 @@ package com.omouravictor.ratesbr.presenter.converter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.Numbers.getRoundedDouble
+import com.omouravictor.ratesbr.util.NumberUtils.getRoundedDouble
 
 class ConverterViewModel : ViewModel() {
 

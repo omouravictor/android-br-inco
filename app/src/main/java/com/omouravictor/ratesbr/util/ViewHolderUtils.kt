@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
-object Functions {
+object ViewHolderUtils {
     fun setVariationOnBind(variation: Double, textView: TextView, imageView: ImageView) {
         textView.text = getVariationText(variation)
 

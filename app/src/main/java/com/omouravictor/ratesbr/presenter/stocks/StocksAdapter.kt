@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.ratesbr.databinding.ItemListStockBinding
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.numberFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
-import com.omouravictor.ratesbr.util.Functions.setVariationOnBind
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.numberFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
 
 class StocksAdapter(
     private val list: List<StockUiModel>,

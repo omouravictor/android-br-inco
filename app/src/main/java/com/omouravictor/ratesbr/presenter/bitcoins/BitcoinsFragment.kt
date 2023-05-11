@@ -17,9 +17,9 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentBitcoinsBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormats.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormats.timeFormat
-import com.omouravictor.ratesbr.util.Formats.getFormattedValueForCurrencyLocale
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
+import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.*
 
