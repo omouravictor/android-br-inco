@@ -11,11 +11,17 @@ object Functions {
         textView.text = getVariationText(variation)
 
         textView.setTextColor(
-            if (variation >= 0.0) Color.parseColor("#19FF00") else textView.currentTextColor
+            if (variation >= 0.0)
+                Color.parseColor("#19FF00")
+            else
+                Color.parseColor("#FFEB3B")
         )
 
         imageView.setImageResource(
-            if (variation >= 0.0) R.drawable.icon_arrow_up else R.drawable.icon_arrow_down
+            if (variation >= 0.0)
+                R.drawable.icon_arrow_up
+            else
+                R.drawable.icon_arrow_down
         )
     }
 }
