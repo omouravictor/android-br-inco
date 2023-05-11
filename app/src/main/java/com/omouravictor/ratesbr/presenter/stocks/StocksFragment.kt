@@ -41,12 +41,12 @@ class StocksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initStockDetailsDialog()
-        initSwipeRefreshLayout()
+        configSwipeRefreshLayout()
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiResultStatus.Success -> {
-                    configureRecyclerView(result.data)
+                    configRecyclerView(result.data)
                     binding.swipeRefreshLayout.isRefreshing = false
                     binding.recyclerViewStocks.isVisible = true
                     binding.includeViewError.root.isVisible = false
@@ -73,13 +73,13 @@ class StocksFragment : Fragment() {
         stockDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
-    private fun initSwipeRefreshLayout() {
+    private fun configSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener { stockViewModel.getStocks() }
     }
 
-    private fun configureRecyclerView(stockList: List<StockUiModel>) {
+    private fun configRecyclerView(stockList: List<StockUiModel>) {
         binding.recyclerViewStocks.apply {
             adapter = StocksAdapter(stockList) { showStockDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
