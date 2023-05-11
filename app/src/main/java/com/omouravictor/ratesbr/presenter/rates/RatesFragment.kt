@@ -49,7 +49,7 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initMenu(requireContext(), view)
+        initMenu(requireContext())
         initRateBottomSheetDialog()
         initRateDetailsDialog()
         configSwipeRefreshLayout()
@@ -77,7 +77,7 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initMenu(context: Context, view: View) {
+    private fun initMenu(context: Context) {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.options_menu, menu)
