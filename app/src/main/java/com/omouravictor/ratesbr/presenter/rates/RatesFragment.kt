@@ -1,21 +1,18 @@
 package com.omouravictor.ratesbr.presenter.rates
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -27,6 +24,7 @@ import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FragmentUtils.initSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {
@@ -49,7 +47,9 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initMenu(requireContext())
+        initSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+            (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
+        }
         initRateBottomSheetDialog()
         initRateDetailsDialog()
         configSwipeRefreshLayout()
@@ -75,31 +75,6 @@ class RatesFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun initMenu(context: Context) {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.options_menu, menu)
-                val searchView = menu.findItem(R.id.searchMenu).actionView as SearchView
-
-                searchView.queryHint = context.getString(R.string.search)
-                searchView.inputType = android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS
-
-                searchView.setOnQueryTextListener(object : OnQueryTextListener {
-                    override fun onQueryTextSubmit(text: String): Boolean {
-                        return false
-                    }
-
-                    override fun onQueryTextChange(text: String): Boolean {
-                        (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
-                        return true
-                    }
-                })
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun initRateBottomSheetDialog() {
