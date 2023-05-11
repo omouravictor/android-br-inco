@@ -23,8 +23,6 @@ object FragmentUtils {
                 val searchView = menu.findItem(R.id.searchMenu).actionView as SearchView
 
                 searchView.queryHint = fragmentActivity.baseContext.getString(R.string.search)
-                searchView.inputType = android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS
-
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(text: String): Boolean {
                         return false

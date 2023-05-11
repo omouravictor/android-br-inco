@@ -20,6 +20,7 @@ import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.numberFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {
@@ -40,6 +41,7 @@ class StocksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initSearchMenu()
         initStockDetailsDialog()
         configSwipeRefreshLayout()
 
@@ -63,6 +65,12 @@ class StocksFragment : Fragment() {
                     binding.includeViewError.root.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun initSearchMenu() {
+        addSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+            (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList(text)
         }
     }
 

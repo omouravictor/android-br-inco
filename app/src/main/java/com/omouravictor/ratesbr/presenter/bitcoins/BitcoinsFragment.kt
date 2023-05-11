@@ -20,6 +20,8 @@ import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
+import com.omouravictor.ratesbr.util.FragmentUtils
+import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.*
 
@@ -41,6 +43,7 @@ class BitcoinsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initSearchMenu()
         initBitcoinDetailsDialog()
         configSwipeRefreshLayout()
 
@@ -64,6 +67,12 @@ class BitcoinsFragment : Fragment() {
                     binding.includeViewError.root.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun initSearchMenu() {
+        addSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+            (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList(text)
         }
     }
 
