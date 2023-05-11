@@ -17,7 +17,7 @@
         <item name="colorControlNormal">@color/white</item>
         <!-- Window background color -->
         <item name="android:windowBackground">@color/black</item>
-        <!-- EditText hint color -->
+        <!-- TextColorHint hint color -->
         <item name="android:textColorHint">@color/textHintWhite</item>
         <!-- Force dark mode -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
