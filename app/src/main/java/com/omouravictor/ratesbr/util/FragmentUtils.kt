@@ -36,7 +36,7 @@ object FragmentUtils {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        }, viewLifecycleOwner, Lifecycle.State.STARTED)
     }
 
 }
