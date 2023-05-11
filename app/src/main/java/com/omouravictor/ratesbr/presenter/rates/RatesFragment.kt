@@ -84,6 +84,7 @@ class RatesFragment : Fragment() {
                 val searchView = menu.findItem(R.id.searchMenu).actionView as SearchView
 
                 searchView.queryHint = context.getString(R.string.search)
+                searchView.inputType = android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
                 searchView.setOnQueryTextListener(object : OnQueryTextListener {
                     override fun onQueryTextSubmit(text: String): Boolean {
