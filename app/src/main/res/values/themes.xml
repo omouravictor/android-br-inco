@@ -17,6 +17,8 @@
         <item name="colorControlNormal">@color/white</item>
         <!-- Window background color -->
         <item name="android:windowBackground">@color/white</item>
+        <!-- EditText hint color -->
+        <item name="android:textColorHint">@color/textHintWhite</item>
     </style>
 
     <!-- TabLayout style -->

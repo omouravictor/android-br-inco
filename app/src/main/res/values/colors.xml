@@ -9,4 +9,5 @@
     <color name="darkWhite">#DDDDDD</color>
     <color name="fluorescentGreen">#19FF00</color>
     <color name="yellow">#FFEB3B</color>
+    <color name="textHintWhite">#80FFFFFF</color>
 </resources>
