@@ -24,7 +24,7 @@ import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
 import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
-import com.omouravictor.ratesbr.util.FragmentUtils.initSearchMenu
+import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {
@@ -47,9 +47,7 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
-        }
+        initSearchMenu()
         initRateBottomSheetDialog()
         initRateDetailsDialog()
         configSwipeRefreshLayout()
@@ -74,6 +72,12 @@ class RatesFragment : Fragment() {
                     binding.includeViewError.root.isVisible = false
                 }
             }
+        }
+    }
+
+    private fun initSearchMenu() {
+        addSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+            (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
         }
     }
 

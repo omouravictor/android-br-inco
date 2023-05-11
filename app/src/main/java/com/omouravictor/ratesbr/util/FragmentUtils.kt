@@ -12,7 +12,7 @@ import com.omouravictor.ratesbr.R
 
 object FragmentUtils {
 
-    fun initSearchMenu(
+    fun addSearchMenu(
         fragmentActivity: FragmentActivity,
         viewLifecycleOwner: LifecycleOwner,
         callBack: (String) -> Unit
