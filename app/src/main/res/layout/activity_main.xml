@@ -13,7 +13,7 @@
         android:background="@color/green"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.App"
+        android:theme="@style/Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -89,6 +89,7 @@ class RatesFragment : Fragment() {
                     override fun onQueryTextSubmit(text: String): Boolean {
                         return false
                     }
+
                     override fun onQueryTextChange(text: String): Boolean {
                         (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
                         return true
@@ -102,7 +103,7 @@ class RatesFragment : Fragment() {
 
     private fun initRateBottomSheetDialog() {
         rateBottomSheetDialog =
-            BottomSheetDialog(requireContext(), R.style.ThemeOverlay_App_BottomSheetDialog)
+            BottomSheetDialog(requireContext(), R.style.OverlayBottomSheetDialog)
         rateBottomSheetDialog.setContentView(R.layout.bottom_sheet_rate_dialog)
         rateBottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
