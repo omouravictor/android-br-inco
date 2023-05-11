@@ -16,7 +16,7 @@
         <!-- Window background color -->
         <item name="android:windowBackground">@color/white</item>
         <!-- TextColorHint hint color -->
-        <item name="android:textColorHint">@color/textHintWhite</item>
+        <item name="android:textColorHint">@color/transparentWhite</item>
     </style>
 
     <!-- TabLayout style -->
@@ -40,6 +40,10 @@
         <item name="colorControlNormal">@color/white</item>
         <!-- SearchView text color -->
         <item name="android:editTextColor">@color/white</item>
+        <!-- SearchView selection stroke color -->
+        <item name="colorControlActivated">@color/transparentWhite</item>
+        <!-- SearchView selected text background color -->
+        <item name="colorSecondary">@color/darkGreen</item>
     </style>
 
 </resources>

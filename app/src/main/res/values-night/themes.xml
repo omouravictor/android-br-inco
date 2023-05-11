@@ -16,7 +16,7 @@
         <!-- Window background color -->
         <item name="android:windowBackground">@color/black</item>
         <!-- TextColorHint hint color -->
-        <item name="android:textColorHint">@color/textHintWhite</item>
+        <item name="android:textColorHint">@color/transparentWhite</item>
         <!-- Force dark mode -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
