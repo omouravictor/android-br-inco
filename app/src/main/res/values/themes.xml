@@ -38,6 +38,7 @@
     <style name="Toolbar">
         <!-- Toolbar icon color -->
         <item name="colorControlNormal">@color/white</item>
+        <!-- SearchView text color -->
         <item name="android:editTextColor">@color/white</item>
     </style>
 
