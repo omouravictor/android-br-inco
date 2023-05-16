@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presenter.welcome.WelcomeActivity">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutWelcome"
-        style="@style/TabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@drawable/icon_tab_dot"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerWelcome"
         android:layout_width="match_parent"
@@ -39,6 +26,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/tabLayoutWelcome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tabLayoutWelcome" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutWelcome"
+        style="@style/TabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabBackground="@drawable/icon_tab_dot"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp" />
 
     <TextView
         android:id="@+id/textViewNext"
