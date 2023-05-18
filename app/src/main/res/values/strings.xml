@@ -32,4 +32,8 @@
     <string name="popup_date_time">%1$s às %2$s</string>
     <string name="popup_currency_buy">%1$s - %2$s</string>
     <string name="details">Detalhes</string>
+    <string name="buy_coin">Moeda de compra</string>
+    <string name="unitary_value">Valor unitário</string>
+    <string name="coin_term">Sigla da moeda</string>
+    <string name="unitary_value_in_reais">Valor unitário (em reais)</string>
 </resources>
