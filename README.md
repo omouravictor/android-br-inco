@@ -30,22 +30,27 @@ Some application screens:
 
 In this application you can:
 
-  - Convert the main currencies to the Real!
-  - Follow the index of stock exchanges around the world!
-  - Follow the bitcoin price on the main brokerages!
-  - Using the app offline, with the last data received!
+- Convert the main currencies to the Real!
+- Follow the index of stock exchanges around the world!
+- Follow the bitcoin price on the main brokerages!
+- Using the app offline, with the last data received!
 
 ## Why?
 
-This project is part of my personal portfolio, so, I'll be happy if you could provide me any feedback about the project, code, structure or anything that you can report that could make me a better developer!
+This project is part of my personal portfolio, so, I'll be happy if you could provide me any
+feedback about the project, code, structure or anything that you can report that could make me a
+better developer!
 
 ## How to run?
 
 - Open the project with Android Studio.
-- Go to https://console.hgbrasil.com/keys, create an account and generate a free key for HG Finance API.
+- Go to https://console.hgbrasil.com/keys, create an account and generate a free key for HG Finance
+  API.
 - Access project root folder (rates-br) and create a file with name "api.properties".
 - Add the line below on "api.properties" file including your HG Finance API key.
+
 ```
 API_KEY_HG_FINANCE="YOUR-API-KEY"
 ```
+
 - That's all :)

@@ -35,10 +35,10 @@
                 android:id="@+id/buttonInit"
                 android:layout_width="200dp"
                 android:layout_height="60dp"
-                android:textSize="16sp"
-                android:text="@string/start"
-                android:textStyle="bold"
                 android:letterSpacing="0.15"
+                android:text="@string/start"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textViewThirdWelcomeOne"
                 app:layout_constraintStart_toStartOf="@+id/textViewThirdWelcomeOne" />

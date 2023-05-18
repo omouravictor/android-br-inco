@@ -17,9 +17,9 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.numberFormat
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brNumberFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
@@ -110,12 +110,12 @@ class StocksFragment : Fragment() {
                 stockUiModel.cityLocation,
                 stockUiModel.countryLocation
             )
-            pointsTextView.text = numberFormat.format(stockUiModel.points)
+            pointsTextView.text = brNumberFormat.format(stockUiModel.points)
             variationTextView.text = getVariationText(stockUiModel.variation)
             dateTimeTextView.text = getString(
                 R.string.popup_date_time,
-                dateFormat.format(stockUiModel.stockDate),
-                timeFormat.format(stockUiModel.stockDate)
+                brDateFormat.format(stockUiModel.stockDate),
+                brTimeFormat.format(stockUiModel.stockDate)
             )
 
             show()

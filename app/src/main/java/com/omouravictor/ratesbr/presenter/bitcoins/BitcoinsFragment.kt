@@ -17,10 +17,9 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentBitcoinsBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
-import com.omouravictor.ratesbr.util.FragmentUtils
 import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.*
@@ -118,8 +117,8 @@ class BitcoinsFragment : Fragment() {
             variationTextView.text = getVariationText(bitcoin.variation)
             dateTimeTextView.text = getString(
                 R.string.popup_date_time,
-                dateFormat.format(bitcoin.bitcoinDate),
-                timeFormat.format(bitcoin.bitcoinDate)
+                brDateFormat.format(bitcoin.bitcoinDate),
+                brTimeFormat.format(bitcoin.bitcoinDate)
             )
 
             show()

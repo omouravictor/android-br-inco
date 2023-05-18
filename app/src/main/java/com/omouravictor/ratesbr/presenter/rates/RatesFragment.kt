@@ -21,9 +21,9 @@ import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.currencyFormat
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.dateFormat
-import com.omouravictor.ratesbr.util.BrazilianFormatUtils.timeFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brCurrencyFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
+import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
@@ -149,12 +149,12 @@ class RatesFragment : Fragment() {
 
             nameTextView.text = rate.currencyName
             currencyTermTextView.text = rate.currencyTerm
-            unitaryValueTextView.text = currencyFormat.format(rate.unitaryRate)
+            unitaryValueTextView.text = brCurrencyFormat.format(rate.unitaryRate)
             variationTextView.text = getVariationText(rate.variation)
             dateTimeTextView.text = getString(
                 R.string.popup_date_time,
-                dateFormat.format(rate.rateDate),
-                timeFormat.format(rate.rateDate)
+                brDateFormat.format(rate.rateDate),
+                brTimeFormat.format(rate.rateDate)
             )
 
             show()
