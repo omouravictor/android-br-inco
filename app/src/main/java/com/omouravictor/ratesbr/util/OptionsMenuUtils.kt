@@ -10,17 +10,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.omouravictor.ratesbr.R
 
-object FragmentUtils {
+object OptionsMenuUtils {
 
-    fun addSearchMenu(
+    lateinit var searchMenuItem: MenuItem
+
+    fun addOptionsMenu(
         fragmentActivity: FragmentActivity,
         viewLifecycleOwner: LifecycleOwner,
         callBack: (String) -> Unit
     ) {
         fragmentActivity.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.options_menu, menu)
-                val searchView = menu.findItem(R.id.searchMenu).actionView as SearchView
+                menuInflater.inflate(R.menu.menu_options, menu)
+                searchMenuItem = menu.findItem(R.id.searchMenu)
+
+                val searchView = searchMenuItem.actionView as SearchView
 
                 searchView.queryHint = fragmentActivity.baseContext.getString(R.string.search)
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

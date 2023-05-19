@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -20,7 +21,8 @@ import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
-import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
+import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
+import com.omouravictor.ratesbr.util.OptionsMenuUtils.searchMenuItem
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.*
 
@@ -42,7 +44,7 @@ class BitcoinsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSearchMenu()
+        initOptionsMenu()
         initBitcoinDetailsDialog()
         configSwipeRefreshLayout()
 
@@ -69,8 +71,8 @@ class BitcoinsFragment : Fragment() {
         }
     }
 
-    private fun initSearchMenu() {
-        addSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+    private fun initOptionsMenu() {
+        addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList(text)
         }
     }
@@ -85,7 +87,10 @@ class BitcoinsFragment : Fragment() {
     private fun configSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener { bitcoinViewModel.getBitcoins() }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            (searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            bitcoinViewModel.getBitcoins()
+        }
     }
 
     private fun configRecyclerView(bitcoinList: List<BitcoinUiModel>) {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -24,7 +25,8 @@ import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brCurrencyFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.ratesbr.util.FragmentUtils.addSearchMenu
+import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
+import com.omouravictor.ratesbr.util.OptionsMenuUtils.searchMenuItem
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class RatesFragment : Fragment() {
@@ -47,7 +49,7 @@ class RatesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSearchMenu()
+        initOptionsMenu()
         initRateBottomSheetDialog()
         initRateDetailsDialog()
         configSwipeRefreshLayout()
@@ -75,8 +77,8 @@ class RatesFragment : Fragment() {
         }
     }
 
-    private fun initSearchMenu() {
-        addSearchMenu(requireActivity(), viewLifecycleOwner) { text ->
+    private fun initOptionsMenu() {
+        addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
         }
     }
@@ -98,7 +100,10 @@ class RatesFragment : Fragment() {
     private fun configSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener { ratesViewModel.getRates() }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            (searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            ratesViewModel.getRates()
+        }
     }
 
     private fun configRecyclerView(ratesList: List<RateUiModel>) {
