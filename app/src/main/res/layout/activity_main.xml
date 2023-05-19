@@ -29,7 +29,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:navGraph="@navigation/main_nav"
+        app:navGraph="@navigation/nav_main"
         tools:layout="@layout/fragment_rates" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
