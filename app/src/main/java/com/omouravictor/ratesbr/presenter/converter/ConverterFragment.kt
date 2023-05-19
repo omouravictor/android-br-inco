@@ -43,6 +43,7 @@ class ConverterFragment : Fragment() {
 
     private fun initTextInputEditTextValueConverter() {
         binding.textInputEditTextValueConverter.setText("1")
+        binding.textInputEditTextValueConverter.requestFocus()
         binding.textInputEditTextValueConverter.doAfterTextChanged {
             converterViewModel.calculateConversion(it.toString())
         }
