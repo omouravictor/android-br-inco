@@ -13,7 +13,7 @@ import java.util.*
 
 class BitcoinsAdapter(
     private val originalList: List<BitcoinUiModel>,
-    private val callBack: (BitcoinUiModel) -> Unit
+    private val callbackFunction: (BitcoinUiModel) -> Unit
 ) : RecyclerView.Adapter<BitcoinsAdapter.BitcoinViewHolder>() {
 
     private var filteredList: List<BitcoinUiModel> = originalList
@@ -21,7 +21,7 @@ class BitcoinsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
         val binding =
             ItemListBitcoinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BitcoinViewHolder(binding, callBack)
+        return BitcoinViewHolder(binding, callbackFunction)
     }
 
     override fun onBindViewHolder(holder: BitcoinViewHolder, position: Int) {
@@ -41,7 +41,7 @@ class BitcoinsAdapter(
 
     class BitcoinViewHolder(
         private val binding: ItemListBitcoinBinding,
-        private val callBack: (BitcoinUiModel) -> Unit
+        private val callbackFunction: (BitcoinUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(bitcoin: BitcoinUiModel) {
@@ -61,7 +61,7 @@ class BitcoinsAdapter(
             binding.textViewDate.text = brDateFormat.format(bitcoin.bitcoinDate)
             binding.textViewTime.text = brTimeFormat.format(bitcoin.bitcoinDate)
             itemView.setOnClickListener {
-                callBack(bitcoin)
+                callbackFunction(bitcoin)
             }
         }
     }

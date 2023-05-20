@@ -12,7 +12,7 @@ import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
 
 class StocksAdapter(
     private val originalList: List<StockUiModel>,
-    private val callBack: (StockUiModel) -> Unit
+    private val callbackFunction: (StockUiModel) -> Unit
 ) : RecyclerView.Adapter<StocksAdapter.StockViewHolder>() {
 
     private var filteredList: List<StockUiModel> = originalList
@@ -20,7 +20,7 @@ class StocksAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
             ItemListStockBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StockViewHolder(binding, callBack)
+        return StockViewHolder(binding, callbackFunction)
     }
 
     override fun onBindViewHolder(holder: StockViewHolder, position: Int) {
@@ -40,7 +40,7 @@ class StocksAdapter(
 
     class StockViewHolder(
         private val binding: ItemListStockBinding,
-        private val callBack: (StockUiModel) -> Unit
+        private val callbackFunction: (StockUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
@@ -55,7 +55,7 @@ class StocksAdapter(
             binding.textViewDate.text = brDateFormat.format(stock.stockDate)
             binding.textViewTime.text = brTimeFormat.format(stock.stockDate)
             itemView.setOnClickListener {
-                callBack(stock)
+                callbackFunction(stock)
             }
         }
     }

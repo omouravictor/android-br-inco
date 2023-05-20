@@ -13,7 +13,7 @@ import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
 
 class RatesAdapter(
     private val originalList: List<RateUiModel>,
-    private val callBack: (RateUiModel) -> Unit
+    private val callbackFunction: (RateUiModel) -> Unit
 ) : RecyclerView.Adapter<RatesAdapter.RatesViewHolder>() {
 
     private var filteredList: List<RateUiModel> = originalList
@@ -21,7 +21,7 @@ class RatesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesViewHolder {
         val binding =
             ItemListRateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RatesViewHolder(binding, callBack)
+        return RatesViewHolder(binding, callbackFunction)
     }
 
     override fun getItemCount(): Int {
@@ -41,7 +41,7 @@ class RatesAdapter(
 
     class RatesViewHolder(
         private val binding: ItemListRateBinding,
-        private val callBack: (RateUiModel) -> Unit
+        private val callbackFunction: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(rate: RateUiModel) {
@@ -58,7 +58,7 @@ class RatesAdapter(
             binding.textViewDate.text = brDateFormat.format(rate.rateDate)
             binding.textViewTime.text = brTimeFormat.format(rate.rateDate)
             itemView.setOnClickListener {
-                callBack(rate)
+                callbackFunction(rate)
             }
         }
     }

@@ -17,7 +17,7 @@ object OptionsMenuUtils {
     fun addOptionsMenu(
         fragmentActivity: FragmentActivity,
         viewLifecycleOwner: LifecycleOwner,
-        callBack: (String) -> Unit
+        callbackFunction: (String) -> Unit
     ) {
         fragmentActivity.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -33,7 +33,7 @@ object OptionsMenuUtils {
                     }
 
                     override fun onQueryTextChange(text: String): Boolean {
-                        callBack(text)
+                        callbackFunction(text)
                         return true
                     }
                 })
