@@ -1,13 +1,15 @@
 package com.omouravictor.ratesbr.presenter.bitcoins
 
 import android.app.Dialog
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -16,15 +18,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentBitcoinsBinding
+import com.omouravictor.ratesbr.network.ConnectivityObserver
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
 import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
-import com.omouravictor.ratesbr.util.OptionsMenuUtils.searchMenuItem
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
-import java.util.*
+import java.util.Locale
 
 class BitcoinsFragment : Fragment() {
 
@@ -45,30 +47,45 @@ class BitcoinsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initOptionsMenu()
+        initTryAgainButton()
+        initConnectivityManager()
         initBitcoinDetailsDialog()
-        configSwipeRefreshLayout()
 
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiResultStatus.Success -> {
                     configRecyclerView(result.data)
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
                     binding.recyclerViewBitcoins.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
+
                 is UiResultStatus.Error -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
+
                 is UiResultStatus.Loading -> {
-                    binding.swipeRefreshLayout.isRefreshing = true
+                    binding.progressBar.isVisible = true
                     binding.recyclerViewBitcoins.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
             }
         }
+    }
+
+    private fun initConnectivityManager() {
+        val connectivityManager = ContextCompat.getSystemService(
+            requireContext(), ConnectivityManager::class.java
+        )
+        val connectivityObserver = ConnectivityObserver { bitcoinViewModel.getBitcoins() }
+        val networkRequest = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+
+        connectivityManager?.registerNetworkCallback(networkRequest, connectivityObserver)
     }
 
     private fun initOptionsMenu() {
@@ -77,20 +94,17 @@ class BitcoinsFragment : Fragment() {
         }
     }
 
+    private fun initTryAgainButton() {
+        binding.includeViewError.buttonTryAgain.setOnClickListener {
+            bitcoinViewModel.getBitcoins()
+        }
+    }
+
     private fun initBitcoinDetailsDialog() {
         bitcoinDetailsDialog = Dialog(requireContext())
         bitcoinDetailsDialog.setContentView(R.layout.details_bitcoin_dialog)
         bitcoinDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         bitcoinDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-    }
-
-    private fun configSwipeRefreshLayout() {
-        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
-        binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            (searchMenuItem.actionView as SearchView).onActionViewCollapsed()
-            bitcoinViewModel.getBitcoins()
-        }
     }
 
     private fun configRecyclerView(bitcoinList: List<BitcoinUiModel>) {

@@ -1,13 +1,15 @@
 package com.omouravictor.ratesbr.presenter.stocks
 
 import android.app.Dialog
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -16,13 +18,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
+import com.omouravictor.ratesbr.network.ConnectivityObserver
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brNumberFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
-import com.omouravictor.ratesbr.util.OptionsMenuUtils.searchMenuItem
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {
@@ -44,30 +46,45 @@ class StocksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initOptionsMenu()
+        initTryAgainButton()
+        initConnectivityManager()
         initStockDetailsDialog()
-        configSwipeRefreshLayout()
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiResultStatus.Success -> {
                     configRecyclerView(result.data)
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = true
                     binding.includeViewError.root.isVisible = false
                 }
+
                 is UiResultStatus.Error -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = true
                     binding.includeViewError.textViewErrorMessage.text = result.e.message
                 }
+
                 is UiResultStatus.Loading -> {
-                    binding.swipeRefreshLayout.isRefreshing = true
+                    binding.progressBar.isVisible = true
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = false
                 }
             }
         }
+    }
+
+    private fun initConnectivityManager() {
+        val connectivityManager = ContextCompat.getSystemService(
+            requireContext(), ConnectivityManager::class.java
+        )
+        val connectivityObserver = ConnectivityObserver { stockViewModel.getStocks() }
+        val networkRequest = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+
+        connectivityManager?.registerNetworkCallback(networkRequest, connectivityObserver)
     }
 
     private fun initOptionsMenu() {
@@ -76,20 +93,17 @@ class StocksFragment : Fragment() {
         }
     }
 
+    private fun initTryAgainButton() {
+        binding.includeViewError.buttonTryAgain.setOnClickListener {
+            stockViewModel.getStocks()
+        }
+    }
+
     private fun initStockDetailsDialog() {
         stockDetailsDialog = Dialog(requireContext())
         stockDetailsDialog.setContentView(R.layout.details_stock_dialog)
         stockDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         stockDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
-    }
-
-    private fun configSwipeRefreshLayout() {
-        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
-        binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            (searchMenuItem.actionView as SearchView).onActionViewCollapsed()
-            stockViewModel.getStocks()
-        }
     }
 
     private fun configRecyclerView(stockList: List<StockUiModel>) {
