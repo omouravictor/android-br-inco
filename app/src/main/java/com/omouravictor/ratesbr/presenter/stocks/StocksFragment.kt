@@ -1,9 +1,6 @@
 package com.omouravictor.ratesbr.presenter.stocks
 
 import android.app.Dialog
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +8,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
-import com.omouravictor.ratesbr.network.ConnectivityObserver
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
@@ -47,7 +42,6 @@ class StocksFragment : Fragment() {
 
         initOptionsMenu()
         initTryAgainButton()
-        initConnectivityManager()
         initStockDetailsDialog()
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
@@ -73,18 +67,6 @@ class StocksFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun initConnectivityManager() {
-        val connectivityManager = ContextCompat.getSystemService(
-            requireContext(), ConnectivityManager::class.java
-        )
-        val connectivityObserver = ConnectivityObserver { stockViewModel.getStocks() }
-        val networkRequest = NetworkRequest.Builder()
-            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            .build()
-
-        connectivityManager?.registerNetworkCallback(networkRequest, connectivityObserver)
     }
 
     private fun initOptionsMenu() {
