@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">Rates BR</h1>
-<p align="center">A financial app for Brazil.</p>
+<p align="center">A financial application for the Brazilian public.</p>
 
 ## Preview
 
