@@ -9,7 +9,7 @@
 
 Some application screens:
 
-![app-screens](https://user-images.githubusercontent.com/64164023/227753715-065e3936-c801-435a-af29-3cc93383ee6e.png)
+![app-screens](https://github.com/omouravictor/rates-br/assets/64164023/d1e22fd0-b524-477f-9622-68b6d03b70b5)
 
 ## Architecture
 
