@@ -17,14 +17,14 @@ Some application screens:
 
 ## Techs used
 
-- [Room](https://developer.android.com/training/data-storage/room)
-- [Retrofit2](https://square.github.io/retrofit/)
-- [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)
-- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
-- [OkHttp](https://square.github.io/okhttp/)
-- [Swiperefreshlayout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
 - [Navigation](https://developer.android.com/jetpack/androidx/releases/navigation)
+- [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- [OkHttp](https://square.github.io/okhttp/)
+- [Retrofit2](https://square.github.io/retrofit/)
+- [Room](https://developer.android.com/training/data-storage/room)
+- [Swiperefreshlayout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+- [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)
 
 ## About this project
 
