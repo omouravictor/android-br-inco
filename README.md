@@ -25,6 +25,7 @@ Some application screens:
 - [Room](https://developer.android.com/training/data-storage/room)
 - [Swiperefreshlayout](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
 - [DataStore](https://developer.android.com/jetpack/androidx/releases/datastore)
+- [Mockito](https://site.mockito.org/)
 
 ## About this project
 
