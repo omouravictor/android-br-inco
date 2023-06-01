@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RateDao {
     @Query("SELECT * FROM rate_table")
-    fun getAllRates(): Flow<List<RateEntity>>
+    fun getAllRates(): List<RateEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRates(listRateEntity: List<RateEntity>)

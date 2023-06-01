@@ -19,7 +19,7 @@ import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
-import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
+import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 import java.util.Locale
 
@@ -42,7 +42,6 @@ class BitcoinsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initOptionsMenu()
-        initTryAgainButton()
         initBitcoinDetailsDialog()
 
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
@@ -73,12 +72,6 @@ class BitcoinsFragment : Fragment() {
     private fun initOptionsMenu() {
         addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList(text)
-        }
-    }
-
-    private fun initTryAgainButton() {
-        binding.includeViewError.buttonTryAgain.setOnClickListener {
-            bitcoinViewModel.getBitcoins()
         }
     }
 

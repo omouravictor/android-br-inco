@@ -9,13 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Date
 
 class RatesRepository(
     private val rateDao: RateDao,
     private val apiService: ApiService
 ) {
-    fun getLocalRates(): Flow<List<RateEntity>> = rateDao.getAllRates()
+    fun getLocalRates(): List<RateEntity> = rateDao.getAllRates()
 
     suspend fun insertRates(rateEntityList: List<RateEntity>) {
         rateDao.insertRates(rateEntityList)

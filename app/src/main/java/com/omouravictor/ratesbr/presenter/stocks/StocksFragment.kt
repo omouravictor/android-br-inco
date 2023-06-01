@@ -19,7 +19,7 @@ import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brNumberFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.ratesbr.util.OptionsMenuUtils.addOptionsMenu
+import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {
@@ -41,7 +41,6 @@ class StocksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initOptionsMenu()
-        initTryAgainButton()
         initStockDetailsDialog()
 
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
@@ -72,12 +71,6 @@ class StocksFragment : Fragment() {
     private fun initOptionsMenu() {
         addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList(text)
-        }
-    }
-
-    private fun initTryAgainButton() {
-        binding.includeViewError.buttonTryAgain.setOnClickListener {
-            stockViewModel.getStocks()
         }
     }
 

@@ -17,11 +17,17 @@
         android:textSize="16sp"
         tools:text="Falha ao buscar os dados na internet :(" />
 
-    <Button
-        android:id="@+id/buttonTryAgain"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/try_again"
-        android:textStyle="bold" />
+        android:layout_marginBottom="30dp"
+        android:text="@string/swipe_down_to_try_again"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_swipe_down" />
 
 </LinearLayout>

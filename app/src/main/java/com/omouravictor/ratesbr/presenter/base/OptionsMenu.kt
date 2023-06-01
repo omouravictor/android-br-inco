@@ -1,4 +1,4 @@
-package com.omouravictor.ratesbr.util
+package com.omouravictor.ratesbr.presenter.base
 
 import android.view.Menu
 import android.view.MenuInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.omouravictor.ratesbr.R
 
-object OptionsMenuUtils {
+object OptionsMenu {
 
     lateinit var searchMenuItem: MenuItem
 
