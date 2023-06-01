@@ -114,7 +114,7 @@ class RatesViewModelTest {
 
             // Then
             verify(ratesObserver).onChanged(
-                UiResultStatus.Error(mockErrorResult.e)
+                UiResultStatus.Error(mockErrorResult.message)
             )
         }
     }

@@ -55,30 +55,38 @@ class RatesFragment : Fragment() {
         initRateDetailsDialog()
         initSwipeRefreshLayout()
 
+        observeRatesResult()
+    }
+
+    private fun observeRatesResult() {
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is UiResultStatus.Success -> {
-                    configRecyclerView(result.data.first)
-                    configSwipeRefreshLayout(result.data.second)
-                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding.recyclerViewRates.isVisible = true
-                    binding.includeViewError.root.isVisible = false
-                }
-
-                is UiResultStatus.Error -> {
-                    binding.swipeRefreshLayout.isRefreshing = false
-                    binding.recyclerViewRates.isVisible = false
-                    binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = result.e.message
-                }
-
-                is UiResultStatus.Loading -> {
-                    binding.swipeRefreshLayout.isRefreshing = true
-                    binding.recyclerViewRates.isVisible = false
-                    binding.includeViewError.root.isVisible = false
-                }
+                is UiResultStatus.Success -> handleUiSuccessResult(result.data)
+                is UiResultStatus.Error -> handleUiErrorResult(result.message)
+                is UiResultStatus.Loading -> handleUiLoadingResult()
             }
         }
+    }
+
+    private fun handleUiSuccessResult(data: Pair<List<RateUiModel>, DataSource>) {
+        configRecyclerView(data.first)
+        configSwipeRefreshLayout(data.second)
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewRates.isVisible = true
+        binding.includeViewError.root.isVisible = false
+    }
+
+    private fun handleUiErrorResult(message: String) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewRates.isVisible = false
+        binding.includeViewError.root.isVisible = true
+        binding.includeViewError.textViewErrorMessage.text = message
+    }
+
+    private fun handleUiLoadingResult() {
+        binding.swipeRefreshLayout.isRefreshing = true
+        binding.recyclerViewRates.isVisible = false
+        binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {

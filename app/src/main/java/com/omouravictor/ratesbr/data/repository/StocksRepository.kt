@@ -30,7 +30,7 @@ class StocksRepository(
                         .apply { stockDate = Date() }
                     emit(NetworkResultStatus.Success(request))
                 } catch (e: Exception) {
-                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :(")))
+                    emit(NetworkResultStatus.Error("Falha ao buscar os dados na internet :("))
                 }
             }
         }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResponse
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toListRateEntity
 import com.omouravictor.ratesbr.data.repository.RatesRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
@@ -28,31 +29,35 @@ class RatesViewModel @ViewModelInject constructor(
 
     fun getRates() {
         viewModelScope.launch(Dispatchers.IO) {
-            ratesRepository.getRemoteRates(currencies).collect { networkResultStatus ->
-                when (networkResultStatus) {
-                    is NetworkResultStatus.Success -> {
-                        val remoteRatesList = networkResultStatus.data.toListRateEntity()
-                        val ratesUiModelList = toRatesUiModelList(remoteRatesList)
-                        ratesRepository.insertRates(remoteRatesList)
-                        postUiResultStatusSuccess(ratesUiModelList, DataSource.NETWORK)
-                    }
-
-                    is NetworkResultStatus.Error -> {
-                        val localRatesList = ratesRepository.getLocalRates()
-                        if (localRatesList.isNotEmpty()) {
-                            val ratesUiModelList = toRatesUiModelList(localRatesList)
-                            postUiResultStatusSuccess(ratesUiModelList, DataSource.LOCAL)
-                        } else {
-                            ratesResult.postValue(UiResultStatus.Error(networkResultStatus.e))
-                        }
-                    }
-
-                    is NetworkResultStatus.Loading -> {
-                        ratesResult.postValue(UiResultStatus.Loading)
-                    }
+            ratesRepository.getRemoteRates(currencies).collect { result ->
+                when (result) {
+                    is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
+                    is NetworkResultStatus.Error -> handleNetworkErrorResult(result.message)
+                    is NetworkResultStatus.Loading -> handleNetworkLoadingResult()
                 }
             }
         }
+    }
+
+    private suspend fun handleNetworkSuccessResult(apiRatesResponse: ApiRatesResponse) {
+        val remoteRatesList = apiRatesResponse.toListRateEntity()
+        val ratesUiModelList = toRatesUiModelList(remoteRatesList)
+        ratesRepository.insertRates(remoteRatesList)
+        postUiResultStatusSuccess(ratesUiModelList, DataSource.NETWORK)
+    }
+
+    private fun handleNetworkErrorResult(message: String) {
+        val localRatesList = ratesRepository.getLocalRates()
+        if (localRatesList.isNotEmpty()) {
+            val ratesUiModelList = toRatesUiModelList(localRatesList)
+            postUiResultStatusSuccess(ratesUiModelList, DataSource.LOCAL)
+        } else {
+            ratesResult.postValue(UiResultStatus.Error(message))
+        }
+    }
+
+    private fun handleNetworkLoadingResult() {
+        ratesResult.postValue(UiResultStatus.Loading)
     }
 
     private fun toRatesUiModelList(rateEntityList: List<RateEntity>): List<RateUiModel> {

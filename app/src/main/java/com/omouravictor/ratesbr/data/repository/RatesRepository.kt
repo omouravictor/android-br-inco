@@ -30,7 +30,7 @@ class RatesRepository(
                         .apply { rateDate = Date() }
                     emit(NetworkResultStatus.Success(networkRatesResponse))
                 } catch (e: Exception) {
-                    emit(NetworkResultStatus.Error(Exception("Falha ao buscar os dados na internet :(")))
+                    emit(NetworkResultStatus.Error("Falha ao buscar os dados na internet :("))
                 }
             }
         }

@@ -56,7 +56,7 @@ class StocksFragment : Fragment() {
                     binding.progressBar.isVisible = false
                     binding.recyclerViewStocks.isVisible = false
                     binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = result.e.message
+                    binding.includeViewError.textViewErrorMessage.text = result.message
                 }
 
                 is UiResultStatus.Loading -> {

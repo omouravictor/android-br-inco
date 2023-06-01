@@ -37,7 +37,7 @@ class StocksViewModel @ViewModelInject constructor(
                             if (localStocks.isNotEmpty())
                                 stocksResult.postValue(UiResultStatus.Success(localStocks.map { it.toStockUiModel() }))
                             else
-                                stocksResult.postValue(UiResultStatus.Error(networkResultStatus.e))
+                                stocksResult.postValue(UiResultStatus.Error(networkResultStatus.message))
                         }
                     }
 

@@ -37,7 +37,7 @@ class BitcoinsViewModel @ViewModelInject constructor(
                             if (localBitcoins.isNotEmpty())
                                 bitcoinsResult.postValue(UiResultStatus.Success(localBitcoins.map { it.toBitcoinUiModel() }))
                             else
-                                bitcoinsResult.postValue(UiResultStatus.Error(networkResultStatus.e))
+                                bitcoinsResult.postValue(UiResultStatus.Error(networkResultStatus.message))
                         }
                     }
 
