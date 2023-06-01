@@ -4,6 +4,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toListRateEntity
@@ -31,7 +32,7 @@ class RatesViewModel @ViewModelInject constructor(
                 when (networkResultStatus) {
                     is NetworkResultStatus.Success -> {
                         val remoteRatesList = networkResultStatus.data.toListRateEntity()
-                        val ratesUiModelList = remoteRatesList.map { it.toRateUiModel() }
+                        val ratesUiModelList = toRatesUiModelList(remoteRatesList)
                         ratesRepository.insertRates(remoteRatesList)
                         postUiResultStatusSuccess(ratesUiModelList, DataSource.NETWORK)
                     }
@@ -39,7 +40,7 @@ class RatesViewModel @ViewModelInject constructor(
                     is NetworkResultStatus.Error -> {
                         val localRatesList = ratesRepository.getLocalRates()
                         if (localRatesList.isNotEmpty()) {
-                            val ratesUiModelList = localRatesList.map { it.toRateUiModel() }
+                            val ratesUiModelList = toRatesUiModelList(localRatesList)
                             postUiResultStatusSuccess(ratesUiModelList, DataSource.LOCAL)
                         } else {
                             ratesResult.postValue(UiResultStatus.Error(networkResultStatus.e))
@@ -52,6 +53,10 @@ class RatesViewModel @ViewModelInject constructor(
                 }
             }
         }
+    }
+
+    private fun toRatesUiModelList(rateEntityList: List<RateEntity>): List<RateUiModel> {
+        return rateEntityList.map { it.toRateUiModel() }
     }
 
     private fun postUiResultStatusSuccess(
