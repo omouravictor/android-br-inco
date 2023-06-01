@@ -2,7 +2,7 @@ package com.omouravictor.ratesbr.util
 
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 object FormatUtils {
     object BrazilianFormats {

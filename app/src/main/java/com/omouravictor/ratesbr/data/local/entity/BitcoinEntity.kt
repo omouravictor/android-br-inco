@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.StringUtils.getCurrencyNameInPortuguese
-import java.util.*
+import java.util.Date
 
 @Entity(tableName = "bitcoin_table")
 data class BitcoinEntity(

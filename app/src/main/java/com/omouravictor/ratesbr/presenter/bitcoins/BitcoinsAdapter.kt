@@ -9,7 +9,7 @@ import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.ratesbr.util.FormatUtils.getFormattedValueForCurrencyLocale
 import com.omouravictor.ratesbr.util.ViewHolderUtils.setVariationOnBind
-import java.util.*
+import java.util.Locale
 
 class BitcoinsAdapter(
     private val originalList: List<BitcoinUiModel>,

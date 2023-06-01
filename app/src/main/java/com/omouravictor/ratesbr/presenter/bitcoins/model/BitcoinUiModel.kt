@@ -1,6 +1,6 @@
 package com.omouravictor.ratesbr.presenter.bitcoins.model
 
-import java.util.*
+import java.util.Date
 
 data class BitcoinUiModel(
     val name: String,

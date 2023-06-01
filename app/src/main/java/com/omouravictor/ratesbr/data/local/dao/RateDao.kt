@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.omouravictor.ratesbr.data.local.entity.RateEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RateDao {

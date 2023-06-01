@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.StringUtils.getCurrencyNameInPortuguese
-import java.util.*
+import java.util.Date
 
 @Entity(tableName = "rate_table")
 data class RateEntity(

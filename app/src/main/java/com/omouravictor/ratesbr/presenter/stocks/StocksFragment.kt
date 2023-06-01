@@ -14,12 +14,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
+import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brNumberFormat
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.util.StringUtils.getVariationText
 
 class StocksFragment : Fragment() {

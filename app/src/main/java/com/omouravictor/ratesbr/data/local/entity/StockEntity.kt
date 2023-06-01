@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.StringUtils.getCityInPortuguese
 import com.omouravictor.ratesbr.util.StringUtils.getCountryInPortuguese
-import java.util.*
+import java.util.Date
 
 @Entity(tableName = "stock_table")
 data class StockEntity(

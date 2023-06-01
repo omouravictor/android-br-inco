@@ -1,6 +1,6 @@
 package com.omouravictor.ratesbr.presenter.rates.model
 
-import java.util.*
+import java.util.Date
 
 data class RateUiModel(
     val currencyName: String,

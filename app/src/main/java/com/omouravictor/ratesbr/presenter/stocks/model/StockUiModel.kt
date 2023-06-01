@@ -1,6 +1,6 @@
 package com.omouravictor.ratesbr.presenter.stocks.model
 
-import java.util.*
+import java.util.Date
 
 data class StockUiModel(
     val name: String,
