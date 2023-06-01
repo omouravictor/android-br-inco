@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StockDao {
     @Query("SELECT * FROM stock_table")
-    fun getAllStocks(): Flow<List<StockEntity>>
+    fun getAllStocks(): List<StockEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStocks(listStockEntity: List<StockEntity>)

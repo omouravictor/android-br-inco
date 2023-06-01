@@ -15,7 +15,7 @@ class BitcoinsRepository(
     private val bitcoinDao: BitcoinDao,
     private val apiService: ApiService
 ) {
-    fun getLocalBitcoins(): Flow<List<BitcoinEntity>> = bitcoinDao.getAllBitcoins()
+    fun getLocalBitcoins(): List<BitcoinEntity> = bitcoinDao.getAllBitcoins()
 
     suspend fun insertBitcoins(bitcoinEntityList: List<BitcoinEntity>) {
         bitcoinDao.insertBitcoins(bitcoinEntityList)

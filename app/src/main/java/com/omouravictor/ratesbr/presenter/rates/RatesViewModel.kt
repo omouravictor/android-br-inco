@@ -21,7 +21,7 @@ class RatesViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     val ratesResult = MutableLiveData<UiResultStatus<Pair<List<RateUiModel>, DataSource>>>()
-    private val currencies = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
+    private val apiFields = "USD,EUR,JPY,GBP,CAD,AUD,ARS,CNY"
 
     init {
         getRates()
@@ -29,7 +29,7 @@ class RatesViewModel @ViewModelInject constructor(
 
     fun getRates() {
         viewModelScope.launch(Dispatchers.IO) {
-            ratesRepository.getRemoteRates(currencies).collect { result ->
+            ratesRepository.getRemoteRates(apiFields).collect { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
                     is NetworkResultStatus.Error -> handleNetworkErrorResult(result.message)

@@ -15,7 +15,7 @@ class StocksRepository(
     private val stockDao: StockDao,
     private val apiService: ApiService
 ) {
-    fun getLocalStocks(): Flow<List<StockEntity>> = stockDao.getAllStocks()
+    fun getLocalStocks(): List<StockEntity> = stockDao.getAllStocks()
 
     suspend fun insertStocks(stockEntityList: List<StockEntity>) {
         stockDao.insertStocks(stockEntityList)

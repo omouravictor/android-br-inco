@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentBitcoinsBinding
+import com.omouravictor.ratesbr.presenter.base.DataSource
+import com.omouravictor.ratesbr.presenter.base.OptionsMenu
 import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
@@ -43,30 +47,40 @@ class BitcoinsFragment : Fragment() {
 
         initOptionsMenu()
         initBitcoinDetailsDialog()
+        initSwipeRefreshLayout()
 
+        observeStocksResult()
+    }
+
+    private fun observeStocksResult() {
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is UiResultStatus.Success -> {
-                    configRecyclerView(result.data)
-                    binding.progressBar.isVisible = false
-                    binding.recyclerViewBitcoins.isVisible = true
-                    binding.includeViewError.root.isVisible = false
-                }
-
-                is UiResultStatus.Error -> {
-                    binding.progressBar.isVisible = false
-                    binding.recyclerViewBitcoins.isVisible = false
-                    binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = result.message
-                }
-
-                is UiResultStatus.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.recyclerViewBitcoins.isVisible = false
-                    binding.includeViewError.root.isVisible = false
-                }
+                is UiResultStatus.Success -> handleUiSuccessResult(result.data)
+                is UiResultStatus.Error -> handleUiErrorResult(result.message)
+                is UiResultStatus.Loading -> handleUiLoadingResult()
             }
         }
+    }
+
+    private fun handleUiSuccessResult(data: Pair<List<BitcoinUiModel>, DataSource>) {
+        configRecyclerView(data.first)
+        configSwipeRefreshLayout(data.second)
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewBitcoins.isVisible = true
+        binding.includeViewError.root.isVisible = false
+    }
+
+    private fun handleUiErrorResult(message: String) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewBitcoins.isVisible = false
+        binding.includeViewError.root.isVisible = true
+        binding.includeViewError.textViewErrorMessage.text = message
+    }
+
+    private fun handleUiLoadingResult() {
+        binding.swipeRefreshLayout.isRefreshing = true
+        binding.recyclerViewBitcoins.isVisible = false
+        binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {
@@ -82,11 +96,24 @@ class BitcoinsFragment : Fragment() {
         bitcoinDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
+    private fun initSwipeRefreshLayout() {
+        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
+        binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            (OptionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            bitcoinViewModel.getBitcoins()
+        }
+    }
+
     private fun configRecyclerView(bitcoinList: List<BitcoinUiModel>) {
         binding.recyclerViewBitcoins.apply {
             adapter = BitcoinsAdapter(bitcoinList) { showBitcoinDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun configSwipeRefreshLayout(dataSource: DataSource) {
+        binding.swipeRefreshLayout.isEnabled = dataSource == DataSource.LOCAL
     }
 
     private fun showBitcoinDetailsDialog(bitcoin: BitcoinUiModel) {

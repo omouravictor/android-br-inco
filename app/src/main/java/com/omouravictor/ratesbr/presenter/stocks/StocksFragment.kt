@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
+import com.omouravictor.ratesbr.presenter.base.DataSource
+import com.omouravictor.ratesbr.presenter.base.OptionsMenu
 import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
@@ -42,30 +46,40 @@ class StocksFragment : Fragment() {
 
         initOptionsMenu()
         initStockDetailsDialog()
+        initSwipeRefreshLayout()
 
+        observeStocksResult()
+    }
+
+    private fun observeStocksResult() {
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is UiResultStatus.Success -> {
-                    configRecyclerView(result.data)
-                    binding.progressBar.isVisible = false
-                    binding.recyclerViewStocks.isVisible = true
-                    binding.includeViewError.root.isVisible = false
-                }
-
-                is UiResultStatus.Error -> {
-                    binding.progressBar.isVisible = false
-                    binding.recyclerViewStocks.isVisible = false
-                    binding.includeViewError.root.isVisible = true
-                    binding.includeViewError.textViewErrorMessage.text = result.message
-                }
-
-                is UiResultStatus.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.recyclerViewStocks.isVisible = false
-                    binding.includeViewError.root.isVisible = false
-                }
+                is UiResultStatus.Success -> handleUiSuccessResult(result.data)
+                is UiResultStatus.Error -> handleUiErrorResult(result.message)
+                is UiResultStatus.Loading -> handleUiLoadingResult()
             }
         }
+    }
+
+    private fun handleUiSuccessResult(data: Pair<List<StockUiModel>, DataSource>) {
+        configRecyclerView(data.first)
+        configSwipeRefreshLayout(data.second)
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewStocks.isVisible = true
+        binding.includeViewError.root.isVisible = false
+    }
+
+    private fun handleUiErrorResult(message: String) {
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.recyclerViewStocks.isVisible = false
+        binding.includeViewError.root.isVisible = true
+        binding.includeViewError.textViewErrorMessage.text = message
+    }
+
+    private fun handleUiLoadingResult() {
+        binding.swipeRefreshLayout.isRefreshing = true
+        binding.recyclerViewStocks.isVisible = false
+        binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {
@@ -81,11 +95,24 @@ class StocksFragment : Fragment() {
         stockDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
+    private fun initSwipeRefreshLayout() {
+        val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
+        binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            (OptionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            stockViewModel.getStocks()
+        }
+    }
+
     private fun configRecyclerView(stockList: List<StockUiModel>) {
         binding.recyclerViewStocks.apply {
             adapter = StocksAdapter(stockList) { showStockDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun configSwipeRefreshLayout(dataSource: DataSource) {
+        binding.swipeRefreshLayout.isEnabled = dataSource == DataSource.LOCAL
     }
 
     private fun showStockDetailsDialog(stockUiModel: StockUiModel) {

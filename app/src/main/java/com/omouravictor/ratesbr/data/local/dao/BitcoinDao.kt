@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BitcoinDao {
     @Query("SELECT * FROM bitcoin_table")
-    fun getAllBitcoins(): Flow<List<BitcoinEntity>>
+    fun getAllBitcoins(): List<BitcoinEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBitcoins(listBitcoinEntity: List<BitcoinEntity>)
