@@ -21,7 +21,6 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentRatesBinding
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.OptionsMenu
-import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.converter.ConverterViewModel
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
@@ -35,6 +34,7 @@ class RatesFragment : Fragment() {
     private lateinit var rateBottomSheetDialog: BottomSheetDialog
     private lateinit var rateDetailsDialog: Dialog
     private lateinit var binding: FragmentRatesBinding
+    private val optionsMenu = OptionsMenu()
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
 
@@ -90,7 +90,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun initOptionsMenu() {
-        addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
+        optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
         }
     }
@@ -113,7 +113,7 @@ class RatesFragment : Fragment() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (OptionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             ratesViewModel.getRates()
         }
     }

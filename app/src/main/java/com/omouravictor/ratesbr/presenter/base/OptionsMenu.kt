@@ -10,7 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.omouravictor.ratesbr.R
 
-object OptionsMenu {
+class OptionsMenu {
 
     lateinit var searchMenuItem: MenuItem
 

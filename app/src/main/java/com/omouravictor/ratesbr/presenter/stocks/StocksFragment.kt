@@ -18,7 +18,6 @@ import com.omouravictor.ratesbr.R
 import com.omouravictor.ratesbr.databinding.FragmentStocksBinding
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.OptionsMenu
-import com.omouravictor.ratesbr.presenter.base.OptionsMenu.addOptionsMenu
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.FormatUtils.BrazilianFormats.brDateFormat
@@ -30,6 +29,7 @@ class StocksFragment : Fragment() {
 
     private lateinit var stockDetailsDialog: Dialog
     private lateinit var binding: FragmentStocksBinding
+    private val optionsMenu = OptionsMenu()
     private val stockViewModel: StocksViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -83,7 +83,7 @@ class StocksFragment : Fragment() {
     }
 
     private fun initOptionsMenu() {
-        addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
+        optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
             (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList(text)
         }
     }
@@ -99,7 +99,7 @@ class StocksFragment : Fragment() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (OptionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             stockViewModel.getStocks()
         }
     }
