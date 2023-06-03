@@ -4,11 +4,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import com.omouravictor.ratesbr.data.local.entity.toBitcoinUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.ApiBitcoinsResponse
-import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.toListBitcoinEntity
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.toBitcoinsEntityList
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.toBitcoinsUiModelList
 import com.omouravictor.ratesbr.data.repository.BitcoinsRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
@@ -40,17 +40,17 @@ class BitcoinsViewModel @ViewModelInject constructor(
     }
 
     private suspend fun handleNetworkSuccessResult(apiBitcoinsResponse: ApiBitcoinsResponse) {
-        val remoteBitcoinsList = apiBitcoinsResponse.toListBitcoinEntity()
-        val bitcoinsUiModelList = toBitcoinsUiModelList(remoteBitcoinsList)
-        bitcoinsRepository.insertBitcoins(remoteBitcoinsList)
-        postUiResultStatusSuccess(bitcoinsUiModelList, DataSource.NETWORK)
+        val remoteBitcoinsEntityList = apiBitcoinsResponse.toBitcoinsEntityList()
+        val remoteBitcoinsUiModelList = apiBitcoinsResponse.toBitcoinsUiModelList()
+        bitcoinsRepository.insertBitcoins(remoteBitcoinsEntityList)
+        postUiResultStatusSuccess(remoteBitcoinsUiModelList, DataSource.NETWORK)
     }
 
     private fun handleNetworkErrorResult(message: String) {
-        val localBitcoinsList = bitcoinsRepository.getLocalBitcoins()
-        if (localBitcoinsList.isNotEmpty()) {
-            val bitcoinsUiModelList = toBitcoinsUiModelList(localBitcoinsList)
-            postUiResultStatusSuccess(bitcoinsUiModelList, DataSource.LOCAL)
+        val localBitcoinsEntityList = bitcoinsRepository.getLocalBitcoins()
+        if (localBitcoinsEntityList.isNotEmpty()) {
+            val localBitcoinsUiModelList = localBitcoinsEntityList.map { it.toBitcoinUiModel() }
+            postUiResultStatusSuccess(localBitcoinsUiModelList, DataSource.LOCAL)
         } else {
             bitcoinsResult.postValue(UiResultStatus.Error(message))
         }
@@ -58,10 +58,6 @@ class BitcoinsViewModel @ViewModelInject constructor(
 
     private fun handleNetworkLoadingResult() {
         bitcoinsResult.postValue(UiResultStatus.Loading)
-    }
-
-    private fun toBitcoinsUiModelList(rateEntityList: List<BitcoinEntity>): List<BitcoinUiModel> {
-        return rateEntityList.map { it.toBitcoinUiModel() }
     }
 
     private fun postUiResultStatusSuccess(

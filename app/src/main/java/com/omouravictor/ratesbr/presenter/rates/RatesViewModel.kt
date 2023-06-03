@@ -4,11 +4,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesbr.data.local.entity.RateEntity
 import com.omouravictor.ratesbr.data.local.entity.toRateUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.ApiRatesResponse
-import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toListRateEntity
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toRatesEntityList
+import com.omouravictor.ratesbr.data.network.hgfinanceapi.rates.toRatesUiModelList
 import com.omouravictor.ratesbr.data.repository.RatesRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
@@ -40,17 +40,17 @@ class RatesViewModel @ViewModelInject constructor(
     }
 
     private suspend fun handleNetworkSuccessResult(apiRatesResponse: ApiRatesResponse) {
-        val remoteRatesList = apiRatesResponse.toListRateEntity()
-        val ratesUiModelList = toRatesUiModelList(remoteRatesList)
-        ratesRepository.insertRates(remoteRatesList)
-        postUiResultStatusSuccess(ratesUiModelList, DataSource.NETWORK)
+        val remoteRatesEntityList = apiRatesResponse.toRatesEntityList()
+        val remoteRatesUiModelList = apiRatesResponse.toRatesUiModelList()
+        ratesRepository.insertRates(remoteRatesEntityList)
+        postUiResultStatusSuccess(remoteRatesUiModelList, DataSource.NETWORK)
     }
 
     private fun handleNetworkErrorResult(message: String) {
-        val localRatesList = ratesRepository.getLocalRates()
-        if (localRatesList.isNotEmpty()) {
-            val ratesUiModelList = toRatesUiModelList(localRatesList)
-            postUiResultStatusSuccess(ratesUiModelList, DataSource.LOCAL)
+        val localRatesEntityList = ratesRepository.getLocalRates()
+        if (localRatesEntityList.isNotEmpty()) {
+            val localRatesUiModelList = localRatesEntityList.map { it.toRateUiModel() }
+            postUiResultStatusSuccess(localRatesUiModelList, DataSource.LOCAL)
         } else {
             ratesResult.postValue(UiResultStatus.Error(message))
         }
@@ -58,10 +58,6 @@ class RatesViewModel @ViewModelInject constructor(
 
     private fun handleNetworkLoadingResult() {
         ratesResult.postValue(UiResultStatus.Loading)
-    }
-
-    private fun toRatesUiModelList(rateEntityList: List<RateEntity>): List<RateUiModel> {
-        return rateEntityList.map { it.toRateUiModel() }
     }
 
     private fun postUiResultStatusSuccess(
