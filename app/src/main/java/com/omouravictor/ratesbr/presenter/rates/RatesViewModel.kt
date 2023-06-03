@@ -39,11 +39,16 @@ class RatesViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun postUiResultStatusSuccess(
+        ratesUiModelList: List<RateUiModel>,
+        dataSource: DataSource
+    ) {
+        ratesResult.postValue(UiResultStatus.Success(Pair(ratesUiModelList, dataSource)))
+    }
+
     private suspend fun handleNetworkSuccessResult(apiRatesResponse: ApiRatesResponse) {
-        val remoteRatesEntityList = apiRatesResponse.toRatesEntityList()
-        val remoteRatesUiModelList = apiRatesResponse.toRatesUiModelList()
-        ratesRepository.insertRates(remoteRatesEntityList)
-        postUiResultStatusSuccess(remoteRatesUiModelList, DataSource.NETWORK)
+        ratesRepository.insertRates(apiRatesResponse.toRatesEntityList())
+        postUiResultStatusSuccess(apiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
     }
 
     private fun handleNetworkErrorResult(message: String) {
@@ -60,14 +65,4 @@ class RatesViewModel @ViewModelInject constructor(
         ratesResult.postValue(UiResultStatus.Loading)
     }
 
-    private fun postUiResultStatusSuccess(
-        ratesUiModelList: List<RateUiModel>,
-        dataSource: DataSource
-    ) {
-        ratesResult.postValue(
-            UiResultStatus.Success(
-                Pair(ratesUiModelList, dataSource)
-            )
-        )
-    }
 }

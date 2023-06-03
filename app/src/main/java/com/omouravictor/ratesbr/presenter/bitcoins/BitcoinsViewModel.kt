@@ -39,11 +39,16 @@ class BitcoinsViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun postUiResultStatusSuccess(
+        bitcoinsUiModelList: List<BitcoinUiModel>,
+        dataSource: DataSource
+    ) {
+        bitcoinsResult.postValue(UiResultStatus.Success(Pair(bitcoinsUiModelList, dataSource)))
+    }
+
     private suspend fun handleNetworkSuccessResult(apiBitcoinsResponse: ApiBitcoinsResponse) {
-        val remoteBitcoinsEntityList = apiBitcoinsResponse.toBitcoinsEntityList()
-        val remoteBitcoinsUiModelList = apiBitcoinsResponse.toBitcoinsUiModelList()
-        bitcoinsRepository.insertBitcoins(remoteBitcoinsEntityList)
-        postUiResultStatusSuccess(remoteBitcoinsUiModelList, DataSource.NETWORK)
+        bitcoinsRepository.insertBitcoins(apiBitcoinsResponse.toBitcoinsEntityList())
+        postUiResultStatusSuccess(apiBitcoinsResponse.toBitcoinsUiModelList(), DataSource.NETWORK)
     }
 
     private fun handleNetworkErrorResult(message: String) {
@@ -60,14 +65,4 @@ class BitcoinsViewModel @ViewModelInject constructor(
         bitcoinsResult.postValue(UiResultStatus.Loading)
     }
 
-    private fun postUiResultStatusSuccess(
-        bitcoinsUiModelList: List<BitcoinUiModel>,
-        dataSource: DataSource
-    ) {
-        bitcoinsResult.postValue(
-            UiResultStatus.Success(
-                Pair(bitcoinsUiModelList, dataSource)
-            )
-        )
-    }
 }

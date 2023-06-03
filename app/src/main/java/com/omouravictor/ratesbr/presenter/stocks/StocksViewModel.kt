@@ -4,7 +4,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.omouravictor.ratesbr.data.local.entity.StockEntity
 import com.omouravictor.ratesbr.data.local.entity.toStockUiModel
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.stock.ApiStocksResponse
@@ -40,11 +39,16 @@ class StocksViewModel @ViewModelInject constructor(
         }
     }
 
+    private fun postUiResultStatusSuccess(
+        stocksUiModelList: List<StockUiModel>,
+        dataSource: DataSource
+    ) {
+        stocksResult.postValue(UiResultStatus.Success(Pair(stocksUiModelList, dataSource)))
+    }
+
     private suspend fun handleNetworkSuccessResult(apiStocksResponse: ApiStocksResponse) {
-        val remoteStocksEntityList = apiStocksResponse.toStocksEntityList()
-        val remoteStocksUiModelList = apiStocksResponse.toStocksUiModelList()
-        stocksRepository.insertStocks(remoteStocksEntityList)
-        postUiResultStatusSuccess(remoteStocksUiModelList, DataSource.NETWORK)
+        stocksRepository.insertStocks(apiStocksResponse.toStocksEntityList())
+        postUiResultStatusSuccess(apiStocksResponse.toStocksUiModelList(), DataSource.NETWORK)
     }
 
     private fun handleNetworkErrorResult(message: String) {
@@ -61,14 +65,4 @@ class StocksViewModel @ViewModelInject constructor(
         stocksResult.postValue(UiResultStatus.Loading)
     }
 
-    private fun postUiResultStatusSuccess(
-        stocksUiModelList: List<StockUiModel>,
-        dataSource: DataSource
-    ) {
-        stocksResult.postValue(
-            UiResultStatus.Success(
-                Pair(stocksUiModelList, dataSource)
-            )
-        )
-    }
 }
