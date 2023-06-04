@@ -13,11 +13,13 @@ import com.omouravictor.ratesbr.data.repository.StocksRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
+import com.omouravictor.ratesbr.util.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class StocksViewModel @ViewModelInject constructor(
-    private val stocksRepository: StocksRepository
+    private val stocksRepository: StocksRepository,
+    private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
     val stocksResult = MutableLiveData<UiResultStatus<Pair<List<StockUiModel>, DataSource>>>()
@@ -28,7 +30,7 @@ class StocksViewModel @ViewModelInject constructor(
     }
 
     fun getStocks() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             stocksRepository.getRemoteStocks(apiFields).collect { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)

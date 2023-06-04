@@ -5,10 +5,8 @@ import com.omouravictor.ratesbr.data.local.entity.BitcoinEntity
 import com.omouravictor.ratesbr.data.network.base.NetworkResultStatus
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.ApiService
 import com.omouravictor.ratesbr.data.network.hgfinanceapi.bitcoin.ApiBitcoinsResponse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import java.util.Date
 
 class BitcoinsRepository(
@@ -21,18 +19,15 @@ class BitcoinsRepository(
         bitcoinDao.insertBitcoins(bitcoinEntityList)
     }
 
-    suspend fun getRemoteBitcoins(fields: String): Flow<NetworkResultStatus<ApiBitcoinsResponse>> {
-        return withContext(Dispatchers.IO) {
-            flow {
-                emit(NetworkResultStatus.Loading)
-                try {
-                    val request = apiService.getBitcoins(fields)
-                        .apply { bitcoinDate = Date() }
-                    emit(NetworkResultStatus.Success(request))
-                } catch (e: Exception) {
-                    emit(NetworkResultStatus.Error("Falha ao buscar os dados na internet :("))
-                }
+    suspend fun getRemoteBitcoins(fields: String): Flow<NetworkResultStatus<ApiBitcoinsResponse>> =
+        flow {
+            emit(NetworkResultStatus.Loading)
+            try {
+                val request = apiService.getBitcoins(fields)
+                    .apply { bitcoinDate = Date() }
+                emit(NetworkResultStatus.Success(request))
+            } catch (e: Exception) {
+                emit(NetworkResultStatus.Error("Falha ao buscar os dados na internet :("))
             }
         }
-    }
 }

@@ -13,11 +13,13 @@ import com.omouravictor.ratesbr.data.repository.BitcoinsRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
+import com.omouravictor.ratesbr.util.DispatcherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BitcoinsViewModel @ViewModelInject constructor(
-    private val bitcoinsRepository: BitcoinsRepository
+    private val bitcoinsRepository: BitcoinsRepository,
+    private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
     val bitcoinsResult = MutableLiveData<UiResultStatus<Pair<List<BitcoinUiModel>, DataSource>>>()
@@ -28,7 +30,7 @@ class BitcoinsViewModel @ViewModelInject constructor(
     }
 
     fun getBitcoins() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             bitcoinsRepository.getRemoteBitcoins(apiFields).collect { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)

@@ -13,11 +13,12 @@ import com.omouravictor.ratesbr.data.repository.RatesRepository
 import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
-import kotlinx.coroutines.Dispatchers
+import com.omouravictor.ratesbr.util.DispatcherProvider
 import kotlinx.coroutines.launch
 
 class RatesViewModel @ViewModelInject constructor(
-    private val ratesRepository: RatesRepository
+    private val ratesRepository: RatesRepository,
+    private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
     val ratesResult = MutableLiveData<UiResultStatus<Pair<List<RateUiModel>, DataSource>>>()
@@ -28,7 +29,7 @@ class RatesViewModel @ViewModelInject constructor(
     }
 
     fun getRates() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatchers.io) {
             ratesRepository.getRemoteRates(apiFields).collect { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
