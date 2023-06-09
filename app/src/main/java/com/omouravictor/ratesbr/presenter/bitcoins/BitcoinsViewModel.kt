@@ -14,7 +14,6 @@ import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.DispatcherProvider
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BitcoinsViewModel @ViewModelInject constructor(
