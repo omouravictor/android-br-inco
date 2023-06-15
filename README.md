@@ -4,7 +4,7 @@
 
 <h1 align="center">Rates BR</h1>
 
-## [Download it on Google Play here](https://play.google.com/store/apps/details?id=io.sensify.sensor)
+## [Download it on Google Play here](https://play.google.com/store/apps/details?id=com.omouravictor.ratesbr&hl=en_US)
 
 ## Preview
 
