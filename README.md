@@ -3,7 +3,8 @@
 </p>
 
 <h1 align="center">Rates BR</h1>
-<p align="center">A financial application for the Brazilian public.</p>
+
+## [Download it on Google Play here](https://play.google.com/store/apps/details?id=io.sensify.sensor)
 
 ## Preview
 
