@@ -97,7 +97,7 @@ class RatesFragment : Fragment() {
 
     private fun initRateBottomSheetDialog() {
         rateBottomSheetDialog =
-            BottomSheetDialog(requireContext(), R.style.OverlayBottomSheetDialog)
+            BottomSheetDialog(requireContext(), R.style.Theme_App_OverlayBottomSheetDialog)
         rateBottomSheetDialog.setContentView(R.layout.bottom_sheet_rate_dialog)
         rateBottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }

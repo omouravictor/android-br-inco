@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="App" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.App.MainTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/green</item>
@@ -19,18 +19,25 @@
         <item name="android:textColorHint">@color/transparentWhite</item>
     </style>
 
+    <!-- SplashScreen theme -->
+    <style name="Theme.App.SplashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/green</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/icon_app</item>
+        <item name="postSplashScreenTheme">@style/Theme.App.MainTheme</item>
+    </style>
+
     <!-- TabLayout style -->
-    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <style name="Theme.App.TabLayout" parent="Widget.MaterialComponents.TabLayout">
         <item name="android:background">@color/white</item>
     </style>
 
     <!-- BottomSheetDialog ThemeOverlay style -->
-    <style name="OverlayBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetModalTransparent</item>
+    <style name="Theme.App.OverlayBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Theme.App.BottomSheetModalTransparent</item>
     </style>
 
     <!-- BottomSheetModal style -->
-    <style name="BottomSheetModalTransparent" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Theme.App.BottomSheetModalTransparent" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
