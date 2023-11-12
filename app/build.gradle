@@ -11,12 +11,12 @@ def apiProperties = new Properties()
 apiProperties.load(new FileInputStream(apiPropertiesFile))
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.omouravictor.ratesbr"
         minSdkVersion 22
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
