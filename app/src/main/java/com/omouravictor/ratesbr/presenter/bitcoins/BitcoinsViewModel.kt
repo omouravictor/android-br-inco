@@ -1,6 +1,5 @@
 package com.omouravictor.ratesbr.presenter.bitcoins
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +13,12 @@ import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.ratesbr.util.DispatcherProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BitcoinsViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BitcoinsViewModel @Inject constructor(
     private val bitcoinsRepository: BitcoinsRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {

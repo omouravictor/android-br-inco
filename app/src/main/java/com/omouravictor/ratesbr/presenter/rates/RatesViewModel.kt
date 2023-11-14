@@ -1,6 +1,5 @@
 package com.omouravictor.ratesbr.presenter.rates
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +13,13 @@ import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.rates.model.RateUiModel
 import com.omouravictor.ratesbr.util.DispatcherProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RatesViewModel @ViewModelInject constructor(
+
+@HiltViewModel
+class RatesViewModel @Inject constructor(
     private val ratesRepository: RatesRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {

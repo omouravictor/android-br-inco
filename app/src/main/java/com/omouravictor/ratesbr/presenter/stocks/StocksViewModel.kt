@@ -1,6 +1,5 @@
 package com.omouravictor.ratesbr.presenter.stocks
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,9 +13,12 @@ import com.omouravictor.ratesbr.presenter.base.DataSource
 import com.omouravictor.ratesbr.presenter.base.UiResultStatus
 import com.omouravictor.ratesbr.presenter.stocks.model.StockUiModel
 import com.omouravictor.ratesbr.util.DispatcherProvider
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StocksViewModel @ViewModelInject constructor(
+@HiltViewModel
+class StocksViewModel @Inject constructor(
     private val stocksRepository: StocksRepository,
     private val dispatchers: DispatcherProvider
 ) : ViewModel() {
