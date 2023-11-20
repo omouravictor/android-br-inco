@@ -8,7 +8,7 @@ object FormatUtils {
     object BrazilianFormats {
         private val brLocale = Locale("pt", "BR")
         val brTimeFormat = SimpleDateFormat("HH:mm", brLocale)
-        val brDateFormat = SimpleDateFormat("dd/MM/yyyy", brLocale)
+        val brDateFormat = SimpleDateFormat("dd/MM/yy", brLocale)
         val brNumberFormat: NumberFormat = NumberFormat.getNumberInstance(brLocale)
         val brCurrencyFormat: NumberFormat = NumberFormat.getCurrencyInstance(brLocale)
     }

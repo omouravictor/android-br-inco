@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="green">#00A053</color>
+    <color name="green">#008746</color>
     <color name="darkGreen">#00532B</color>
     <color name="black">#FF000000</color>
     <color name="darkGray">#3C3C3C</color>
@@ -12,4 +12,5 @@
     <color name="fluorescentGreen">#19FF00</color>
     <color name="yellow">#FFEB3B</color>
     <color name="transparentWhite">#8CFFFFFF</color>
+    <color name="navigationBackground">@color/white</color>
 </resources>
