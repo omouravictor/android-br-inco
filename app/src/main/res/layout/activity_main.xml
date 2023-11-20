@@ -38,6 +38,8 @@
         android:layout_height="wrap_content"
         android:background="@color/navigationBackground"
         android:elevation="5dp"
+        android:theme="@style/BottomNavigationTheme"
+        app:itemRippleColor="@color/green"
         app:labelVisibilityMode="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

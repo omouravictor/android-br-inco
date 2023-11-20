@@ -19,7 +19,12 @@
         <item name="android:textColorHint">@color/transparentWhite</item>
     </style>
 
-    <!-- SplashScreen theme -->
+    <!-- BottomNavigation style -->
+    <style name="BottomNavigationTheme" parent="Theme.App.MainTheme">
+        <item name="colorPrimary">#00B65F</item>
+    </style>
+
+    <!-- SplashScreen style -->
     <style name="Theme.App.SplashScreenTheme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/green</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/icon_app</item>
