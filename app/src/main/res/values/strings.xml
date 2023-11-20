@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rates BR</string>
+    <string name="app_name">BR InCo</string>
     <string name="stock_exchanges">Bolsas de valores</string>
     <string name="stocks">Bolsas</string>
     <string name="bitcoins">Bitcoins</string>
