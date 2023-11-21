@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/rates_fragment"
         android:name="com.omouravictor.br_inco.presenter.rates.RatesFragment"
-        android:label="@string/coins"
+        android:label="@string/rate"
         tools:layout="@layout/fragment_rates">
         <action
             android:id="@+id/action_rates_fragment_to_converter_fragment"

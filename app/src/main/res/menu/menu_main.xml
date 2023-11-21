@@ -9,7 +9,7 @@
     <item
         android:id="@+id/ratesItemMenu"
         android:icon="@drawable/icon_money"
-        android:title="@string/coins" />
+        android:title="@string/rate" />
 
     <item
         android:id="@+id/bitcoinsItemMenu"

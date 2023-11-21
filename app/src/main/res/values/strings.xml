@@ -4,7 +4,7 @@
     <string name="stocks">Bolsas</string>
     <string name="bitcoins">Bitcoins</string>
     <string name="conversion">Conversão</string>
-    <string name="coins">Moedas</string>
+    <string name="rate">Câmbio</string>
     <string name="search">Pesquise aqui…</string>
     <string name="quantity">Quantidade</string>
     <string name="hello_welcome">Olá, seja bem-vindo!</string>
