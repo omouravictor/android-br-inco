@@ -14,7 +14,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.omouravictor.brinco"
+        applicationId "com.omouravictor.br_inco"
         minSdkVersion 22
         targetSdk 34
         versionCode 1
@@ -42,7 +42,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.omouravictor.brinco'
+    namespace 'com.omouravictor.br_inco'
 }
 
 dependencies {

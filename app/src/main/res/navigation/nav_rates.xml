@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/rates_fragment"
-        android:name="com.omouravictor.brinco.presenter.rates.RatesFragment"
+        android:name="com.omouravictor.br_inco.presenter.rates.RatesFragment"
         android:label="@string/coins"
         tools:layout="@layout/fragment_rates">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/converter_fragment"
-        android:name="com.omouravictor.brinco.presenter.converter.ConverterFragment"
+        android:name="com.omouravictor.br_inco.presenter.converter.ConverterFragment"
         android:label="@string/conversion"
         tools:layout="@layout/fragment_converter" />
 </navigation>

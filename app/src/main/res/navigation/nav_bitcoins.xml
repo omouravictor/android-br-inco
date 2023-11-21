@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bitcoins_fragment"
-        android:name="com.omouravictor.brinco.presenter.bitcoins.BitcoinsFragment"
+        android:name="com.omouravictor.br_inco.presenter.bitcoins.BitcoinsFragment"
         android:label="@string/bitcoins"
         tools:layout="@layout/fragment_bitcoins" />
 

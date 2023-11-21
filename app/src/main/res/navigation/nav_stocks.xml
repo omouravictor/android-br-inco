@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/stocks_fragment"
-        android:name="com.omouravictor.brinco.presenter.stocks.StocksFragment"
+        android:name="com.omouravictor.br_inco.presenter.stocks.StocksFragment"
         android:label="@string/stocks"
         tools:layout="@layout/fragment_stocks" />
 
