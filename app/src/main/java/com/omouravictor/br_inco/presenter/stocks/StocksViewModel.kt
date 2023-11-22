@@ -14,6 +14,7 @@ import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
 import com.omouravictor.br_inco.util.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +33,7 @@ class StocksViewModel @Inject constructor(
 
     fun getStocks() {
         viewModelScope.launch(dispatchers.io) {
-            stocksRepository.getRemoteStocks(apiFields).collect { result ->
+            stocksRepository.getRemoteStocks(apiFields).collectLatest { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
                     is NetworkResultStatus.Error -> handleNetworkErrorResult(result.message)

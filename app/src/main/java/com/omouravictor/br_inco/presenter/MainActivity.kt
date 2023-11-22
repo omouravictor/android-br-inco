@@ -16,6 +16,7 @@ import com.omouravictor.br_inco.databinding.ActivityMainBinding
 import com.omouravictor.br_inco.presenter.welcome.WelcomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val newUserDataStoreFlow: Flow<Boolean> = dataStore.data.map { it[newUserPrefKey] ?: true }
 
         lifecycleScope.launch {
-            newUserDataStoreFlow.collect {
+            newUserDataStoreFlow.collectLatest {
                 if (it) {
                     val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                     startActivity(intent)

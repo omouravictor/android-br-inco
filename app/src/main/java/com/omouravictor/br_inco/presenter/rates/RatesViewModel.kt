@@ -14,6 +14,7 @@ import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
 import com.omouravictor.br_inco.util.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +34,7 @@ class RatesViewModel @Inject constructor(
 
     fun getRates() {
         viewModelScope.launch(dispatchers.io) {
-            ratesRepository.getRemoteRates(apiFields).collect { result ->
+            ratesRepository.getRemoteRates(apiFields).collectLatest { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
                     is NetworkResultStatus.Error -> handleNetworkErrorResult(result.message)

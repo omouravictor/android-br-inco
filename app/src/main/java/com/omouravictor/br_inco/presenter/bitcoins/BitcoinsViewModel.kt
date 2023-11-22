@@ -14,6 +14,7 @@ import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.br_inco.util.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +33,7 @@ class BitcoinsViewModel @Inject constructor(
 
     fun getBitcoins() {
         viewModelScope.launch(dispatchers.io) {
-            bitcoinsRepository.getRemoteBitcoins(apiFields).collect { result ->
+            bitcoinsRepository.getRemoteBitcoins(apiFields).collectLatest { result ->
                 when (result) {
                     is NetworkResultStatus.Success -> handleNetworkSuccessResult(result.data)
                     is NetworkResultStatus.Error -> handleNetworkErrorResult(result.message)
