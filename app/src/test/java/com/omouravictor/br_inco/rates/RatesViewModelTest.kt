@@ -45,19 +45,20 @@ class RatesViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatchers.standardTestDispatcher)
+        viewModel = RatesViewModel(ratesRepository, testDispatchers)
     }
 
     @Test
     fun `when getRates is called, should fetch REMOTE rates successfully`() = runTest {
-        val mockRateDate = Date()
         val mockApiRatesResponse = ApiRatesResponse(
             ApiRatesResultsResponse(
-                linkedMapOf("USD" to ApiRatesResultsItemResponse(5.15, 0.125))
+                linkedMapOf(
+                    "USD" to ApiRatesResultsItemResponse(5.15, 0.125),
+                    "EUR" to ApiRatesResultsItemResponse(6.15, 0.225)
+                )
             ),
-            mockRateDate
+            Date()
         )
-
-        viewModel = RatesViewModel(ratesRepository, testDispatchers)
 
         `when`(ratesRepository.getRemoteRates(anyString()))
             .thenReturn(flowOf(NetworkResultStatus.Success(mockApiRatesResponse)))
@@ -77,18 +78,16 @@ class RatesViewModelTest {
     @Test
     fun `when getRates is called, should fetch LOCAL rates successfully`() = runTest {
         val mockRateDate = Date()
-        val mockErrorMsg = "Error Message"
         val mockLocalRates = listOf(
             RateEntity("USD", 5.15, 0.125, mockRateDate),
             RateEntity("EUR", 6.15, 0.225, mockRateDate)
         )
 
-        viewModel = RatesViewModel(ratesRepository, testDispatchers)
-
         `when`(ratesRepository.getRemoteRates(anyString()))
-            .thenReturn(flowOf(NetworkResultStatus.Error(mockErrorMsg)))
+            .thenReturn(flowOf(NetworkResultStatus.Error("Error Message")))
 
-        `when`(ratesRepository.getLocalRates()).thenReturn(mockLocalRates)
+        `when`(ratesRepository.getLocalRates())
+            .thenReturn(mockLocalRates)
 
         viewModel.getRates()
 
@@ -99,6 +98,26 @@ class RatesViewModelTest {
             UiResultStatus.Success(
                 Pair(mockLocalRates.map { it.toRateUiModel() }, DataSource.LOCAL)
             )
+        )
+    }
+
+    @Test
+    fun `when getRates is called, should fetch error`() = runTest {
+        val mockErrorMsg = "Error Message"
+
+        `when`(ratesRepository.getRemoteRates(anyString()))
+            .thenReturn(flowOf(NetworkResultStatus.Error(mockErrorMsg)))
+
+        `when`(ratesRepository.getLocalRates())
+            .thenReturn(emptyList())
+
+        viewModel.getRates()
+
+        testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(
+            viewModel.ratesResult.value,
+            UiResultStatus.Error(mockErrorMsg)
         )
     }
 
