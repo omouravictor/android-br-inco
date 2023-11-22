@@ -67,12 +67,11 @@ class RatesViewModelTest {
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(
-            viewModel.ratesResult.value,
-            UiResultStatus.Success(
-                Pair(mockApiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
-            )
+        val expectedUiResultStatus = UiResultStatus.Success(
+            Pair(mockApiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
         )
+
+        assertEquals(viewModel.ratesResult.value, expectedUiResultStatus)
     }
 
     @Test
@@ -93,12 +92,11 @@ class RatesViewModelTest {
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(
-            viewModel.ratesResult.value,
-            UiResultStatus.Success(
-                Pair(mockLocalRates.map { it.toRateUiModel() }, DataSource.LOCAL)
-            )
+        val expectedUiResultStatus = UiResultStatus.Success(
+            Pair(mockLocalRates.map { it.toRateUiModel() }, DataSource.LOCAL)
         )
+
+        assertEquals(viewModel.ratesResult.value, expectedUiResultStatus)
     }
 
     @Test
@@ -115,10 +113,9 @@ class RatesViewModelTest {
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
-        assertEquals(
-            viewModel.ratesResult.value,
-            UiResultStatus.Error(mockErrorMsg)
-        )
+        val expectedUiResultStatus = UiResultStatus.Error(mockErrorMsg)
+
+        assertEquals(viewModel.ratesResult.value, expectedUiResultStatus)
     }
 
     @After
