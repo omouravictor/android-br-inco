@@ -5,7 +5,9 @@ import com.omouravictor.br_inco.data.network.base.NetworkResultStatus
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResponse
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResultsItemResponse
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResultsResponse
+import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.toRatesUiModelList
 import com.omouravictor.br_inco.data.repository.RatesRepository
+import com.omouravictor.br_inco.presenter.base.DataSource
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.rates.RatesViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +17,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,7 +64,12 @@ class RatesViewModelTest {
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
-        assert(viewModel.ratesResult.value is UiResultStatus.Success)
+        assertEquals(
+            viewModel.ratesResult.value,
+            UiResultStatus.Success(
+                Pair(mockApiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
+            )
+        )
     }
 
     @After
