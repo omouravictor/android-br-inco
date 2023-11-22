@@ -1,6 +1,8 @@
 package com.omouravictor.br_inco.rates
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.omouravictor.br_inco.data.local.entity.RateEntity
+import com.omouravictor.br_inco.data.local.entity.toRateUiModel
 import com.omouravictor.br_inco.data.network.base.NetworkResultStatus
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResponse
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResultsItemResponse
@@ -46,7 +48,7 @@ class RatesViewModelTest {
     }
 
     @Test
-    fun `when getRates is called, should fetch remote rates successfully`() = runTest {
+    fun `when getRates is called, should fetch REMOTE rates successfully`() = runTest {
         val mockRateDate = Date()
         val mockApiRatesResponse = ApiRatesResponse(
             ApiRatesResultsResponse(
@@ -68,6 +70,34 @@ class RatesViewModelTest {
             viewModel.ratesResult.value,
             UiResultStatus.Success(
                 Pair(mockApiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
+            )
+        )
+    }
+
+    @Test
+    fun `when getRates is called, should fetch LOCAL rates successfully`() = runTest {
+        val mockRateDate = Date()
+        val mockErrorMsg = "Error Message"
+        val mockLocalRates = listOf(
+            RateEntity("USD", 5.15, 0.125, mockRateDate),
+            RateEntity("EUR", 6.15, 0.225, mockRateDate)
+        )
+
+        viewModel = RatesViewModel(ratesRepository, testDispatchers)
+
+        `when`(ratesRepository.getRemoteRates(anyString()))
+            .thenReturn(flowOf(NetworkResultStatus.Error(mockErrorMsg)))
+
+        `when`(ratesRepository.getLocalRates()).thenReturn(mockLocalRates)
+
+        viewModel.getRates()
+
+        testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(
+            viewModel.ratesResult.value,
+            UiResultStatus.Success(
+                Pair(mockLocalRates.map { it.toRateUiModel() }, DataSource.LOCAL)
             )
         )
     }
