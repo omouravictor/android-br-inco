@@ -33,9 +33,15 @@ class RatesAdapter(
     }
 
     fun filterList(text: String) {
-        filteredList = if (text.isNotEmpty())
-            originalList.filter { it.currencyName.contains(text, true) }
-        else originalList
+        filteredList = if (text.isNotEmpty()) {
+            originalList.filter {
+                it.currencyName.contains(text, true) ||
+                        it.currencyTerm.contains(text, true)
+            }
+        } else {
+            originalList
+        }
+
         notifyDataSetChanged()
     }
 

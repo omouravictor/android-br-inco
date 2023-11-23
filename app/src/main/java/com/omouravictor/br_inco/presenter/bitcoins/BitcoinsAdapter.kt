@@ -33,9 +33,15 @@ class BitcoinsAdapter(
     }
 
     fun filterList(text: String) {
-        filteredList = if (text.isNotEmpty())
-            originalList.filter { it.name.contains(text, true) }
-        else originalList
+        filteredList = if (text.isNotEmpty()) {
+            originalList.filter {
+                it.name.contains(text, true) ||
+                        it.currencyTerm.contains(text, true)
+            }
+        } else {
+            originalList
+        }
+
         notifyDataSetChanged()
     }
 
