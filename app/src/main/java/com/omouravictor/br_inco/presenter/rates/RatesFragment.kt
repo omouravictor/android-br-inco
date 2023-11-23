@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.omouravictor.br_inco.R
 import com.omouravictor.br_inco.databinding.FragmentRatesBinding
@@ -104,7 +105,7 @@ class RatesFragment : Fragment() {
         rateBottomSheetDialog =
             BottomSheetDialog(requireContext(), R.style.Theme_App_OverlayBottomSheetDialog)
         rateBottomSheetDialog.setContentView(R.layout.bottom_sheet_rate_dialog)
-        rateBottomSheetDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        rateBottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun initRateDetailsDialog() {
