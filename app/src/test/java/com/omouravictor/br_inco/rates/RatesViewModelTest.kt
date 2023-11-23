@@ -7,6 +7,7 @@ import com.omouravictor.br_inco.data.network.base.NetworkResultStatus
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResponse
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResultsItemResponse
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.ApiRatesResultsResponse
+import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.toRatesEntityList
 import com.omouravictor.br_inco.data.network.hgfinanceapi.rates.toRatesUiModelList
 import com.omouravictor.br_inco.data.repository.RatesRepository
 import com.omouravictor.br_inco.presenter.base.DataSource
@@ -25,6 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import java.util.Date
@@ -45,7 +47,6 @@ class RatesViewModelTest {
     fun setUp() {
         MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatchers.standardTestDispatcher)
-        viewModel = RatesViewModel(ratesRepository, testDispatchers)
     }
 
     @Test
@@ -63,7 +64,8 @@ class RatesViewModelTest {
         `when`(ratesRepository.getRemoteRates(anyString()))
             .thenReturn(flowOf(NetworkResultStatus.Success(mockApiRatesResponse)))
 
-        viewModel.getRates()
+        // getRates() is called in init block
+        viewModel = RatesViewModel(ratesRepository, testDispatchers)
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
@@ -71,6 +73,7 @@ class RatesViewModelTest {
             Pair(mockApiRatesResponse.toRatesUiModelList(), DataSource.NETWORK)
         )
 
+        verify(ratesRepository).insertRates(mockApiRatesResponse.toRatesEntityList())
         assertEquals(viewModel.ratesResult.value, expectedUiResultStatus)
     }
 
@@ -88,7 +91,8 @@ class RatesViewModelTest {
         `when`(ratesRepository.getLocalRates())
             .thenReturn(mockLocalRates)
 
-        viewModel.getRates()
+        // getRates() is called in init block
+        viewModel = RatesViewModel(ratesRepository, testDispatchers)
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
@@ -109,7 +113,8 @@ class RatesViewModelTest {
         `when`(ratesRepository.getLocalRates())
             .thenReturn(emptyList())
 
-        viewModel.getRates()
+        // getRates() is called in init block
+        viewModel = RatesViewModel(ratesRepository, testDispatchers)
 
         testDispatchers.standardTestDispatcher.scheduler.advanceUntilIdle()
 
