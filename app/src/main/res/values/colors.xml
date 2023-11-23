@@ -8,9 +8,12 @@
     <color name="lightGray">#777777</color>
     <color name="white">#FFFFFFFF</color>
     <color name="darkWhite">#DDDDDD</color>
-    <color name="background">#E6E6E6</color>
     <color name="fluorescentGreen">#19FF00</color>
     <color name="yellow">#FFEB3B</color>
     <color name="transparentWhite">#8CFFFFFF</color>
+
+    <!-- DayNight colors -->
+    <color name="background">#E6E6E6</color>
     <color name="navigationBackground">@color/white</color>
+    <color name="itemListPressed">#EDEDED</color>
 </resources>

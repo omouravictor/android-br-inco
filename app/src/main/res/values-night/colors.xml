@@ -2,4 +2,5 @@
 <resources>
     <color name="background">@color/black</color>
     <color name="navigationBackground">#353535</color>
+    <color name="itemListPressed">#222222</color>
 </resources>
