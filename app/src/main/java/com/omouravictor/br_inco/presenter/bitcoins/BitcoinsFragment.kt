@@ -52,6 +52,11 @@ class BitcoinsFragment : Fragment() {
         observeStocksResult()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList("")
+    }
+
     private fun observeStocksResult() {
         bitcoinViewModel.bitcoinsResult.observe(viewLifecycleOwner) { result ->
             when (result) {

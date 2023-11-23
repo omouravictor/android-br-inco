@@ -51,6 +51,11 @@ class StocksFragment : Fragment() {
         observeStocksResult()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList("")
+    }
+
     private fun observeStocksResult() {
         stockViewModel.stocksResult.observe(viewLifecycleOwner) { result ->
             when (result) {

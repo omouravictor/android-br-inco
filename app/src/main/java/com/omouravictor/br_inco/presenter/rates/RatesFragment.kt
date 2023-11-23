@@ -58,6 +58,11 @@ class RatesFragment : Fragment() {
         observeRatesResult()
     }
 
+    override fun onResume() {
+        super.onResume()
+        (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList("")
+    }
+
     private fun observeRatesResult() {
         ratesViewModel.ratesResult.observe(viewLifecycleOwner) { result ->
             when (result) {
