@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.animation.AnimationUtils.loadLayoutAnimation
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -126,6 +127,7 @@ class RatesFragment : Fragment() {
 
     private fun configRecyclerView(ratesList: List<RateUiModel>) {
         binding.recyclerViewRates.apply {
+            layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
             adapter = RatesAdapter(ratesList) { showRateBottomSheetDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }

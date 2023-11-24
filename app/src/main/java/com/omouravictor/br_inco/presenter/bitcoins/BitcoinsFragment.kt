@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.animation.AnimationUtils.loadLayoutAnimation
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -112,6 +113,7 @@ class BitcoinsFragment : Fragment() {
 
     private fun configRecyclerView(bitcoinList: List<BitcoinUiModel>) {
         binding.recyclerViewBitcoins.apply {
+            layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
             adapter = BitcoinsAdapter(bitcoinList) { showBitcoinDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)
         }
