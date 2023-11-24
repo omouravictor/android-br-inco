@@ -14,14 +14,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="16dp">
+            android:layout_margin="24dp">
 
             <TextView
                 android:id="@+id/textViewCurrencyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/green"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
                 android:id="@+id/textViewUnitaryRateValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewCurrencyTerm"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayoutConverter"
                 app:layout_constraintTop_toTopOf="@+id/textViewCurrencyTerm"
@@ -42,8 +42,8 @@
                 android:id="@+id/textViewCurrencyTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="24sp"
+                android:layout_marginTop="24dp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayoutConverter"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCurrencyName"
                 tools:text="USD" />
@@ -71,7 +71,7 @@
                 android:id="@+id/textViewResultValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:textAlignment="center"
                 android:textColor="@color/green"
                 android:textSize="34sp"
