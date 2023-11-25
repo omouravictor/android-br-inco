@@ -2,7 +2,7 @@
   <img src="https://github.com/omouravictor/rates-br/blob/master/rates-br-icon.png" alt="app-icon">
 </p>
 
-<h1 align="center">Rates BR</h1>
+<h1 align="center">BR InCo</h1>
 
 ## [Download it on Google Play here](https://play.google.com/store/apps/details?id=com.omouravictor.ratesbr&hl=en_US)
 
