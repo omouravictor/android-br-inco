@@ -114,6 +114,8 @@ class RatesFragment : Fragment() {
         rateDetailsDialog.setContentView(R.layout.details_rate_dialog)
         rateDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         rateDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        rateDetailsDialog.window?.attributes?.windowAnimations =
+            R.style.Animation_Design_BottomSheetDialog
     }
 
     private fun initSwipeRefreshLayout() {

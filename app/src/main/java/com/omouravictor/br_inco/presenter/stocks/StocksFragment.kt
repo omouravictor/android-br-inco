@@ -99,6 +99,8 @@ class StocksFragment : Fragment() {
         stockDetailsDialog.setContentView(R.layout.details_stock_dialog)
         stockDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         stockDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        stockDetailsDialog.window?.attributes?.windowAnimations =
+            R.style.Animation_Design_BottomSheetDialog
     }
 
     private fun initSwipeRefreshLayout() {

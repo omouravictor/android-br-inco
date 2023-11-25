@@ -100,6 +100,8 @@ class BitcoinsFragment : Fragment() {
         bitcoinDetailsDialog.setContentView(R.layout.details_bitcoin_dialog)
         bitcoinDetailsDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         bitcoinDetailsDialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+        bitcoinDetailsDialog.window?.attributes?.windowAnimations =
+            R.style.Animation_Design_BottomSheetDialog
     }
 
     private fun initSwipeRefreshLayout() {
