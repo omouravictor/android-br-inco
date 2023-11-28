@@ -3,7 +3,7 @@ package com.omouravictor.br_inco.presenter.stocks
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.br_inco.databinding.ItemListStockBinding
+import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brNumberFormat
@@ -19,7 +19,7 @@ class StocksAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
-            ItemListStockBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StockViewHolder(binding, callbackFunction)
     }
 
@@ -45,19 +45,19 @@ class StocksAdapter(
     }
 
     class StockViewHolder(
-        private val binding: ItemListStockBinding,
+        private val binding: ItemListBinding,
         private val callbackFunction: (StockUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stock: StockUiModel) {
-            binding.textViewStockLocation.text = stock.countryLocation
-            binding.textViewStockName.text = stock.name
+            binding.textViewInfo1.text = stock.countryLocation
+            binding.textViewInfo2.text = stock.name
             setVariationOnBind(
                 stock.variation,
-                binding.textViewStockVariation,
-                binding.imageViewStockVariation
+                binding.textViewVariation,
+                binding.imageViewVariation
             )
-            binding.textViewStockPoints.text = brNumberFormat.format(stock.points)
+            binding.textViewInfo3.text = brNumberFormat.format(stock.points)
             binding.textViewDate.text = brDateFormat.format(stock.stockDate)
             binding.textViewTime.text = brTimeFormat.format(stock.stockDate)
             itemView.setOnClickListener {

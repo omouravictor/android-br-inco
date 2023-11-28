@@ -3,7 +3,7 @@ package com.omouravictor.br_inco.presenter.bitcoins
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.omouravictor.br_inco.databinding.ItemListBitcoinBinding
+import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
@@ -20,7 +20,7 @@ class BitcoinsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
         val binding =
-            ItemListBitcoinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BitcoinViewHolder(binding, callbackFunction)
     }
 
@@ -46,21 +46,21 @@ class BitcoinsAdapter(
     }
 
     class BitcoinViewHolder(
-        private val binding: ItemListBitcoinBinding,
+        private val binding: ItemListBinding,
         private val callbackFunction: (BitcoinUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(bitcoin: BitcoinUiModel) {
             val bitcoinLocale = Locale(bitcoin.language, bitcoin.countryLanguage)
 
-            binding.textViewBitcoinCurrencyTerm.text = bitcoin.currencyTerm
-            binding.textViewBitcoinName.text = bitcoin.name
+            binding.textViewInfo1.text = bitcoin.currencyTerm
+            binding.textViewInfo2.text = bitcoin.name
             setVariationOnBind(
                 bitcoin.variation,
-                binding.textViewBitcoinVariation,
-                binding.imageViewBitcoinVariation
+                binding.textViewVariation,
+                binding.imageViewVariation
             )
-            binding.textViewBitcoinValue.text = getFormattedValueForCurrencyLocale(
+            binding.textViewInfo3.text = getFormattedValueForCurrencyLocale(
                 bitcoin.unitaryRate,
                 bitcoinLocale
             )
