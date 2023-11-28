@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.br_inco.R
-import com.omouravictor.br_inco.databinding.FragmentBitcoinsBinding
+import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
 import com.omouravictor.br_inco.presenter.base.OptionsMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
@@ -30,7 +30,7 @@ import java.util.Locale
 class BitcoinsFragment : Fragment() {
 
     private lateinit var bitcoinDetailsDialog: Dialog
-    private lateinit var binding: FragmentBitcoinsBinding
+    private lateinit var binding: FragmentInfoCardsBinding
     private val optionsMenu = OptionsMenu()
     private val bitcoinViewModel: BitcoinsViewModel by activityViewModels()
 
@@ -39,7 +39,7 @@ class BitcoinsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBitcoinsBinding.inflate(layoutInflater, container, false)
+        binding = FragmentInfoCardsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -55,7 +55,7 @@ class BitcoinsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList("")
+        (binding.recyclerView.adapter as? BitcoinsAdapter)?.filterList("")
     }
 
     private fun observeStocksResult() {
@@ -72,26 +72,26 @@ class BitcoinsFragment : Fragment() {
         configRecyclerView(data.first)
         configSwipeRefreshLayout(data.second)
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewBitcoins.isVisible = true
+        binding.recyclerView.isVisible = true
         binding.includeViewError.root.isVisible = false
     }
 
     private fun handleUiErrorResult(message: String) {
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewBitcoins.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = true
         binding.includeViewError.textViewErrorMessage.text = message
     }
 
     private fun handleUiLoadingResult() {
         binding.swipeRefreshLayout.isRefreshing = true
-        binding.recyclerViewBitcoins.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {
         optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerViewBitcoins.adapter as? BitcoinsAdapter)?.filterList(text)
+            (binding.recyclerView.adapter as? BitcoinsAdapter)?.filterList(text)
         }
     }
 
@@ -114,7 +114,7 @@ class BitcoinsFragment : Fragment() {
     }
 
     private fun configRecyclerView(bitcoinList: List<BitcoinUiModel>) {
-        binding.recyclerViewBitcoins.apply {
+        binding.recyclerView.apply {
             layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
             adapter = BitcoinsAdapter(bitcoinList) { showBitcoinDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)

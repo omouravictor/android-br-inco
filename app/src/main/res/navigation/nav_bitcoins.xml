@@ -9,6 +9,6 @@
         android:id="@+id/bitcoins_fragment"
         android:name="com.omouravictor.br_inco.presenter.bitcoins.BitcoinsFragment"
         android:label="@string/bitcoins"
-        tools:layout="@layout/fragment_bitcoins" />
+        tools:layout="@layout/fragment_info_cards" />
 
 </navigation>

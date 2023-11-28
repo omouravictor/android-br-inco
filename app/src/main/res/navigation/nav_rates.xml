@@ -9,7 +9,7 @@
         android:id="@+id/rates_fragment"
         android:name="com.omouravictor.br_inco.presenter.rates.RatesFragment"
         android:label="@string/rate"
-        tools:layout="@layout/fragment_rates">
+        tools:layout="@layout/fragment_info_cards">
         <action
             android:id="@+id/action_rates_fragment_to_converter_fragment"
             app:destination="@id/converter_fragment" />

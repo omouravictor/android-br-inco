@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.br_inco.R
-import com.omouravictor.br_inco.databinding.FragmentStocksBinding
+import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
 import com.omouravictor.br_inco.presenter.base.OptionsMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
@@ -29,7 +29,7 @@ import com.omouravictor.br_inco.util.StringUtils.getVariationText
 class StocksFragment : Fragment() {
 
     private lateinit var stockDetailsDialog: Dialog
-    private lateinit var binding: FragmentStocksBinding
+    private lateinit var binding: FragmentInfoCardsBinding
     private val optionsMenu = OptionsMenu()
     private val stockViewModel: StocksViewModel by activityViewModels()
 
@@ -38,7 +38,7 @@ class StocksFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStocksBinding.inflate(layoutInflater, container, false)
+        binding = FragmentInfoCardsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -54,7 +54,7 @@ class StocksFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList("")
+        (binding.recyclerView.adapter as? StocksAdapter)?.filterList("")
     }
 
     private fun observeStocksResult() {
@@ -71,26 +71,26 @@ class StocksFragment : Fragment() {
         configRecyclerView(data.first)
         configSwipeRefreshLayout(data.second)
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewStocks.isVisible = true
+        binding.recyclerView.isVisible = true
         binding.includeViewError.root.isVisible = false
     }
 
     private fun handleUiErrorResult(message: String) {
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewStocks.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = true
         binding.includeViewError.textViewErrorMessage.text = message
     }
 
     private fun handleUiLoadingResult() {
         binding.swipeRefreshLayout.isRefreshing = true
-        binding.recyclerViewStocks.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {
         optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerViewStocks.adapter as? StocksAdapter)?.filterList(text)
+            (binding.recyclerView.adapter as? StocksAdapter)?.filterList(text)
         }
     }
 
@@ -113,7 +113,7 @@ class StocksFragment : Fragment() {
     }
 
     private fun configRecyclerView(stockList: List<StockUiModel>) {
-        binding.recyclerViewStocks.apply {
+        binding.recyclerView.apply {
             layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
             adapter = StocksAdapter(stockList) { showStockDetailsDialog(it) }
             layoutManager = LinearLayoutManager(context)

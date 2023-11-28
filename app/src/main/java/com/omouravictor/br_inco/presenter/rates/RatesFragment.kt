@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.omouravictor.br_inco.R
-import com.omouravictor.br_inco.databinding.FragmentRatesBinding
+import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
 import com.omouravictor.br_inco.presenter.base.OptionsMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
@@ -35,7 +35,7 @@ class RatesFragment : Fragment() {
 
     private lateinit var rateBottomSheetDialog: BottomSheetDialog
     private lateinit var rateDetailsDialog: Dialog
-    private lateinit var binding: FragmentRatesBinding
+    private lateinit var binding: FragmentInfoCardsBinding
     private val optionsMenu = OptionsMenu()
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
@@ -45,7 +45,7 @@ class RatesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRatesBinding.inflate(layoutInflater, container, false)
+        binding = FragmentInfoCardsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -62,7 +62,7 @@ class RatesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList("")
+        (binding.recyclerView.adapter as? RatesAdapter)?.filterList("")
     }
 
     private fun observeRatesResult() {
@@ -79,26 +79,26 @@ class RatesFragment : Fragment() {
         configRecyclerView(data.first)
         configSwipeRefreshLayout(data.second)
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewRates.isVisible = true
+        binding.recyclerView.isVisible = true
         binding.includeViewError.root.isVisible = false
     }
 
     private fun handleUiErrorResult(message: String) {
         binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerViewRates.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = true
         binding.includeViewError.textViewErrorMessage.text = message
     }
 
     private fun handleUiLoadingResult() {
         binding.swipeRefreshLayout.isRefreshing = true
-        binding.recyclerViewRates.isVisible = false
+        binding.recyclerView.isVisible = false
         binding.includeViewError.root.isVisible = false
     }
 
     private fun initOptionsMenu() {
         optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerViewRates.adapter as? RatesAdapter)?.filterList(text)
+            (binding.recyclerView.adapter as? RatesAdapter)?.filterList(text)
         }
     }
 
@@ -128,7 +128,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun configRecyclerView(ratesList: List<RateUiModel>) {
-        binding.recyclerViewRates.apply {
+        binding.recyclerView.apply {
             layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
             adapter = RatesAdapter(ratesList) { showRateBottomSheetDialog(it) }
             layoutManager = LinearLayoutManager(context)
