@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="170dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="10dp"
@@ -35,18 +35,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Brazil" />
 
-            <TextView
-                android:id="@+id/textViewStockName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/white"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewStockLocation"
-                tools:text="IBOVESPA" />
+            <ImageView
+                android:id="@+id/imageViewStockVariation"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/icon_arrow_down"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewStockLocation"
+                app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
+                app:layout_constraintTop_toTopOf="@+id/textViewStockLocation" />
 
             <TextView
                 android:id="@+id/textViewStockVariation"
@@ -54,27 +50,36 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewStockVariation"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageViewStockVariation"
                 tools:text="-2,423%" />
 
-            <ImageView
-                android:id="@+id/imageViewStockVariation"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/icon_arrow_down"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewStockVariation"
-                app:layout_constraintEnd_toStartOf="@+id/textViewStockVariation"
-                app:layout_constraintTop_toTopOf="@+id/textViewStockVariation" />
+            <TextView
+                android:id="@+id/textViewStockName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textViewStockPoints"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewStockVariation"
+                tools:text="IBOVESPA" />
 
             <TextView
                 android:id="@+id/textViewStockPoints"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
-                app:layout_constraintStart_toStartOf="@+id/textViewStockName"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDate"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textViewDate"
                 tools:text="193.443,10" />
 
