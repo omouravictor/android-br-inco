@@ -17,12 +17,7 @@ class ConverterViewModel : ViewModel() {
         unitaryRate = getRoundedDouble(rateUiModel.unitaryRate)
     }
 
-    fun calculateConversion(value: String) {
-        try {
-            val conversionResult = value.toDouble() * unitaryRate
-            result.postValue(conversionResult)
-        } catch (e: Exception) {
-            result.postValue(0.0)
-        }
+    fun calculateConversion(value: Double) {
+        result.postValue(value * unitaryRate)
     }
 }

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brNumberFormat
+import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
 
@@ -57,7 +57,7 @@ class StocksAdapter(
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
-            binding.textViewInfo3.text = brNumberFormat.format(stock.points)
+            binding.textViewInfo3.text = brDecimalFormat.format(stock.points)
             binding.textViewDate.text = brDateFormat.format(stock.stockDate)
             binding.textViewTime.text = brTimeFormat.format(stock.stockDate)
             itemView.setOnClickListener {

@@ -22,7 +22,7 @@ import com.omouravictor.br_inco.presenter.base.OptionsMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brNumberFormat
+import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.br_inco.util.StringUtils.getVariationText
 
@@ -140,7 +140,7 @@ class StocksFragment : Fragment() {
                 stockUiModel.cityLocation,
                 stockUiModel.countryLocation
             )
-            pointsTextView.text = brNumberFormat.format(stockUiModel.points)
+            pointsTextView.text = brDecimalFormat.format(stockUiModel.points)
             variationTextView.text = getVariationText(stockUiModel.variation)
             dateTimeTextView.text = getString(
                 R.string.popup_date_time,
