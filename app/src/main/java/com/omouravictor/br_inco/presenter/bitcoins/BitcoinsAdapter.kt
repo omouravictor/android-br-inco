@@ -12,10 +12,10 @@ import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
 import java.util.Locale
 
 class BitcoinsAdapter(
-    private val originalList: List<BitcoinUiModel>,
     private val callbackFunction: (BitcoinUiModel) -> Unit
 ) : RecyclerView.Adapter<BitcoinsAdapter.BitcoinViewHolder>() {
 
+    private var originalList = listOf<BitcoinUiModel>()
     private var filteredList: List<BitcoinUiModel> = originalList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BitcoinViewHolder {
@@ -28,9 +28,7 @@ class BitcoinsAdapter(
         holder.bind(filteredList[position])
     }
 
-    override fun getItemCount(): Int {
-        return filteredList.size
-    }
+    override fun getItemCount(): Int = filteredList.size
 
     fun filterList(text: String) {
         filteredList = if (text.isNotEmpty()) {
@@ -42,6 +40,17 @@ class BitcoinsAdapter(
             originalList
         }
 
+        notifyDataSetChanged()
+    }
+
+    fun clearFilter() {
+        filteredList = originalList
+        notifyDataSetChanged()
+    }
+
+    fun setList(list: List<BitcoinUiModel>) {
+        originalList = list
+        filteredList = list
         notifyDataSetChanged()
     }
 

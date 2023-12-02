@@ -11,11 +11,11 @@ import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
 import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
 
 class StocksAdapter(
-    private val originalList: List<StockUiModel>,
     private val callbackFunction: (StockUiModel) -> Unit
 ) : RecyclerView.Adapter<StocksAdapter.StockViewHolder>() {
 
-    private var filteredList: List<StockUiModel> = originalList
+    private var originalList = listOf<StockUiModel>()
+    private var filteredList = originalList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockViewHolder {
         val binding =
@@ -27,9 +27,7 @@ class StocksAdapter(
         holder.bind(filteredList[position])
     }
 
-    override fun getItemCount(): Int {
-        return filteredList.size
-    }
+    override fun getItemCount(): Int = filteredList.size
 
     fun filterList(text: String) {
         filteredList = if (text.isNotEmpty()) {
@@ -41,6 +39,17 @@ class StocksAdapter(
             originalList
         }
 
+        notifyDataSetChanged()
+    }
+
+    fun clearFilter() {
+        filteredList = originalList
+        notifyDataSetChanged()
+    }
+
+    fun setList(list: List<StockUiModel>) {
+        originalList = list
+        filteredList = list
         notifyDataSetChanged()
     }
 

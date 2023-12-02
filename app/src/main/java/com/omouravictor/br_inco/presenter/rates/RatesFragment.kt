@@ -36,6 +36,7 @@ class RatesFragment : Fragment() {
     private lateinit var rateBottomSheetDialog: BottomSheetDialog
     private lateinit var rateDetailsDialog: Dialog
     private lateinit var binding: FragmentInfoCardsBinding
+    private val ratesAdapter = RatesAdapter { showRateBottomSheetDialog(it) }
     private val optionsMenu = OptionsMenu()
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
@@ -55,6 +56,7 @@ class RatesFragment : Fragment() {
         initOptionsMenu()
         initRateBottomSheetDialog()
         initRateDetailsDialog()
+        initRecyclerView()
         initSwipeRefreshLayout()
 
         observeRatesResult()
@@ -62,7 +64,7 @@ class RatesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (binding.recyclerView.adapter as? RatesAdapter)?.filterList("")
+        ratesAdapter.clearFilter()
     }
 
     private fun observeRatesResult() {
@@ -75,30 +77,49 @@ class RatesFragment : Fragment() {
         }
     }
 
+    private fun setupViews(
+        swipeRefreshLayoutIsRefreshing: Boolean,
+        recyclerViewIsVisible: Boolean,
+        viewErrorIsVisible: Boolean
+    ) {
+        binding.swipeRefreshLayout.isRefreshing = swipeRefreshLayoutIsRefreshing
+        binding.recyclerView.isVisible = recyclerViewIsVisible
+        binding.includeViewError.root.isVisible = viewErrorIsVisible
+    }
+
     private fun handleUiSuccessResult(data: Pair<List<RateUiModel>, DataSource>) {
-        configRecyclerView(data.first)
-        configSwipeRefreshLayout(data.second)
-        binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerView.isVisible = true
-        binding.includeViewError.root.isVisible = false
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = false,
+            recyclerViewIsVisible = true,
+            viewErrorIsVisible = false
+        )
+
+        ratesAdapter.setList(data.first)
+        binding.recyclerView.layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
+        binding.swipeRefreshLayout.isEnabled = data.second == DataSource.LOCAL
     }
 
     private fun handleUiErrorResult(message: String) {
-        binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerView.isVisible = false
-        binding.includeViewError.root.isVisible = true
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = false,
+            recyclerViewIsVisible = false,
+            viewErrorIsVisible = true
+        )
+
         binding.includeViewError.textViewErrorMessage.text = message
     }
 
     private fun handleUiLoadingResult() {
-        binding.swipeRefreshLayout.isRefreshing = true
-        binding.recyclerView.isVisible = false
-        binding.includeViewError.root.isVisible = false
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = true,
+            recyclerViewIsVisible = false,
+            viewErrorIsVisible = false
+        )
     }
 
     private fun initOptionsMenu() {
         optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerView.adapter as? RatesAdapter)?.filterList(text)
+            ratesAdapter.filterList(text)
         }
     }
 
@@ -118,6 +139,11 @@ class RatesFragment : Fragment() {
             R.style.Animation_Design_BottomSheetDialog
     }
 
+    private fun initRecyclerView() {
+        binding.recyclerView.adapter = ratesAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
     private fun initSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
@@ -125,18 +151,6 @@ class RatesFragment : Fragment() {
             (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             ratesViewModel.getRates()
         }
-    }
-
-    private fun configRecyclerView(ratesList: List<RateUiModel>) {
-        binding.recyclerView.apply {
-            layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
-            adapter = RatesAdapter(ratesList) { showRateBottomSheetDialog(it) }
-            layoutManager = LinearLayoutManager(context)
-        }
-    }
-
-    private fun configSwipeRefreshLayout(dataSource: DataSource) {
-        binding.swipeRefreshLayout.isEnabled = dataSource == DataSource.LOCAL
     }
 
     private fun showRateBottomSheetDialog(rateUiModel: RateUiModel) {

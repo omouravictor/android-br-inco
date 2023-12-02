@@ -31,6 +31,7 @@ class StocksFragment : Fragment() {
     private lateinit var stockDetailsDialog: Dialog
     private lateinit var binding: FragmentInfoCardsBinding
     private val optionsMenu = OptionsMenu()
+    private val stocksAdapter = StocksAdapter { showStockDetailsDialog(it) }
     private val stockViewModel: StocksViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class StocksFragment : Fragment() {
 
         initOptionsMenu()
         initStockDetailsDialog()
+        initRecyclerView()
         initSwipeRefreshLayout()
 
         observeStocksResult()
@@ -54,7 +56,7 @@ class StocksFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (binding.recyclerView.adapter as? StocksAdapter)?.filterList("")
+        stocksAdapter.clearFilter()
     }
 
     private fun observeStocksResult() {
@@ -67,30 +69,49 @@ class StocksFragment : Fragment() {
         }
     }
 
+    private fun setupViews(
+        swipeRefreshLayoutIsRefreshing: Boolean,
+        recyclerViewIsVisible: Boolean,
+        viewErrorIsVisible: Boolean
+    ) {
+        binding.swipeRefreshLayout.isRefreshing = swipeRefreshLayoutIsRefreshing
+        binding.recyclerView.isVisible = recyclerViewIsVisible
+        binding.includeViewError.root.isVisible = viewErrorIsVisible
+    }
+
     private fun handleUiSuccessResult(data: Pair<List<StockUiModel>, DataSource>) {
-        configRecyclerView(data.first)
-        configSwipeRefreshLayout(data.second)
-        binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerView.isVisible = true
-        binding.includeViewError.root.isVisible = false
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = false,
+            recyclerViewIsVisible = true,
+            viewErrorIsVisible = false
+        )
+
+        stocksAdapter.setList(data.first)
+        binding.recyclerView.layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
+        binding.swipeRefreshLayout.isEnabled = data.second == DataSource.LOCAL
     }
 
     private fun handleUiErrorResult(message: String) {
-        binding.swipeRefreshLayout.isRefreshing = false
-        binding.recyclerView.isVisible = false
-        binding.includeViewError.root.isVisible = true
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = false,
+            recyclerViewIsVisible = false,
+            viewErrorIsVisible = true
+        )
+
         binding.includeViewError.textViewErrorMessage.text = message
     }
 
     private fun handleUiLoadingResult() {
-        binding.swipeRefreshLayout.isRefreshing = true
-        binding.recyclerView.isVisible = false
-        binding.includeViewError.root.isVisible = false
+        setupViews(
+            swipeRefreshLayoutIsRefreshing = true,
+            recyclerViewIsVisible = false,
+            viewErrorIsVisible = false
+        )
     }
 
     private fun initOptionsMenu() {
         optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
-            (binding.recyclerView.adapter as? StocksAdapter)?.filterList(text)
+            stocksAdapter.filterList(text)
         }
     }
 
@@ -103,6 +124,11 @@ class StocksFragment : Fragment() {
             R.style.Animation_Design_BottomSheetDialog
     }
 
+    private fun initRecyclerView() {
+        binding.recyclerView.adapter = stocksAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
     private fun initSwipeRefreshLayout() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
@@ -110,18 +136,6 @@ class StocksFragment : Fragment() {
             (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             stockViewModel.getStocks()
         }
-    }
-
-    private fun configRecyclerView(stockList: List<StockUiModel>) {
-        binding.recyclerView.apply {
-            layoutAnimation = loadLayoutAnimation(context, R.anim.layout_animation)
-            adapter = StocksAdapter(stockList) { showStockDetailsDialog(it) }
-            layoutManager = LinearLayoutManager(context)
-        }
-    }
-
-    private fun configSwipeRefreshLayout(dataSource: DataSource) {
-        binding.swipeRefreshLayout.isEnabled = dataSource == DataSource.LOCAL
     }
 
     private fun showStockDetailsDialog(stockUiModel: StockUiModel) {
