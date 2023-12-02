@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.br_inco.R
 import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
-import com.omouravictor.br_inco.presenter.base.OptionsMenu
+import com.omouravictor.br_inco.presenter.base.SearchOptionMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
 import com.omouravictor.br_inco.util.FormatUtils
@@ -28,7 +28,7 @@ class StocksFragment : Fragment() {
 
     private lateinit var stockDetailsDialog: Dialog
     private lateinit var binding: FragmentInfoCardsBinding
-    private val optionsMenu = OptionsMenu()
+    private val searchOptionMenu = SearchOptionMenu()
     private val stocksAdapter = StocksAdapter { showStockDetailsDialog(it) }
     private val stockViewModel: StocksViewModel by activityViewModels()
 
@@ -108,7 +108,7 @@ class StocksFragment : Fragment() {
     }
 
     private fun initOptionsMenu() {
-        optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
+        searchOptionMenu.addSearchOptionMenu(requireActivity(), viewLifecycleOwner) { text ->
             stocksAdapter.filterList(text)
         }
     }
@@ -131,7 +131,7 @@ class StocksFragment : Fragment() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            (searchOptionMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             stockViewModel.getStocks()
         }
     }

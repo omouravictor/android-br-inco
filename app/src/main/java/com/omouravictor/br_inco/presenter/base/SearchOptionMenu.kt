@@ -10,11 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.omouravictor.br_inco.R
 
-class OptionsMenu {
+class SearchOptionMenu {
 
     lateinit var searchMenuItem: MenuItem
 
-    fun addOptionsMenu(
+    fun addSearchOptionMenu(
         fragmentActivity: FragmentActivity,
         viewLifecycleOwner: LifecycleOwner,
         callbackFunction: (String) -> Unit

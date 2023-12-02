@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.omouravictor.br_inco.R
 import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
-import com.omouravictor.br_inco.presenter.base.OptionsMenu
+import com.omouravictor.br_inco.presenter.base.SearchOptionMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.converter.ConverterViewModel
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
@@ -35,7 +35,7 @@ class RatesFragment : Fragment() {
     private lateinit var rateDetailsDialog: Dialog
     private lateinit var binding: FragmentInfoCardsBinding
     private val ratesAdapter = RatesAdapter { showRateBottomSheetDialog(it) }
-    private val optionsMenu = OptionsMenu()
+    private val searchOptionMenu = SearchOptionMenu()
     private val ratesViewModel: RatesViewModel by activityViewModels()
     private val converterViewModel: ConverterViewModel by activityViewModels()
 
@@ -116,7 +116,7 @@ class RatesFragment : Fragment() {
     }
 
     private fun initOptionsMenu() {
-        optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
+        searchOptionMenu.addSearchOptionMenu(requireActivity(), viewLifecycleOwner) { text ->
             ratesAdapter.filterList(text)
         }
     }
@@ -146,7 +146,7 @@ class RatesFragment : Fragment() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            (searchOptionMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             ratesViewModel.getRates()
         }
     }

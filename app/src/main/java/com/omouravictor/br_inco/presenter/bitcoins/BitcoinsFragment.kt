@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.omouravictor.br_inco.R
 import com.omouravictor.br_inco.databinding.FragmentInfoCardsBinding
 import com.omouravictor.br_inco.presenter.base.DataSource
-import com.omouravictor.br_inco.presenter.base.OptionsMenu
+import com.omouravictor.br_inco.presenter.base.SearchOptionMenu
 import com.omouravictor.br_inco.presenter.base.UiResultStatus
 import com.omouravictor.br_inco.presenter.bitcoins.model.BitcoinUiModel
 import com.omouravictor.br_inco.util.FormatUtils
@@ -29,7 +29,7 @@ class BitcoinsFragment : Fragment() {
 
     private lateinit var bitcoinDetailsDialog: Dialog
     private lateinit var binding: FragmentInfoCardsBinding
-    private val optionsMenu = OptionsMenu()
+    private val searchOptionMenu = SearchOptionMenu()
     private val bitcoinsAdapter = BitcoinsAdapter { showBitcoinDetailsDialog(it) }
     private val bitcoinViewModel: BitcoinsViewModel by activityViewModels()
 
@@ -109,7 +109,7 @@ class BitcoinsFragment : Fragment() {
     }
 
     private fun initOptionsMenu() {
-        optionsMenu.addOptionsMenu(requireActivity(), viewLifecycleOwner) { text ->
+        searchOptionMenu.addSearchOptionMenu(requireActivity(), viewLifecycleOwner) { text ->
             bitcoinsAdapter.filterList(text)
         }
     }
@@ -132,7 +132,7 @@ class BitcoinsFragment : Fragment() {
         val greenColor = ContextCompat.getColor(requireContext(), R.color.green)
         binding.swipeRefreshLayout.setColorSchemeColors(greenColor, greenColor, greenColor)
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (optionsMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
+            (searchOptionMenu.searchMenuItem.actionView as SearchView).onActionViewCollapsed()
             bitcoinViewModel.getBitcoins()
         }
     }
