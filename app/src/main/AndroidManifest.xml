@@ -15,8 +15,7 @@
 
         <activity
             android:name="com.omouravictor.br_inco.presenter.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing">
+            android:exported="true">
 
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -12,6 +12,7 @@ import com.omouravictor.br_inco.databinding.FragmentConverterBinding
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brCurrencyFormat
 import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
+import com.omouravictor.br_inco.util.SystemServiceUtils.hideKeyboard
 
 class ConverterFragment : Fragment() {
 
@@ -43,6 +44,11 @@ class ConverterFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        hideKeyboard(requireActivity(), binding.root.windowToken)
+    }
+
     private fun initTextInputEditTextValueConverter() {
         binding.textInputEditTextValueConverter.setText("1,00")
         binding.textInputEditTextValueConverter.requestFocus()
@@ -61,7 +67,6 @@ class ConverterFragment : Fragment() {
                 binding.textInputEditTextValueConverter.setText(formatted)
                 binding.textInputEditTextValueConverter.setSelection(formatted.length)
                 binding.textInputEditTextValueConverter.addTextChangedListener(this)
-
             }
 
             override fun afterTextChanged(s: Editable?) {}
