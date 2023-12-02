@@ -47,12 +47,11 @@ class ConverterFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        SystemServiceUtils.hideKeyboard(requireActivity(), binding.root.windowToken)
+        SystemServiceUtils.hideKeyboard(requireActivity(), requireView())
     }
 
     private fun initTextInputEditTextValueConverter() {
         binding.textInputEditTextValueConverter.setText("1,00")
-        binding.textInputEditTextValueConverter.requestFocus()
         binding.textInputEditTextValueConverter.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -73,7 +72,7 @@ class ConverterFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        SystemServiceUtils.showKeyboard(requireActivity())
+        SystemServiceUtils.showKeyboard(requireActivity(), binding.textInputEditTextValueConverter)
     }
 
     private fun setRateInfo(rateUiModel: RateUiModel) {

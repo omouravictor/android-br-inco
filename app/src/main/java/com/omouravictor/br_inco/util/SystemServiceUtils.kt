@@ -1,20 +1,20 @@
 package com.omouravictor.br_inco.util
 
 import android.app.Activity
-import android.content.Context
-import android.os.IBinder
-import android.view.inputmethod.InputMethodManager
+import android.view.View
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 
 object SystemServiceUtils {
 
-    fun hideKeyboard(activity: Activity, windowToken: IBinder) {
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(windowToken, 0)
+    fun hideKeyboard(activity: Activity, view: View) {
+        view.clearFocus()
+        WindowCompat.getInsetsController(activity.window, view).hide(WindowInsetsCompat.Type.ime())
     }
 
-    fun showKeyboard(activity: Activity) {
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(activity.currentFocus, InputMethodManager.SHOW_IMPLICIT)
+    fun showKeyboard(activity: Activity, view: View) {
+        view.requestFocus()
+        WindowCompat.getInsetsController(activity.window, view).show(WindowInsetsCompat.Type.ime())
     }
 
 }
