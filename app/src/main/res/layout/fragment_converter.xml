@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewCurrencyTerm"
-                app:layout_constraintEnd_toEndOf="@+id/textInputLayoutConverter"
+                app:layout_constraintEnd_toEndOf="@+id/textInputLayoutAmount"
                 app:layout_constraintTop_toTopOf="@+id/textViewCurrencyTerm"
                 tools:text="R$ 4,99" />
 
@@ -43,23 +43,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayoutConverter"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayoutAmount"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCurrencyName"
                 tools:text="USD" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutConverter"
+                android:id="@+id/textInputLayoutAmount"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/value_for_conversion"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewUnitaryRateValue">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextValueConverter"
+                    android:id="@+id/textInputEditTextAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
@@ -78,7 +79,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConverter"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAmount"
                 tools:text="R$ 4,99" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

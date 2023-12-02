@@ -177,9 +177,9 @@ class RatesFragment : Fragment() {
     }
 
     private fun prepareAndNavigateToConverterFragment(rateUiModel: RateUiModel) {
-        converterViewModel.setInitialValues(rateUiModel)
-        val action = RatesFragmentDirections.actionRatesFragmentToConverterFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(
+            RatesFragmentDirections.navToConverterFragment(rateUiModel)
+        )
     }
 
     private fun showRateDetailsDialog(rate: RateUiModel) {

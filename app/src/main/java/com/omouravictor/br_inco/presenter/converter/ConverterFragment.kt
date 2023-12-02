@@ -17,6 +17,9 @@ class ConverterFragment : Fragment() {
 
     private lateinit var binding: FragmentConverterBinding
     private val converterViewModel: ConverterViewModel by activityViewModels()
+    private val rateUiModelArg by lazy {
+        ConverterFragmentArgs.fromBundle(requireArguments()).rateUiModelArg
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,19 +32,15 @@ class ConverterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initTextInputEditTextValueConverter()
+        prepareForConversion(rateUiModelArg)
     }
 
     override fun onStart() {
         super.onStart()
 
-        converterViewModel.rate.observe(this) {
-            setRateInfo(it)
-        }
-
-        converterViewModel.result.observe(this) {
+        converterViewModel.conversionResult.observe(this) { conversionResult ->
             binding.textViewResultValue.text =
-                FormatUtils.BrazilianFormats.brCurrencyFormat.format(it)
+                FormatUtils.BrazilianFormats.brCurrencyFormat.format(conversionResult)
         }
     }
 
@@ -50,35 +49,45 @@ class ConverterFragment : Fragment() {
         SystemServiceUtils.hideKeyboard(requireActivity(), requireView())
     }
 
-    private fun initTextInputEditTextValueConverter() {
-        binding.textInputEditTextValueConverter.setText("1,00")
-        binding.textInputEditTextValueConverter.addTextChangedListener(object : TextWatcher {
+    private fun prepareForConversion(rateUiModel: RateUiModel) {
+        converterViewModel.unitaryRate = rateUiModel.unitaryRate
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                binding.textInputEditTextValueConverter.removeTextChangedListener(this)
-
-                val cleanString = s.replace("[,.]".toRegex(), "")
-                val value = cleanString.toDouble() / 100
-                val formatted = FormatUtils.BrazilianFormats.brDecimalFormat.format(value)
-
-                converterViewModel.calculateConversion(value)
-                binding.textInputEditTextValueConverter.setText(formatted)
-                binding.textInputEditTextValueConverter.setSelection(formatted.length)
-                binding.textInputEditTextValueConverter.addTextChangedListener(this)
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-
-        SystemServiceUtils.showKeyboard(requireActivity(), binding.textInputEditTextValueConverter)
-    }
-
-    private fun setRateInfo(rateUiModel: RateUiModel) {
         binding.textViewCurrencyName.text = rateUiModel.currencyName
         binding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
         binding.textViewUnitaryRateValue.text =
             FormatUtils.BrazilianFormats.brCurrencyFormat.format(rateUiModel.unitaryRate)
+
+        setupTextInputEditTextAmount()
     }
+
+    private fun setupTextInputEditTextAmount() {
+        with(binding.textInputEditTextAmount) {
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(cs: CharSequence?, s: Int, c: Int, a: Int) {}
+
+                override fun onTextChanged(
+                    text: CharSequence, start: Int, before: Int, count: Int
+                ) {
+                    removeTextChangedListener(this)
+
+                    val cleanText = text.replace("[,.]".toRegex(), "")
+                    val amount = cleanText.toDoubleOrNull()?.div(100) ?: 0.0
+                    val formattedAmount =
+                        FormatUtils.BrazilianFormats.brDecimalFormat.format(amount)
+
+                    converterViewModel.calculateConversion(amount)
+                    setText(formattedAmount)
+                    setSelection(formattedAmount.length)
+
+                    addTextChangedListener(this)
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
+            setText("1,00")
+            SystemServiceUtils.showKeyboard(requireActivity(), this)
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background">@color/black</color>
-    <color name="navigationBackground">#353535</color>
+    <color name="navigationBackground">#272727</color>
     <color name="itemListPressed">#222222</color>
 </resources>

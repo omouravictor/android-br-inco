@@ -11,12 +11,19 @@
         android:label="@string/rate"
         tools:layout="@layout/fragment_info_cards">
         <action
-            android:id="@+id/action_rates_fragment_to_converter_fragment"
+            android:id="@+id/navToConverterFragment"
             app:destination="@id/converter_fragment" />
     </fragment>
+
     <fragment
         android:id="@+id/converter_fragment"
         android:name="com.omouravictor.br_inco.presenter.converter.ConverterFragment"
         android:label="@string/conversion"
-        tools:layout="@layout/fragment_converter" />
+        tools:layout="@layout/fragment_converter">
+
+        <argument
+            android:name="rateUiModelArg"
+            app:argType="com.omouravictor.br_inco.presenter.rates.model.RateUiModel" />
+    </fragment>
+
 </navigation>
