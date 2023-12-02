@@ -3,8 +3,7 @@ package com.omouravictor.br_inco.data.network.hgfinanceapi.stock
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.br_inco.data.local.entity.StockEntity
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
-import com.omouravictor.br_inco.util.StringUtils.getCityInPortuguese
-import com.omouravictor.br_inco.util.StringUtils.getCountryInPortuguese
+import com.omouravictor.br_inco.util.StringUtils
 import java.util.*
 
 data class ApiStocksResponse(
@@ -41,8 +40,8 @@ fun ApiStocksResponse.toStocksUiModelList(): List<StockUiModel> {
         StockUiModel(
             stocksMapKey,
             stocksMapValue.name,
-            getCountryInPortuguese(countryLocation),
-            getCityInPortuguese(cityLocation),
+            StringUtils.getCountryInPortuguese(countryLocation),
+            StringUtils.getCityInPortuguese(cityLocation),
             stocksMapValue.points,
             stocksMapValue.variation,
             stockDate

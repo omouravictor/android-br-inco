@@ -3,7 +3,7 @@ package com.omouravictor.br_inco.data.network.hgfinanceapi.rates
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.br_inco.data.local.entity.RateEntity
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
-import com.omouravictor.br_inco.util.StringUtils.getCurrencyNameInPortuguese
+import com.omouravictor.br_inco.util.StringUtils
 import java.util.*
 
 data class ApiRatesResponse(
@@ -27,7 +27,7 @@ fun ApiRatesResponse.toRatesEntityList(): List<RateEntity> {
 fun ApiRatesResponse.toRatesUiModelList(): List<RateUiModel> {
     return results.currencies.map { (currenciesMapKey, currenciesMapValue) ->
         RateUiModel(
-            getCurrencyNameInPortuguese(currenciesMapKey),
+            StringUtils.getCurrencyNameInPortuguese(currenciesMapKey),
             currenciesMapKey,
             currenciesMapValue.buy,
             currenciesMapValue.variation,

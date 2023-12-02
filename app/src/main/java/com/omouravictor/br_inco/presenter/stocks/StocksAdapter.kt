@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.stocks.model.StockUiModel
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
+import com.omouravictor.br_inco.util.FormatUtils
+import com.omouravictor.br_inco.util.ViewHolderUtils
 
 class StocksAdapter(
     private val callbackFunction: (StockUiModel) -> Unit
@@ -61,14 +59,17 @@ class StocksAdapter(
         fun bind(stock: StockUiModel) {
             binding.textViewInfo1.text = stock.countryLocation
             binding.textViewInfo2.text = stock.name
-            setVariationOnBind(
+            ViewHolderUtils.setVariationOnBind(
                 stock.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
-            binding.textViewInfo3.text = brDecimalFormat.format(stock.points)
-            binding.textViewDate.text = brDateFormat.format(stock.stockDate)
-            binding.textViewTime.text = brTimeFormat.format(stock.stockDate)
+            binding.textViewInfo3.text =
+                FormatUtils.BrazilianFormats.brDecimalFormat.format(stock.points)
+            binding.textViewDate.text =
+                FormatUtils.BrazilianFormats.brDateFormat.format(stock.stockDate)
+            binding.textViewTime.text =
+                FormatUtils.BrazilianFormats.brTimeFormat.format(stock.stockDate)
             itemView.setOnClickListener {
                 callbackFunction(stock)
             }

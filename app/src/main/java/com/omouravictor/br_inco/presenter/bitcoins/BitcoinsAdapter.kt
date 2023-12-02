@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.br_inco.util.FormatUtils.getFormattedValueForCurrencyLocale
-import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
+import com.omouravictor.br_inco.util.FormatUtils
+import com.omouravictor.br_inco.util.ViewHolderUtils
 import java.util.Locale
 
 class BitcoinsAdapter(
@@ -64,17 +62,19 @@ class BitcoinsAdapter(
 
             binding.textViewInfo1.text = bitcoin.currencyTerm
             binding.textViewInfo2.text = bitcoin.name
-            setVariationOnBind(
+            ViewHolderUtils.setVariationOnBind(
                 bitcoin.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
-            binding.textViewInfo3.text = getFormattedValueForCurrencyLocale(
+            binding.textViewInfo3.text = FormatUtils.getFormattedValueForCurrencyLocale(
                 bitcoin.unitaryRate,
                 bitcoinLocale
             )
-            binding.textViewDate.text = brDateFormat.format(bitcoin.bitcoinDate)
-            binding.textViewTime.text = brTimeFormat.format(bitcoin.bitcoinDate)
+            binding.textViewDate.text =
+                FormatUtils.BrazilianFormats.brDateFormat.format(bitcoin.bitcoinDate)
+            binding.textViewTime.text =
+                FormatUtils.BrazilianFormats.brTimeFormat.format(bitcoin.bitcoinDate)
             itemView.setOnClickListener {
                 callbackFunction(bitcoin)
             }

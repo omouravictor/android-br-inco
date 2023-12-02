@@ -3,7 +3,7 @@ package com.omouravictor.br_inco.data.network.hgfinanceapi.bitcoin
 import com.google.gson.annotations.SerializedName
 import com.omouravictor.br_inco.data.local.entity.BitcoinEntity
 import com.omouravictor.br_inco.presenter.bitcoins.model.BitcoinUiModel
-import com.omouravictor.br_inco.util.StringUtils.getCurrencyNameInPortuguese
+import com.omouravictor.br_inco.util.StringUtils
 import java.util.*
 
 data class ApiBitcoinsResponse(
@@ -31,7 +31,7 @@ fun ApiBitcoinsResponse.toBitcoinsUiModelList(): List<BitcoinUiModel> {
     return results.bitcoins.map { (_, bitcoinsMapValue) ->
         BitcoinUiModel(
             bitcoinsMapValue.name,
-            getCurrencyNameInPortuguese(bitcoinsMapValue.format[0]),
+            StringUtils.getCurrencyNameInPortuguese(bitcoinsMapValue.format[0]),
             bitcoinsMapValue.format[0],
             bitcoinsMapValue.format[1].substring(0..1),
             bitcoinsMapValue.format[1].substring(3..4),

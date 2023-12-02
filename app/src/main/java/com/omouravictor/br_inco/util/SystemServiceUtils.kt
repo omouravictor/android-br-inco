@@ -12,4 +12,9 @@ object SystemServiceUtils {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
+    fun showKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(activity.currentFocus, InputMethodManager.SHOW_IMPLICIT)
+    }
+
 }

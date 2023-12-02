@@ -1,10 +1,8 @@
 package com.omouravictor.br_inco.util
 
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
-
 object StringUtils {
     fun getVariationText(variation: Double): String {
-        val formattedVariation = brDecimalFormat.format(variation)
+        val formattedVariation = FormatUtils.BrazilianFormats.brDecimalFormat.format(variation)
         return if (variation > 0.0) "+${formattedVariation}%" else "${formattedVariation}%"
     }
 

@@ -3,7 +3,7 @@ package com.omouravictor.br_inco.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
-import com.omouravictor.br_inco.util.StringUtils.getCurrencyNameInPortuguese
+import com.omouravictor.br_inco.util.StringUtils
 import java.util.Date
 
 @Entity(tableName = "rate_table")
@@ -16,7 +16,7 @@ data class RateEntity(
 )
 
 fun RateEntity.toRateUiModel() = RateUiModel(
-    getCurrencyNameInPortuguese(currencyTerm),
+    StringUtils.getCurrencyNameInPortuguese(currencyTerm),
     currencyTerm,
     unitaryRate,
     variation,

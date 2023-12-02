@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brCurrencyFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDateFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brTimeFormat
-import com.omouravictor.br_inco.util.NumberUtils.getRoundedDouble
-import com.omouravictor.br_inco.util.ViewHolderUtils.setVariationOnBind
+import com.omouravictor.br_inco.util.FormatUtils
+import com.omouravictor.br_inco.util.NumberUtils
+import com.omouravictor.br_inco.util.ViewHolderUtils
 
 class RatesAdapter(
     private val callbackFunction: (RateUiModel) -> Unit
@@ -62,16 +60,18 @@ class RatesAdapter(
         fun bind(rate: RateUiModel) {
             binding.textViewInfo1.text = rate.currencyTerm
             binding.textViewInfo2.text = rate.currencyName
-            setVariationOnBind(
+            ViewHolderUtils.setVariationOnBind(
                 rate.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
-            binding.textViewInfo3.text = brCurrencyFormat.format(
-                getRoundedDouble(rate.unitaryRate)
+            binding.textViewInfo3.text = FormatUtils.BrazilianFormats.brCurrencyFormat.format(
+                NumberUtils.getRoundedDouble(rate.unitaryRate)
             )
-            binding.textViewDate.text = brDateFormat.format(rate.rateDate)
-            binding.textViewTime.text = brTimeFormat.format(rate.rateDate)
+            binding.textViewDate.text =
+                FormatUtils.BrazilianFormats.brDateFormat.format(rate.rateDate)
+            binding.textViewTime.text =
+                FormatUtils.BrazilianFormats.brTimeFormat.format(rate.rateDate)
             itemView.setOnClickListener {
                 callbackFunction(rate)
             }

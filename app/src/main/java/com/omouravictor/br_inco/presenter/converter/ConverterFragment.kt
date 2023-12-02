@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.omouravictor.br_inco.databinding.FragmentConverterBinding
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brCurrencyFormat
-import com.omouravictor.br_inco.util.FormatUtils.BrazilianFormats.brDecimalFormat
-import com.omouravictor.br_inco.util.SystemServiceUtils.hideKeyboard
+import com.omouravictor.br_inco.util.FormatUtils
+import com.omouravictor.br_inco.util.SystemServiceUtils
 
 class ConverterFragment : Fragment() {
 
@@ -35,18 +34,20 @@ class ConverterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         converterViewModel.rate.observe(this) {
             setRateInfo(it)
         }
 
         converterViewModel.result.observe(this) {
-            binding.textViewResultValue.text = brCurrencyFormat.format(it)
+            binding.textViewResultValue.text =
+                FormatUtils.BrazilianFormats.brCurrencyFormat.format(it)
         }
     }
 
     override fun onStop() {
         super.onStop()
-        hideKeyboard(requireActivity(), binding.root.windowToken)
+        SystemServiceUtils.hideKeyboard(requireActivity(), binding.root.windowToken)
     }
 
     private fun initTextInputEditTextValueConverter() {
@@ -61,7 +62,7 @@ class ConverterFragment : Fragment() {
 
                 val cleanString = s.replace("[,.]".toRegex(), "")
                 val value = cleanString.toDouble() / 100
-                val formatted = brDecimalFormat.format(value)
+                val formatted = FormatUtils.BrazilianFormats.brDecimalFormat.format(value)
 
                 converterViewModel.calculateConversion(value)
                 binding.textInputEditTextValueConverter.setText(formatted)
@@ -71,11 +72,14 @@ class ConverterFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        SystemServiceUtils.showKeyboard(requireActivity())
     }
 
     private fun setRateInfo(rateUiModel: RateUiModel) {
         binding.textViewCurrencyName.text = rateUiModel.currencyName
         binding.textViewCurrencyTerm.text = rateUiModel.currencyTerm
-        binding.textViewUnitaryRateValue.text = brCurrencyFormat.format(rateUiModel.unitaryRate)
+        binding.textViewUnitaryRateValue.text =
+            FormatUtils.BrazilianFormats.brCurrencyFormat.format(rateUiModel.unitaryRate)
     }
 }
