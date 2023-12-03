@@ -57,26 +57,26 @@ class BitcoinsAdapter(
         private val callbackFunction: (BitcoinUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(bitcoin: BitcoinUiModel) {
-            val bitcoinLocale = Locale(bitcoin.language, bitcoin.countryLanguage)
+        fun bind(bitcoinUiModel: BitcoinUiModel) {
+            val bitcoinLocale = Locale(bitcoinUiModel.language, bitcoinUiModel.countryLanguage)
 
-            binding.textViewInfo1.text = bitcoin.currencyTerm
-            binding.textViewInfo2.text = bitcoin.name
+            binding.textViewInfo1.text = bitcoinUiModel.currencyTerm
+            binding.textViewInfo2.text = bitcoinUiModel.name
             ViewHolderUtils.setVariationOnBind(
-                bitcoin.variation,
+                bitcoinUiModel.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
             binding.textViewInfo3.text = FormatUtils.getFormattedValueForCurrencyLocale(
-                bitcoin.unitaryRate,
+                bitcoinUiModel.unitaryRate,
                 bitcoinLocale
             )
             binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(bitcoin.bitcoinDate)
+                FormatUtils.BrazilianFormats.brDateFormat.format(bitcoinUiModel.bitcoinDate)
             binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(bitcoin.bitcoinDate)
+                FormatUtils.BrazilianFormats.brTimeFormat.format(bitcoinUiModel.bitcoinDate)
             itemView.setOnClickListener {
-                callbackFunction(bitcoin)
+                callbackFunction(bitcoinUiModel)
             }
         }
     }

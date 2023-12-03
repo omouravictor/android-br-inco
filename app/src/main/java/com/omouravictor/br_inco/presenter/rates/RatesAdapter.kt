@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.omouravictor.br_inco.databinding.ItemListBinding
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
 import com.omouravictor.br_inco.util.FormatUtils
-import com.omouravictor.br_inco.util.NumberUtils
 import com.omouravictor.br_inco.util.ViewHolderUtils
 
 class RatesAdapter(
@@ -57,23 +56,23 @@ class RatesAdapter(
         private val callbackFunction: (RateUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(rate: RateUiModel) {
-            binding.textViewInfo1.text = rate.currencyTerm
-            binding.textViewInfo2.text = rate.currencyName
+        fun bind(rateUiModel: RateUiModel) {
+            binding.textViewInfo1.text = rateUiModel.currencyTerm
+            binding.textViewInfo2.text = rateUiModel.currencyName
             ViewHolderUtils.setVariationOnBind(
-                rate.variation,
+                rateUiModel.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
             binding.textViewInfo3.text = FormatUtils.BrazilianFormats.brCurrencyFormat.format(
-                NumberUtils.getRoundedDouble(rate.unitaryRate)
+                rateUiModel.unitaryRate
             )
             binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(rate.rateDate)
+                FormatUtils.BrazilianFormats.brDateFormat.format(rateUiModel.rateDate)
             binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(rate.rateDate)
+                FormatUtils.BrazilianFormats.brTimeFormat.format(rateUiModel.rateDate)
             itemView.setOnClickListener {
-                callbackFunction(rate)
+                callbackFunction(rateUiModel)
             }
         }
     }

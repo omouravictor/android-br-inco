@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.omouravictor.br_inco.databinding.FragmentConverterBinding
 import com.omouravictor.br_inco.presenter.rates.model.RateUiModel
 import com.omouravictor.br_inco.util.FormatUtils
+import com.omouravictor.br_inco.util.NumberUtils
 import com.omouravictor.br_inco.util.SystemServiceUtils
 
 class ConverterFragment : Fragment() {
@@ -50,7 +51,7 @@ class ConverterFragment : Fragment() {
     }
 
     private fun prepareForConversion(rateUiModel: RateUiModel) {
-        converterViewModel.unitaryRate = rateUiModel.unitaryRate
+        converterViewModel.unitaryRate = NumberUtils.getRoundedDouble(rateUiModel.unitaryRate)
 
         binding.textViewCurrencyName.text = rateUiModel.currencyName
         binding.textViewCurrencyTerm.text = rateUiModel.currencyTerm

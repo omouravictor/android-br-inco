@@ -56,22 +56,22 @@ class StocksAdapter(
         private val callbackFunction: (StockUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(stock: StockUiModel) {
-            binding.textViewInfo1.text = stock.countryLocation
-            binding.textViewInfo2.text = stock.name
+        fun bind(stockUiModel: StockUiModel) {
+            binding.textViewInfo1.text = stockUiModel.countryLocation
+            binding.textViewInfo2.text = stockUiModel.name
             ViewHolderUtils.setVariationOnBind(
-                stock.variation,
+                stockUiModel.variation,
                 binding.textViewVariation,
                 binding.imageViewVariation
             )
             binding.textViewInfo3.text =
-                FormatUtils.BrazilianFormats.brDecimalFormat.format(stock.points)
+                FormatUtils.BrazilianFormats.brDecimalFormat.format(stockUiModel.points)
             binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(stock.stockDate)
+                FormatUtils.BrazilianFormats.brDateFormat.format(stockUiModel.stockDate)
             binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(stock.stockDate)
+                FormatUtils.BrazilianFormats.brTimeFormat.format(stockUiModel.stockDate)
             itemView.setOnClickListener {
-                callbackFunction(stock)
+                callbackFunction(stockUiModel)
             }
         }
     }
