@@ -71,10 +71,6 @@ class BitcoinsAdapter(
                 bitcoinUiModel.unitaryRate,
                 bitcoinLocale
             )
-            binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(bitcoinUiModel.bitcoinDate)
-            binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(bitcoinUiModel.bitcoinDate)
             itemView.setOnClickListener {
                 callbackFunction(bitcoinUiModel)
             }

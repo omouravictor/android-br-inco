@@ -74,36 +74,11 @@
                 android:id="@+id/textViewInfo3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:textColor="@color/white"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewDate"
-                app:layout_constraintEnd_toStartOf="@+id/textViewDate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textViewDate"
-                tools:text="Info3" />
-
-            <TextView
-                android:id="@+id/textViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:textColor="@color/darkWhite"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewTime"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="06/07/22" />
-
-            <TextView
-                android:id="@+id/textViewTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:textColor="@color/darkWhite"
-                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="15:53" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Info3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

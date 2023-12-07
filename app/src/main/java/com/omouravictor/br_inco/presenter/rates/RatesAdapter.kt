@@ -67,10 +67,6 @@ class RatesAdapter(
             binding.textViewInfo3.text = FormatUtils.BrazilianFormats.brCurrencyFormat.format(
                 rateUiModel.unitaryRate
             )
-            binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(rateUiModel.rateDate)
-            binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(rateUiModel.rateDate)
             itemView.setOnClickListener {
                 callbackFunction(rateUiModel)
             }

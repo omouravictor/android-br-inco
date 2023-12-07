@@ -66,10 +66,6 @@ class StocksAdapter(
             )
             binding.textViewInfo3.text =
                 FormatUtils.BrazilianFormats.brDecimalFormat.format(stockUiModel.points)
-            binding.textViewDate.text =
-                FormatUtils.BrazilianFormats.brDateFormat.format(stockUiModel.stockDate)
-            binding.textViewTime.text =
-                FormatUtils.BrazilianFormats.brTimeFormat.format(stockUiModel.stockDate)
             itemView.setOnClickListener {
                 callbackFunction(stockUiModel)
             }
