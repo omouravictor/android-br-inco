@@ -4,7 +4,7 @@
 
 <h1 align="center">BR InCo</h1>
 
-## [Download it on Google Play here](https://play.google.com/store/apps/details?id=com.omouravictor.br_inco)
+### [Download it on Google Play here](https://play.google.com/store/apps/details?id=com.omouravictor.br_inco)
 
 ## Preview
 
