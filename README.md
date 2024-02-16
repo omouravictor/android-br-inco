@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/omouravictor/rates-br/blob/master/rates-br-icon.png" alt="app-icon">
+  <img src="https://github.com/omouravictor/android-br-inco/assets/64164023/7db19c33-ae5b-4a87-b194-b12c78b57946" width=15%>
 </p>
 
 <h1 align="center">BR InCo</h1>
@@ -10,7 +10,7 @@
 
 Some application screens:
 
-![app-screens](https://github.com/omouravictor/rates-br/assets/64164023/d1e22fd0-b524-477f-9622-68b6d03b70b5)
+![preview-br-inco](https://github.com/omouravictor/android-br-inco/assets/64164023/87612c63-d612-486e-b4e4-df082d83a87e)
 
 ## Architecture
 
