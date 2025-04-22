@@ -8,8 +8,6 @@
 
 ## Preview
 
-Some application screens:
-
 ![preview-br-inco](https://github.com/omouravictor/android-br-inco/assets/64164023/87612c63-d612-486e-b4e4-df082d83a87e)
 
 ## Architecture
